@@ -1,34 +1,192 @@
-.page {
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    font-family: Inter;
-    display: flex;
-    flex-direction: column;
-    min-width: 320px;
-    max-width: 880px;
-    background-color: #fff;
-    color: #000000;
-    margin: 0 auto;
-}
+  }
 
-.header {
-    padding-left: 50px;
-    padding-right: 50px;
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  header {
+    display: flex;
     align-items: center;
-    height: 74px;
-}
+    padding: 10px 10px;
+    background-color: #ffffff;
+  }
 
-.header__logo{
-    width: 200px;
+  header img {
+    width: 100px;
+    height: auto;
+  }
 
-}
+  .banner {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(90deg, #f76c22, #692fd7, #af65ec);
+    color: #ffffff;
+    overflow: hidden;
+  }
 
-.header__nav {
+  .banner h1 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .icons {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+
+  .icon {
+    text-align: center;
+    color: white;
+    width: 30%;
+    margin-bottom: 10px;
+  }
+
+  .icon img {
+    width: 40px;
+    height: auto;
+    margin-bottom: 5px;
+  }
+
+  .card-wrapper {
+    padding: 10px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+
+  .card-header {
+    display: flex;
     justify-content: space-between;
-}
+    align-items: center;
+    margin-bottom: 10px;
+  }
 
-.header__button-call-img {
-    width: 48px;
+  .highlight, .promo {
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
 
-}
+  .highlight {
+    background-color: #d281ff;
+  }
+
+  .promo {
+    background-color: #ff4f4f;
+  }
+
+  .card-content h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #333;
+  }
+
+  .card-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .card-content ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .card-content ul li img {
+    width: 20px;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .card-pricing {
+    margin-top: 20px;
+  }
+
+  .card-pricing .price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f76c22;
+  }
+
+  .card-pricing .discount {
+    font-size: 14px;
+    color: #692fd7;
+  }
+
+  .card-pricing .details {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+  }
+
+  .btn {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 15px;
+    margin-top: 20px;
+    width: 100%;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #f76c22, #692fd7, #af65ec);
+  }
+
+  .contact-buttons {
+    margin: 20px 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .contact-buttons a {
+    display: inline-block;
+    width: 48%;
+    text-align: center;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  .contact-buttons a.whatsapp {
+    background-color: #4cc345;
+  }
+
+  .contact-buttons a.telegram {
+    background-color: #0187cc;
+  }
+
+  .call-button {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 0 auto 20px auto;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #f76c22;
+    border-radius: 10px;
+    font-size: 18px;
+  }

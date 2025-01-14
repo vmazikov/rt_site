@@ -3,236 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
   <title>Ростелеком</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      width: 100%;
-      overflow-x: hidden;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      padding: 10px 10px;
-      background-color: #ffffff;
-    }
-
-    header img {
-      width: 100px;
-      height: auto;
-    }
-
-    .banner {
-      text-align: center;
-      padding: 20px;
-      background: linear-gradient(90deg, #f76c22, #692fd7, #af65ec);
-      color: #ffffff;
-      overflow: hidden;
-    }
-
-    .banner h1 {
-      font-size: 18px;
-      margin: 0;
-    }
-
-    .icons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      margin-top: 20px;
-    }
-
-    .icon {
-      text-align: center;
-      color: white;
-      width: 30%;
-      margin-bottom: 10px;
-    }
-
-    .icon img {
-      width: 40px;
-      height: auto;
-      margin-bottom: 5px;
-    }
-
-    .card-wrapper {
-      padding: 10px;
-    }
-
-    .card {
-      margin-bottom: 20px;
-      padding: 15px;
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      width: 100%;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .highlight, .promo {
-      font-size: 12px;
-      font-weight: bold;
-      color: #ffffff;
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
-
-    .highlight {
-      background-color: #d281ff;
-    }
-
-    .promo {
-      background-color: #ff4f4f;
-    }
-
-    .card-content h3 {
-      margin: 0 0 10px;
-      font-size: 16px;
-      color: #333;
-    }
-
-    .card-content ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .card-content ul li {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      font-size: 14px;
-    }
-
-    .card-content ul li img {
-      width: 20px;
-      height: auto;
-      margin-right: 10px;
-    }
-
-    .card-pricing {
-      margin-top: 20px;
-    }
-
-    .card-pricing .price {
-      font-size: 24px;
-      font-weight: bold;
-      color: #f76c22;
-    }
-
-    .card-pricing .discount {
-      font-size: 14px;
-      color: #692fd7;
-    }
-
-    .card-pricing .details {
-      font-size: 14px;
-      color: #666;
-      margin-top: 10px;
-    }
-
-    .btn {
-      display: inline-block;
-      text-align: center;
-      padding: 10px 15px;
-      margin-top: 20px;
-      width: 100%;
-      color: white;
-      text-decoration: none;
-      border-radius: 30px;
-      background: linear-gradient(90deg, #f76c22, #692fd7, #af65ec);
-    }
-
-    .contact-buttons {
-      margin: 20px 10px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .contact-buttons a {
-      display: inline-block;
-      width: 48%;
-      text-align: center;
-      padding: 15px 0;
-      margin-bottom: 10px;
-      text-decoration: none;
-      color: #ffffff;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-
-    .contact-buttons a.whatsapp {
-      background-color: #4cc345;
-    }
-
-    .contact-buttons a.telegram {
-      background-color: #0187cc;
-    }
-
-    .call-button {
-      display: block;
-      width: calc(100% - 20px);
-      margin: 0 auto 20px auto;
-      text-align: center;
-      padding: 15px;
-      text-decoration: none;
-      color: #ffffff;
-      background-color: #f76c22;
-      border-radius: 10px;
-      font-size: 18px;
-    }
-  </style>
 </head>
 <body>
   <header>
-    <img src="logo-placeholder.png" alt="Логотип">
+    <img src="./images/RGB_RT_hor_1_partner.png" alt="Логотип">
   </header>
   <div class="banner">
     <h1>Почему стоит выбрать Ростелеком</h1>
     <div class="icons">
       <div class="icon">
-        <img src="person-icon.png" alt="">
+        <img src="./images/person_icon.png" alt="">
         <p>20 млн. абонентов</p>
       </div>
       <div class="icon">
-        <img src="tower-icon.png" alt="">
+        <img src="./images/cell_tower.png" alt="">
         <p>Надежная технология подключения</p>
       </div>
       <div class="icon">
-        <img src="tv-icon.png" alt="">
+        <img src="./images/tv_icon.png" alt="">
         <p>Кино и ТВ</p>
       </div>
       <div class="icon">
-        <img src="camera-icon.png" alt="">
+        <img src="./images/camera_icon.png" alt="">
         <p>Умные технологии</p>
       </div>
       <div class="icon">
-        <img src="wifi-icon.png" alt="">
+        <img src="./images/wifi_icon.png" alt="">
         <p>Скоростной WiFi</p>
       </div>
       <div class="icon">
-        <img src="gamepad-icon.png" alt="">
+        <img src="./images/game-contoller_icon.png" alt="">
         <p>Облачный гейминг</p>
       </div>
     </div>
   </div>
   <div class="card-wrapper">
+    <div class="card">
+      <div class="card-header">
+        <span class="highlight">Хит подключений</span>
+        <span class="promo">Акция</span>
+      </div>
+      <div class="card-content">
+        <h3>Тариф<br>Технологии развлечений</h3>
+        <ul>
+          <li><img src="./images/internet_icon.png" alt="">200 Мбит/с GPON Интернет</li>
+          <li><img src="./images/router_icon.png" alt="">Wi-Fi роутер<br>99 ₽/мес в аренду</li>
+        </ul>
+      </div>
+      <div class="card-pricing">
+        <div class="price">200 ₽/мес</div>
+        <div class="discount">-50% первые 4 мес</div>
+        <div class="details">400 ₽ с 5-го мес<br>Подключение 100 ₽</div>
+      </div>
+      <a href="#" class="btn">Подключить</a>
+      <div class="icon-bell">🔔</div>
+    </div>
     <div class="card">
         <div class="card-header">
           <span class="highlight">Хит подключений</span>
@@ -241,16 +68,16 @@
         <div class="card-content">
           <h3>Тариф<br>Технологии развлечений</h3>
           <ul>
-            <li><img src="globe-icon.png" alt="">400 Мбит/с GPON Интернет</li>
-            <li><img src="tv-icon.png" alt="">210 Каналов Телевидение</li>
-            <li><img src="tv-series-icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
-            <li><img src="router-icon.png" alt="">Wi-Fi роутер<br>99 ₽/мес в аренду</li>
+            <li><img src="./images/internet_icon.png" alt="">200 Мбит/с GPON Интернет</li>
+            <li><img src="./images/tv-card_icon.png" alt="">210 Каналов Телевидение</li>
+            <li><img src="./images/wink_icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
+            <li><img src="./images/router_icon.png" alt="">Wi-Fi роутер<br>99 ₽/мес в аренду</li>
           </ul>
         </div>
         <div class="card-pricing">
-          <div class="price">350 ₽/мес</div>
-          <div class="discount">-50% первые 6 мес</div>
-          <div class="details">700 ₽ с 7-го мес<br>Подключение 100 ₽</div>
+          <div class="price">300 ₽/мес</div>
+          <div class="discount">-50% первые 4 мес</div>
+          <div class="details">600 ₽ с 5-го мес<br>Подключение 100 ₽</div>
         </div>
         <a href="#" class="btn">Подключить</a>
         <div class="icon-bell">🔔</div>
@@ -263,11 +90,11 @@
         <div class="card-content">
           <h3>Тариф<br>Технологии выгоды</h3>
           <ul>
-            <li><img src="globe-icon.png" alt="">300 Мбит/с GPON Интернет</li>
-            <li><img src="tv-icon.png" alt="">210 Каналов Телевидение</li>
-            <li><img src="phone-icon.png" alt="">50 ГБ и 1000 Мин Моб. связь</li>
-            <li><img src="tv-series-icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
-            <li><img src="router-icon.png" alt="">Wi-Fi роутер<br>99 ₽/мес в аренду</li>
+            <li><img src="./images/internet_icon.png" alt="">200 Мбит/с GPON Интернет</li>
+            <li><img src="./images/tv-card_icon.png" alt="">210 Каналов Телевидение</li>
+            <li><img src="./images/smartphone_icon.png" alt="">40 ГБ и 2000 Мин Моб. связь</li>
+            <li><img src="./images/wink_icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
+            <li><img src="./images/router_icon.png" alt="">Wi-Fi роутер<br>99 ₽/мес в аренду</li>
           </ul>
           <div class="additional-info">
             <p>• Безлимитный доступ к Одноклассники и ВКонтакте</p>
@@ -277,8 +104,36 @@
         </div>
         <div class="card-pricing">
           <div class="price">375 ₽/мес</div>
-          <div class="discount">-50% первые 6 мес</div>
-          <div class="details">750 ₽ с 7-го мес<br>Подключение 100 ₽</div>
+          <div class="discount">-50% первые 4 мес</div>
+          <div class="details">750 ₽ с 5-го мес<br>Подключение 100 ₽</div>
+        </div>
+        <a href="#" class="btn">Подключить</a>
+        <div class="icon-bell">🔔</div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="highlight">Хит подключений</span>
+          <span class="promo">Акция</span>
+        </div>
+        <div class="card-content">
+          <h3>Тариф<br>Технологии выгоды</h3>
+          <ul>
+            <li><img src="./images/internet_icon.png" alt="">200 Мбит/с GPON Интернет</li>
+            <li><img src="./images/tv-card_icon.png" alt="">210 Каналов Телевидение</li>
+            <li><img src="./images/smartphone_icon.png" alt="">40 ГБ и 1000 Мин Моб. связь</li>
+            <li><img src="./images/wink_icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
+            <li><img src="./images/router_icon.png" alt="">Wi-Fi роутер<br>99 ₽/мес в аренду</li>
+          </ul>
+          <div class="additional-info">
+            <p>• Бесплатно до 5 сим-карт в тарифе</p>
+            <p>• Безлимитный доступ к мессенджерам WhatsApp, Telegram и ещё +2</p>
+            <p>• Перенос остатков минут и Гб</p>
+          </div>
+        </div>
+        <div class="card-pricing">
+          <div class="price">475 ₽/мес</div>
+          <div class="discount">-50% первые 2 мес</div>
+          <div class="details">950 ₽ с 3-го мес<br>Подключение 100 ₽</div>
         </div>
         <a href="#" class="btn">Подключить</a>
         <div class="icon-bell">🔔</div>
@@ -288,7 +143,7 @@
     <a href="https://wa.me/" class="whatsapp">WhatsApp</a>
     <a href="https://t.me/" class="telegram">Telegram</a>
   </div>
-  <a href="tel:+7XXXXXXXXXX" class="call-button">Позвонить</a>
+  <a href="tel:+79505908454" class="call-button">Позвонить</a>
 </body>
 </html>
 

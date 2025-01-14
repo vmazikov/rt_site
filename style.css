@@ -267,3 +267,18 @@
   .step-content p a:hover {
     text-decoration: underline;
   }
+
+  .footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    color: #666;
+    font-size: 12px;
+    border-top: 1px solid #e5e5e5;
+    margin-top: 20px;
+  }
+
+  .footer p {
+    margin: 0;
+    line-height: 1.5;
+  }

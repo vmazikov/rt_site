@@ -1,0 +1,34 @@
+.page {
+    box-sizing: border-box;
+    font-family: Inter;
+    display: flex;
+    flex-direction: column;
+    min-width: 320px;
+    max-width: 880px;
+    background-color: #fff;
+    color: #000000;
+    margin: 0 auto;
+}
+
+.header {
+    padding-left: 50px;
+    padding-right: 50px;
+    align-items: center;
+    height: 74px;
+}
+
+.header__logo{
+    width: 200px;
+
+}
+
+.header__nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header__button-call-img {
+    width: 48px;
+
+}

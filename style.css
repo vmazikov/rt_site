@@ -58,6 +58,11 @@
     margin-bottom: 5px;
   }
 
+  .check_icon {
+    width: 15px;
+    height: auto;
+  }
+
   .card-wrapper {
     padding: 10px;
   }

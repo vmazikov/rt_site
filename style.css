@@ -463,3 +463,7 @@
   .cloud-button:hover {
     background-color: #e64a19;
   }
+
+  .hiden {
+    display: none;
+  }

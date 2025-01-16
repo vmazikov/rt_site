@@ -8,11 +8,16 @@
     font-family: Inter;   
   }
 
+ .body {
+  margin: 0 auto;
+ }
+
   body {
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     background-color: #f9f9f9;
     width: 100%;
+    max-width: 1024px;
     overflow-x: hidden;
   }
 
@@ -156,8 +161,8 @@
     width: 100%;
     color: white;
     text-decoration: none;
-    border-radius: 30px;
-    background: linear-gradient(90deg, #f76c22, #692fd7, #af65ec);
+    border-radius: 8px;
+    background: #f8530f;
   }
 
   .contact-buttons {

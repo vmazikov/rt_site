@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./images/icon.png" type="image/x-icon">
   <!-- Yandex.Metrika counter -->
 <!-- <script type="text/javascript" >
   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -303,21 +304,16 @@
   <h3>Заявка на подключение</h3>
   <p>Перезвоним для уточнения деталей и согласования времени</p>
   <div class="form-card">
-    <form id="phoneForm"
+    <!-- Форма в popup2 -->
+    <form id="phoneForm" method="POST" action="send_email.php">
       <div class="form-group">
         <label for="phone">Введите телефон</label>
-        <input
-          type="text"
-          id="phone"
-          maxlength="12"
-          placeholder="+7 (___) ___-__-__"
-          value="+7"
-        />
+        <input type="text" id="phone" name="phone" placeholder="+7 (___) ___-__-__" maxlength="12" value="+7" />
         <small id="errorText" class="error-text"></small>
       </div>
       <p class="hint">Перезвоним в течение 15 минут</p>
       <button type="submit" id="submitButton" class="btn primary-btn" disabled>
-        Оформить заявку
+        Получить консультацию
       </button>
     </form>
   </div>

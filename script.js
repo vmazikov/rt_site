@@ -96,7 +96,7 @@ document.getElementById("phoneForm").addEventListener("submit", (e) => {
     setTimeout(() => submitButton.classList.remove("error"), 500);
   } else {
     closePopup(); // Закрыть текущий попап
-    openPopup(popup4); // Открыть следующий попап
+
   }
 });
 // Элементы
@@ -148,29 +148,69 @@ existingConnectionBtn.addEventListener("click", () => {
   openPopup(popup3);
 });
 
-// Валидация формы телефона
+// // Валидация формы телефона
+// phoneInput.addEventListener("input", () => {
+//   const isValid = phoneInput.value.length === 12 && phoneInput.value.startsWith("+7");
+//   submitButton.disabled = !isValid;
+//   if (isValid) {
+//     errorText.style.display = "none";
+//     submitButton.style.backgroundColor = "#f8530f";
+//   } else {
+//     submitButton.style.backgroundColor = "#cccccc";
+//   }
+// });
+
+// // Обработка отправки формы
+// document.getElementById("phoneForm").addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   if (submitButton.disabled) {
+//     errorText.textContent = "Не верный формат номера";
+//     errorText.style.display = "block";
+//     submitButton.classList.add("error");
+//     setTimeout(() => submitButton.classList.remove("error"), 500);
+//   } else {
+//     closePopup();
+//     openPopup(popup4);
+//   }
+// });
+
 phoneInput.addEventListener("input", () => {
+  if (!phoneInput.value.startsWith("+7")) {
+    phoneInput.value = "+7";
+  }
+
+  // Валидация
   const isValid = phoneInput.value.length === 12 && phoneInput.value.startsWith("+7");
   submitButton.disabled = !isValid;
-  if (isValid) {
-    errorText.style.display = "none";
-    submitButton.style.backgroundColor = "#f8530f";
-  } else {
-    submitButton.style.backgroundColor = "#cccccc";
-  }
+  submitButton.style.backgroundColor = isValid ? "#f8530f" : "#cccccc";
+  errorText.style.display = isValid ? "none" : "block";
 });
 
-// Обработка отправки формы
-document.getElementById("phoneForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (submitButton.disabled) {
+document.getElementById("phoneForm").addEventListener("submit", function (e) {
+  e.preventDefault(); // Останавливаем стандартную отправку формы
+  
+  // Проверяем, валиден ли номер
+  if (!submitButton.disabled) {
+    const formData = new FormData(this);
+    
+    fetch('send_email.php', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Успешная отправка
+      if (data.success) {
+        openPopup(popup4);
+      } else {
+        alert("Произошла ошибка при отправке.");
+      }
+    })
+    .catch(error => {
+      console.log("Произошла ошибка при отправке данных.");
+    });
+  } else {
     errorText.textContent = "Не верный формат номера";
     errorText.style.display = "block";
-    submitButton.classList.add("error");
-    setTimeout(() => submitButton.classList.remove("error"), 500);
-  } else {
-    closePopup();
-    openPopup(popup4);
   }
 });
-

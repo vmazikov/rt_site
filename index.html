@@ -314,27 +314,29 @@
     <button id="existingConnection" class="btn secondary-btn">Уже подключен к Ростелеком</button>
   </div>
   
- <!-- Попап 2 -->
+<!-- Popup2 -->
 <div id="popup2" class="popup popup-2">
   <button class="close-btn">&times;</button>
   <h3>Заявка на подключение</h3>
   <p>Перезвоним для уточнения деталей и согласования времени</p>
   <div class="form-card">
     <!-- Форма в popup2 -->
-    <form id="phoneForm" method="POST" action="send_email.php">
+    <form id="phoneForm" method="POST" action="send_to_telegram.php">
       <div class="form-group">
         <label for="phone">Введите телефон</label>
-        <input type="text" id="phone" name="phone" placeholder="+7 (___) ___-__-__" maxlength="12" value="+7" />
-        <small id="errorText" class="error-text"></small>
+        <input type="text" id="phone" name="phone" placeholder="+7 (___) ___-__-__" maxlength="12" value="+7" required />
       </div>
+
+      <!-- Скрытые инпуты для тарифа, местоположения и координат -->
+      <input type="hidden" id="tarif" name="tarif" />
+      <input type="hidden" id="location" name="location" />
+      <input type="hidden" id="coordinates" name="coordinates" />
+
       <p class="hint">Перезвоним в течение 15 минут</p>
-      <button type="submit" id="submitButton" class="btn primary-btn" disabled>
-        Получить консультацию
-      </button>
+      <button type="submit" id="submitButton" class="btn primary-btn">Отправить заявку</button>
     </form>
   </div>
 </div>
-  
   <!-- Попап 3 -->
   <div id="popup3" class="popup popup-3">
     <button class="close-btn">&times;</button>

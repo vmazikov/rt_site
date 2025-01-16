@@ -186,51 +186,51 @@ phoneInput.addEventListener("input", () => {
   errorText.style.display = isValid ? "none" : "block";
 });
 
-document.getElementById("phoneForm").addEventListener("submit", function (e) {
-  e.preventDefault(); // Останавливаем стандартную отправку формы
+// document.getElementById("phoneForm").addEventListener("submit", function (e) {
+//   e.preventDefault(); // Останавливаем стандартную отправку формы
   
-  // Проверяем, валиден ли номер
-  if (!submitButton.disabled) {
-    const formData = new FormData(this);
+//   // Проверяем, валиден ли номер
+//   if (!submitButton.disabled) {
+//     const formData = new FormData(this);
     
-    fetch('send_email.php', {
-      method: 'POST',
-      body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-      // Успешная отправка
-      if (data.success) {
-        openPopup(popup4);
-      } else {
-        alert("Произошла ошибка при отправке.");
-      }
-    })
-    .catch(error => {
-      console.log("Произошла ошибка при отправке данных.");
-    });
-  } else {
-    errorText.textContent = "Не верный формат номера";
-    errorText.style.display = "block";
-  }
-});
+//     fetch('send_email.php', {
+//       method: 'POST',
+//       body: formData,
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//       // Успешная отправка
+//       if (data.success) {
+//         openPopup(popup4);
+//       } else {
+//         alert("Произошла ошибка при отправке.");
+//       }
+//     })
+//     .catch(error => {
+//       console.log("Произошла ошибка при отправке данных.");
+//     });
+//   } else {
+//     errorText.textContent = "Не верный формат номера";
+//     errorText.style.display = "block";
+//   }
+// });
 
 window.onload = function() {
-  // По умолчанию показываем текст "Подключить интернет от Ростелеком"
-  document.getElementById('user-city').textContent = '';
+  // Инициализация переменных для координат и города
+  let latitude, longitude, city;
 
   // Проверяем, поддерживается ли геолокация
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
 
       // Отправляем запрос на API, чтобы получить данные о местоположении
       fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
         .then(response => response.json())
         .then(data => {
-          const city = data.address.city || data.address.town || data.address.village;
-          const state = data.address.state;  // Получаем название области
+          city = data.address.city || data.address.town || data.address.village;
+          const state = data.address.state;
           const country = data.address.country;
 
           // Проверяем, что город находится в Кемеровской области России
@@ -243,15 +243,52 @@ window.onload = function() {
           }
         })
         .catch(() => {
-          // Если произошла ошибка, оставляем фразу по умолчанию
           document.getElementById('user-city').textContent = '';
         });
     }, function(error) {
-      // Если пользователь не дал разрешение на геолокацию, оставляем фразу по умолчанию
       document.getElementById('user-city').textContent = '';
     });
-  } else {
-    // Если геолокация не поддерживается, оставляем фразу по умолчанию
-    document.getElementById('user-city').textContent = '';
   }
+
+  // Функция для получения тарифа из карточки
+  document.querySelectorAll('.connect-btn').forEach(function(button) {
+    button.addEventListener('click', function() {
+      // Извлекаем тариф из карточки
+      const tarif = this.closest('.card').querySelector('.details').innerText.trim();
+      document.getElementById('tarif').value = tarif;  // Устанавливаем тариф в скрытое поле
+
+      // Устанавливаем местоположение и координаты в скрытые поля
+      document.getElementById('location').value = city || '';  // Если город найден, устанавливаем его
+      document.getElementById('coordinates').value = `${latitude}, ${longitude}`;  // Устанавливаем координаты
+    });
+  });
+
+  // Обработка отправки формы
+  document.getElementById('phoneForm').addEventListener('submit', function(event) {
+    event.preventDefault();  // Останавливаем стандартную отправку формы
+
+    const phone = document.getElementById('phone').value;
+    const tarif = document.getElementById('tarif').value;
+    const location = document.getElementById('location').value;
+    const coordinates = document.getElementById('coordinates').value;
+
+    const formData = new FormData();
+    formData.append('phone', phone);
+    formData.append('tarif', tarif);
+    formData.append('location', location);
+    formData.append('coordinates', coordinates);
+
+    // Отправка данных на сервер
+    fetch('send_to_telegram.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      openPopup(popup4);
+    })
+    .catch(error => {
+      console.error('Ошибка:', error);
+    });
+  });
 };

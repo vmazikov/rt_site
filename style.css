@@ -614,3 +614,48 @@ input[type="text"]:focus {
   background-color: #cccccc;
   cursor: not-allowed;
 }
+
+/* Общие стили для попапов */
+
+
+.phone-number a {
+  font-size: 24px;
+  color: #f76c22;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.phone-number a:hover {
+  text-decoration: underline;
+}
+
+.link-to-lk {
+  color: #1e88e5;
+  text-decoration: none;
+}
+
+.link-to-lk:hover {
+  text-decoration: underline;
+}
+
+/* Стили для блока с заголовком */
+.location-header {
+  color: white;
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.location-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#location-header {
+  display: block; /* Блок видим по умолчанию */
+}
+
+/* Скрыть блок, если геолокация не найдена или не разрешена */
+#location-header.hidden {
+  display: none;
+}

@@ -229,12 +229,13 @@ window.onload = function() {
       fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
         .then(response => response.json())
         .then(data => {
+          console.log(data)
           const city = data.address.city || data.address.town || data.address.village;
           const state = data.address.state;  // Получаем название области
           const country = data.address.country;
 
           // Проверяем, что город находится в Кемеровской области России
-          if (country === "Russia" && state === "Kemerovo Oblast") {
+          if (country === "Россия" && state === "Кемеровская область") {
             // Если город в Кемеровской области, подставляем название города
             document.getElementById('user-city').textContent = `в ${city}`;
           } else {

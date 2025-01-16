@@ -533,12 +533,12 @@
 
 /* Попап размеры */
 .popup-1 {
-  height: 40%;
+  height: 30%;
 }
 
 .popup-2,
 .popup-3 {
-  height: 80%;
+  height: 50%;
 }
 
 .popup-4 {

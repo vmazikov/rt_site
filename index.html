@@ -64,6 +64,26 @@
       </div>
     </div>
   </section>
+  <div id="location-section" class="location-section">
+    <h2 class="location-header-black">
+      Тарифы Ростелеком <span id="current-city" class="city-editable">Кемерово</span>
+      <span class="edit-icon">✎</span>
+    </h2>
+    <p class="location-note">
+      Тарифы по городу могут отличаться. Укажите
+      <a href="#" id="change-city">город</a>
+      для корректного отображения
+    </p>
+  </div>
+  
+  <div id="location-popup" class="popup location-popup">
+    <div class="popup-content">
+      <button class="close-btn">&times;</button>
+      <h3>Выберите ваш город</h3>
+      <input type="text" id="city-search" placeholder="Введите ваш город" />
+      <ul id="city-list" class="city-list"></ul>
+    </div>
+  </div>
   <section>
     <div class="card-wrapper">
       <div class="card">

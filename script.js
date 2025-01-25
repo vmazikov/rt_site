@@ -177,13 +177,14 @@ window.onload = function() {
         .then(response => response.json())
         .then(data => {
           city = data.address.city || data.address.town || data.address.village;
+          address = data.display_name
           const state = data.address.state;
           const country = data.address.country;
 
           // Проверяем, что город находится в Кемеровской области России
           if (country === "Россия" && state === "Кемеровская область") {
             // Если город в Кемеровской области, подставляем название города
-            address = data.display_name
+
           } else {
             // Если город не в Кемеровской области, оставляем фразу по умолчанию
             
@@ -207,8 +208,10 @@ window.onload = function() {
       // Устанавливаем местоположение и координаты в скрытые поля
       document.getElementById('location').value = city || '';  // Если город найден, устанавливаем его
       document.getElementById('address').value = address || '';  // Устанавливаем координаты
+
     });
   });
+
 
   // Обработка отправки формы
   document.getElementById('phoneForm').addEventListener('submit', function(event) {

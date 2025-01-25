@@ -115,14 +115,14 @@ const existingConnectionBtn = document.getElementById("existingConnection");
 function openPopup(popup) {
   overlay.classList.add("active");
   popup.classList.add("active");
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow = "hidden"; // Блокировка прокрутки
 }
 
 // Функция закрытия попапа
 function closePopup() {
   overlay.classList.remove("active");
   popups.forEach((popup) => popup.classList.remove("active"));
-  document.body.style.overflow = "";
+  document.body.style.overflow = ""; // Блокировка прокрутки
 }
 
 // Закрытие по клику на оверлей
@@ -164,7 +164,7 @@ phoneInput.addEventListener("input", () => {
 
 window.onload = function() {
   // Инициализация переменных для координат и города
-  let latitude, longitude, city;
+  let latitude, longitude, city, address;
 
   // Проверяем, поддерживается ли геолокация
   if ("geolocation" in navigator) {
@@ -179,30 +179,21 @@ window.onload = function() {
           city = data.address.city || data.address.town || data.address.village;
           const state = data.address.state;
           const country = data.address.country;
-          const village = data.address.village;
-          const road = data.address.road; 
-          const house = data.address.house_number;
-          
+
           // Проверяем, что город находится в Кемеровской области России
           if (country === "Россия" && state === "Кемеровская область") {
             // Если город в Кемеровской области, подставляем название города
-            if(city != undefined) {
-              alert(`Ваш адрес: ${city} ${road} ${house}`)
-            } if (village != undefined) {
-              alert(`Ваш адрес: ${village} ${road} ${house}`)
-            }  if (town != undefined) {
-              alert(`Ваш адрес: ${town} ${road} ${house}`)
-            } else {
-              alert(data)
-            }
-
+            address = data.display_name
           } else {
             // Если город не в Кемеровской области, оставляем фразу по умолчанию
-            console.log(data)
+            
           }
         })
+        .catch(() => {
+
+        });
     }, function(error) {
-      console.log(error)
+
     });
   }
 
@@ -215,7 +206,7 @@ window.onload = function() {
 
       // Устанавливаем местоположение и координаты в скрытые поля
       document.getElementById('location').value = city || '';  // Если город найден, устанавливаем его
-      document.getElementById('coordinates').value = `${latitude}, ${longitude}`;  // Устанавливаем координаты
+      document.getElementById('adress').value = address;  // Устанавливаем координаты
     });
   });
 
@@ -226,13 +217,13 @@ window.onload = function() {
     const phone = document.getElementById('phone').value;
     const tarif = document.getElementById('tarif').value;
     const location = document.getElementById('location').value;
-    const coordinates = document.getElementById('coordinates').value;
+    const address = document.getElementById('address').value;
 
     const formData = new FormData();
     formData.append('phone', phone);
     formData.append('tarif', tarif);
     formData.append('location', location);
-    formData.append('coordinates', coordinates);
+    formData.append('address', address);
 
     // Отправка данных на сервер
     fetch('send_to_telegram.php', {
@@ -248,3 +239,4 @@ window.onload = function() {
     });
   });
 };
+

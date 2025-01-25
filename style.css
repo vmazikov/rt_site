@@ -1,796 +1,128 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/fonts.css);
+@import url(./blocks/page/page.css);
+@import url(./blocks/header/header.css);
+@import url(./blocks/header/__logo/header__logo.css);
+@import url(./blocks/banner/banner.css);
+@import url(./blocks/banner/__title/bunner__title.css);
+@import url(./blocks/banner/__title-wrap/bunner__title-wrap.css);
+@import url(./blocks/banner/__subtitle/bunner__subtitle.css);
+@import url(./blocks/banner/__icon/bunner__icon.css);
+@import url(./blocks/banner/__icons-wrap/bunner__icons-wrap.css);
+@import url(./blocks/banner/__icon/bunner__icon.css);
+@import url(./blocks/banner/__icon-text/bunner__icon-text.css);
+@import url(./blocks/banner/__icon-img/bunner__icon-img.css);
+@import url(./blocks/card/card.css);
+@import url(./blocks/card/__title/card__title.css);
+@import url(./blocks/card/__subtitle/card__subtitle.css);
+@import url(./blocks/card/__subtitle-list/card__subtitle-list.css);
+@import url(./blocks/card/__subtitle-img/card__subtitle-img.css);
+@import url(./blocks/card/__pricing/card__pricing.css);
+@import url(./blocks/card/__pricing/_price/card__pricing_price.css);
+@import url(./blocks/card/__pricing/_discount/card__pricing_discount.css);
+@import url(./blocks/card/__pricing/_details/card__pricing_details.css);
+@import url(./blocks/card/__highlights/card__highlights.css);
+@import url(./blocks/card/__highlight/card__highlight.css);
+@import url(./blocks/card/__highlight/_promo/card__highlight_promo.css);
+@import url(./blocks/card/__highlight/_hit/card__highlight_hit.css);
+@import url(./blocks/card/__connect-btn/card__connect-btn.css);
+@import url(./blocks/card/__additional-info/card__additional-info.css);
+@import url(./blocks/card/__additional-info-text/card__additional-info-text.css);
+@import url(./blocks/card/__additional-info-img/card__additional-info-img.css);
+@import url(./blocks/equipment-section/equipment-section.css);
+@import url(./blocks/equipment-section/__title/equipment-section__title.css);
+@import url(./blocks/equipment-section/__subtitle/equipment-section__subtitle.css);
+@import url(./blocks/equipment-section/__carousel/equipment-section__carousel.css);
+@import url(./blocks/equipment-section/__carousel/__track/equipment-section__carousel__track.css);
+@import url(./blocks/equipment-section/__carousel/__item/equipment-section__carousel__item.css);
+@import url(./blocks/equipment-section/__carousel/__item-text/equipment-section__carousel__item-text.css);
+@import url(./blocks/equipment-section/__carousel/__item-img/equipment-section__carousel__item-img.css);
+@import url(./blocks/equipment-section/__carousel/__dots/equipment-section__carousel__dots.css);
+@import url(./blocks/equipment-section/__carousel/__dot/equipment-section__carousel__dot.css);
+@import url(./blocks/equipment-section/__carousel/__dot/_active/equipment-section__carousel__dot_active.css);
+@import url(./blocks/equipment-section/__buttons/equipment-section__buttons.css);
+@import url(./blocks/equipment-section/__button/equipment-section__button.css);
+@import url(./blocks/equipment-section/__button/_active/equipment-section__button_active.css);
+@import url(./blocks/connect-section/connect-section.css);
+@import url(./blocks/connect-section/__title/connect-section__title.css);
+@import url(./blocks/connect-section/__text/connect-section__text.css);
+@import url(./blocks/connect-section/__subtitle/connect-section__subtitle.css);
+@import url(./blocks/connect-section/__steps/connect-section__steps.css);
+@import url(./blocks/connect-section/__step/connect-section__step.css);
+@import url(./blocks/connect-section/__step-icon/connect-section__step-icon.css);
+@import url(./blocks/connect-section/__step-icon-img/connect-section__step-icon-img.css);
+@import url(./blocks/connect-section/__step-content/connect-section__step-content.css);
+@import url(./blocks/connect-section/__link/connect-section__link.css);
+@import url(./blocks/contact-section/contact-section.css);
+@import url(./blocks/contact-section/__social-buttons/contact-section__social-buttons.css);
+@import url(./blocks/contact-section/__social-button/contact-section__social-button.css);
+@import url(./blocks/contact-section/__social-button/_whatsapp/contact-section__social-button_whatsapp.css);
+@import url(./blocks/contact-section/__social-button/_telegram/contact-section__social-button_telegram.css);
+@import url(./blocks/contact-section/__call-button/contact-section__call-button.css);
+@import url(./blocks/footer/footer.css);
+@import url(./blocks/footer/__text/footer__text.css);
+@import url(./blocks/overlay/overlay.css);
+@import url(./blocks/overlay/_active/overlay_active.css);
+@import url(./blocks/popup/popup.css);
+@import url(./blocks/popup/_active/popup_active.css);
+@import url(./blocks/popup/__title/popup__title.css);
+@import url(./blocks/popup/__text/popup__text.css);
+@import url(./blocks/popup/__submit-button/popup__submit-button.css);
+@import url(./blocks/popup/__submit-button/_active/popup__submit-button_active.css);
+@import url(./blocks/popup/__close-btn/popup__close-btn.css);
+@import url(./blocks/popup-check-client/popup-check-client.css);
+@import url(./blocks/popup-check-client/__client-button/popup-check-client__client-button.css);
+@import url(./blocks/popup-client/popup-client.css);
+@import url(./blocks/popup-client/__phone-number/popup-client__phone-number.css);
+@import url(./blocks/popup-client/__link/popup-client__link.css);
+@import url(./blocks/popup-form/popup-form.css);
+@import url(./blocks/popup-form/__hint/popup-form__hint.css);
+@import url(./blocks/popup-form/__group/popup-form__group.css);
+@import url(./blocks/popup-form/__group-label/popup-form__group-label.css);
+@import url(./blocks/popup-form/__group-input/popup-form__group-input.css);
+@import url(./blocks/popup-form/__card/popup-form__card.css);
+@import url(./blocks/popup-submit/popup-submit.css);
+
+
+
+
+
+
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box; 
-    font-family: Inter;   
+    
   }
 
- .body {
-  margin: 0 auto;
- }
 
-  body {
-    margin: 0 auto;
-    padding: 0;
-    background-color: #f9f9f9;
-    width: 100%;
-    max-width: 1024px;
-    overflow-x: hidden;
-  }
 
-  header {
-    display: flex;
-    align-items: center;
-    padding: 10px 10px;
-    background-color: #ffffff;
-  }
-
-  header img {
-    width: 100px;
-    height: auto;
-  }
-
-  .banner {
-    text-align: center;
-    padding: 20px;
-    background: linear-gradient(90deg, #f76c22, #692fd7, #af65ec);
-    color: #ffffff;
-    overflow: hidden;
-  }
-
-  .banner h1 {
-    font-size: 18px;
-    margin: 0;
-  }
-
-  .icons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 20px;
-  }
-
-  .icon {
-    text-align: center;
-    color: white;
-    width: 30%;
-    margin-bottom: 10px;
-  }
-
-  .icon img {
-    width: 40px;
-    height: auto;
-    margin-bottom: 5px;
-  }
-
-  .check_icon {
-    width: 15px;
-    height: auto;
-  }
-
-  .card-wrapper {
-    padding: 10px;
-  }
-
-  .card {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 100%;
-  }
-
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .highlight, .promo {
-    font-size: 12px;
-    font-weight: bold;
-    color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-
-  .highlight {
-    background-color: #d281ff;
-  }
-
-  .promo {
-    background-color: #ff4f4f;
-  }
-
-  .card-content h3 {
-    margin: 0 0 10px;
-    font-size: 16px;
-    color: #333;
-  }
-
-  .card-content ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .card-content ul li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 14px;
-  }
-
-  .card-content ul li img {
-    width: 20px;
-    height: auto;
-    margin-right: 10px;
-  }
-
-  .card-pricing {
-    margin-top: 20px;
-  }
-
-  .card-pricing .price {
-    font-size: 24px;
-    font-weight: bold;
-    color: #f76c22;
-  }
-
-  .card-pricing .discount {
-    font-size: 14px;
-    color: #692fd7;
-  }
-
-  .card-pricing .details {
-    font-size: 14px;
-    color: #666;
-    margin-top: 10px;
-  }
-
-  .btn {
-    display: inline-block;
-    text-align: center;
-    padding: 10px 15px;
-    margin-top: 20px;
-    width: 100%;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    background: #f8530f;
-  }
-
-  .contact-buttons {
-    margin: 20px 10px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .contact-buttons a {
-    display: inline-block;
-    width: 48%;
-    text-align: center;
-    padding: 15px 0;
-    margin-bottom: 10px;
-    text-decoration: none;
-    color: #ffffff;
-    border-radius: 10px;
-    font-size: 16px;
-  }
-
-  .contact-buttons a.whatsapp {
-    background-color: #4cc345;
-  }
-
-  .contact-buttons a.telegram {
-    background-color: #0187cc;
-  }
-
-  .call-button {
-    display: block;
-    width: calc(100% - 20px);
-    margin: 0 auto 20px auto;
-    text-align: center;
-    padding: 15px;
-    text-decoration: none;
-    color: #ffffff;
-    background-color: #f76c22;
-    border-radius: 10px;
-    font-size: 18px;
-  }
-
-  .steps-section {
-    padding: 20px;
-    background-color: #ffffff;
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .steps-section h2 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .steps {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .step {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-
-  .step-icon {
-    flex-shrink: 0;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ff6600;
-    border-radius: 50%;
-  }
-
-  .step-icon img {
-    width: 30px;
-    height: 30px;
-  }
-
-  .step-content {
-    flex-grow: 1;
-  }
-
-  .step-content h3 {
-    margin: 0 0 5px;
-    font-size: 16px;
-    color: #333;
-  }
-
-  .step-content p {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-  }
-
-  .step-content p a {
-    color: #f76c22;
-    text-decoration: none;
-  }
-
-  .step-content p a:hover {
-    text-decoration: underline;
-  }
-
-  .footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #f9f9f9;
-    color: #666;
-    font-size: 12px;
-    border-top: 1px solid #e5e5e5;
-    margin-top: 20px;
-  }
-
-  .footer p {
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-
-  .equipment-section {
-    max-width: 900px;
-    margin: 20px auto;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .equipment-section h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-
-  .equipment-buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .equipment-buttons button {
-    background-color: #f5f5f5;
-    border: none;
-    padding: 10px 20px;
-    margin: 0 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: 0.3s;
-  }
-
-  .equipment-buttons button.active {
-    background-color: #ff4500;
-    color: #fff;
-  }
-
-  .carousel {
-    position: relative;
-    overflow: hidden;
-    height: 300px;
-  }
-
-  .carousel-track {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-
-  .carousel-item {
-    min-width: 100%;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .carousel-item img {
-    width: 150px;
-    height: auto;
-    margin-bottom: 10px;
-  }
-
-  .carousel-item p {
-    margin: 5px 0;
-    font-size: 16px;
-  }
-
-  .dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #ccc;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .dot.active {
-    background-color: #ff4500;
-  }
-
-  .cloud-surveillance {
-    background-color: #fff;
-    padding: 40px 0;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    padding: 0 15px;
-    box-sizing: border-box;
-  }
-  
-  .cloud-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    overflow: hidden;
-  }
-  
-  .cloud-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px;
-  }
-  
-  .cloud-content {
-    max-width: 500px;
-    text-align: left;
-  }
-  
-  .cloud-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .cloud-subtitle {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  .cloud-features {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .cloud-features li {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #444;
-    margin-bottom: 10px;
-  }
-  
-  .cloud-features li i {
-    width: 16px;
-    height: 16px;
-    background-color: #ff5722;
-    margin-right: 10px;
-    border-radius: 50%;
-  }
-  
-  .cloud-button {
-    display: inline-block;
-    background-color: #ff5722;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-  }
-  
-  .cloud-button:hover {
-    background-color: #e64a19;
-  }
-
-  .hiden {
-    display: none;
-  }
 /* Общие стили */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 998;
-  display: none;
-}
 
-.popup {
-  position: fixed;
-  bottom: -100%;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
-  box-shadow: 0px -4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 16px 16px 0 0;
-  padding: 20px;
-  z-index: 999;
-  transition: bottom 0.3s ease;
-}
 
-.popup h3 {
-  margin-bottom: 20px;
-}
 
-.popup .btn {
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 15px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-}
 
-.popup .primary-btn {
-  background: #f8530f;
-  color: #fff;
-}
 
-.popup .secondary-btn {
-  background: #fff;
-  border: 2px solid #f8530f;
-  color: #f8530f;
-}
 
-.popup .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  background: none;
-  border: none;
-}
 
-.error-text {
-  color: red;
-  display: none;
-}
 
-/* Попап размеры */
-.popup-1 {
-  height: 40%;
-}
 
-.popup-2,
-.popup-3 {
-  height: 50%;
-}
 
-.popup-4 {
-  height: 40%;
-}
 
-/* Активное состояние */
-.popup.active {
-  bottom: 0;
-}
 
-.overlay.active {
-  display: block;
-}
+
+
 
 /* Карточка формы */
-.form-card {
-  background: #f9f9f9;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
+
 
 /* Стили полей ввода */
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus {
-  border-color: #f8530f;
-}
-
-.error-text {
-  display: none;
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.hint {
-  font-size: 14px;
-  color: #888;
-  margin-top: -10px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.disclaimer {
-  font-size: 12px;
-  color: #888;
-  margin-top: 10px;
-  text-align: center;
-}
-
-/* Отключенная кнопка */
-.primary-btn[disabled] {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-/* Общие стили для попапов */
 
 
-.phone-number a {
-  font-size: 24px;
-  color: #f76c22;
-  font-weight: bold;
-  text-decoration: none;
-}
 
-.phone-number a:hover {
-  text-decoration: underline;
-}
 
-.link-to-lk {
-  color: #1e88e5;
-  text-decoration: none;
-}
 
-.link-to-lk:hover {
-  text-decoration: underline;
-}
 
-/* Стили для блока с заголовком */
-.location-header {
-  color: white;
-  padding: 20px;
-  text-align: left;
-  margin-top: 20px;
-}
 
-.location-header-black {
-  color: #11191b;
-  padding: 0px;
-  text-align: left;
-  margin-top: 20px;
-}
 
-.location-header h2 {
-  font-size: 28px;
-  font-weight: bold;
-}
-
-#location-header {
-  display: block; /* Блок видим по умолчанию */
-}
-
-/* Скрыть блок, если геолокация не найдена или не разрешена */
-#location-header.hidden {
-  display: none;
-}
-
-/* Секция текущего города */
-.location-section {
-  padding: 15px 10px;
-  margin: 15px;
-  background-color: #f9f9f9;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.location-section p {
-  margin: 5px 0;
-  color: #333;
-}
-
-.edit-icon {
-  cursor: pointer;
-  font-size: 14px;
-  color: #f8530f;
-  margin-left: 5px;
-}
-
-.location-note a {
-  color: #f8530f;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.location-note a:hover {
-  text-decoration: underline;
-}
-
-/* Новый попап выбора города */
-.location-popup {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #ffffff;
-  z-index: 1000;
-  overflow-y: auto;
-}
-
-.location-popup.active {
-  display: block;
-}
-
-.location-popup .popup-content {
-  padding: 20px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.location-popup h3 {
-  margin-bottom: 15px;
-  font-size: 18px;
-  color: #333;
-}
-
-.location-popup #city-search {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-/* Стили для списка городов */
-.city-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Левое выравнивание */
-  gap: 5px;
-}
-
-.city-list li {
-  width: 100%;
-}
-
-.city-list li a {
-  display: block;
-  padding: 12px 15px;
-  border-radius: 8px;
-  background-color: #f0f0f0;
-  text-decoration: none;
-  color: #333;
-  font-size: 16px;
-  transition: background 0.3s;
-}
-
-.city-list li a:hover {
-  background-color: #ddd;
-}
-
-.city-list li.selected a {
-  font-weight: bold;
-  background-color: #f8530f;
-  color: #fff;
-}
-
-.city-list li.selected a::before {
-  content: "📍 ";
-  margin-right: 5px;
-}
-
-/* Общие стили попапа */
-.popup .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}

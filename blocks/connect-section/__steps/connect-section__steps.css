@@ -1,0 +1,5 @@
+.connect-section__steps {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }

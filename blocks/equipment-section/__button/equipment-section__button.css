@@ -1,0 +1,10 @@
+.equipment-section__button {
+    background-color: #f5f5f5;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+   }

@@ -1,0 +1,10 @@
+.page {
+    font-family: Inter;
+    margin: 0 auto;
+    max-width: 1024px;
+    padding: 0;
+    background-color: #f9f9f9;
+    width: 100%;
+    overflow-x: hidden;
+}
+  

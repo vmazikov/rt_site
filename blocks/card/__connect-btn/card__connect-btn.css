@@ -1,0 +1,11 @@
+.card__connect-btn {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 15px;
+    margin-top: 20px;
+    width: 100%;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    background: #f8530f;
+  }

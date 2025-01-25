@@ -1,48 +1,3 @@
-const buttons = document.querySelectorAll(".equipment-buttons button");
-const track = document.querySelector(".carousel-track");
-const dots = document.querySelectorAll(".dot");
-let currentIndex = 0;
-let autoSlideInterval;
-
-const updateCarousel = (index) => {
-  track.style.transform = `translateX(-${index * 100}%)`;
-  dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
-};
-
-const setActiveCategory = (category) => {
-  const items = document.querySelectorAll(".carousel-item");
-  items.forEach(item => {
-    if (item.dataset.category === category) {
-      item.style.display = "block";
-    } else {
-      item.style.display = "none";
-    }
-  });
-};
-
-buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    buttons.forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
-    setActiveCategory(button.dataset.category);
-  });
-});
-
-dots.forEach((dot, index) => {
-  dot.addEventListener("click", () => {
-    currentIndex = index;
-    updateCarousel(index);
-  });
-});
-
-const autoSlide = () => {
-  autoSlideInterval = setInterval(() => {
-    currentIndex = (currentIndex + 1) % dots.length;
-    updateCarousel(currentIndex);
-  }, 7000);
-};
-
-autoSlide();
 
 // Получаем все кнопки "Подключить"
 const connectButtons = document.querySelectorAll(".connect-btn");
@@ -71,10 +26,10 @@ function validatePhone() {
   if (isValid) {
     errorText.style.display = "none";
     submitButton.disabled = false;
-    submitButton.style.backgroundColor = "#f8530f";
+    submitButton.classList.add("popup__submit-button_active")
   } else {
     submitButton.disabled = true;
-    submitButton.style.backgroundColor = "#cccccc";
+    submitButton.classList.remove("popup__submit-button_active")
   }
 }
 
@@ -106,22 +61,22 @@ const popup1 = document.getElementById("popup1");
 const popup2 = document.getElementById("popup2");
 const popup3 = document.getElementById("popup3");
 const popup4 = document.getElementById("popup4");
-const closeButtons = document.querySelectorAll(".close-btn");
+const closeButtons = document.querySelectorAll(".popup__close-button");
 const newConnectionBtn = document.getElementById("newConnection");
 const existingConnectionBtn = document.getElementById("existingConnection");
 
 
 // Функция открытия попапа
 function openPopup(popup) {
-  overlay.classList.add("active");
-  popup.classList.add("active");
+  overlay.classList.add("overlay_active");
+  popup.classList.add("popup_active");
   document.body.style.overflow = "hidden"; // Блокировка прокрутки
 }
 
 // Функция закрытия попапа
 function closePopup() {
-  overlay.classList.remove("active");
-  popups.forEach((popup) => popup.classList.remove("active"));
+  overlay.classList.remove("overlay_active");
+  popups.forEach((popup) => popup.classList.remove("popup_active"));
   document.body.style.overflow = ""; // Блокировка прокрутки
 }
 

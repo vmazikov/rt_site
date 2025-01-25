@@ -1,0 +1,4 @@
+.equipment-section__carousel__track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }

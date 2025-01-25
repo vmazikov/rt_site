@@ -1,0 +1,11 @@
+.contact-section__social-button {
+    display: inline-block;
+    width: 48%;
+    text-align: center;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    border-radius: 10px;
+    font-size: 16px;
+  }

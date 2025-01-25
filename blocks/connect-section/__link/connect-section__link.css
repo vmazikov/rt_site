@@ -1,0 +1,8 @@
+.connect-section__link {
+    color: #f76c22;
+    text-decoration: none;
+  }
+
+  .connect-section__link:hover {
+    text-decoration: underline;
+  }

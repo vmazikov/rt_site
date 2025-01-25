@@ -1,0 +1,14 @@
+.popup-form__group-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .popup-form__group-input:focus {
+    border-color: #f8530f;
+  }
+  

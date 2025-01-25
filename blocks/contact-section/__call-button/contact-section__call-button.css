@@ -1,0 +1,12 @@
+.contact-section__call-button {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 0 auto 20px auto;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #f76c22;
+    border-radius: 10px;
+    font-size: 18px;
+  }

@@ -1,0 +1,10 @@
+.popup-client__phone-number {
+    font-size: 24px;
+    color: #f76c22;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .popup-client__phone-number:hover {
+    text-decoration: underline;
+  }

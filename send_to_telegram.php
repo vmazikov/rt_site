@@ -5,7 +5,7 @@
 $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
 $tarif = isset($_POST['tarif']) ? $_POST['tarif'] : '';
 $city = isset($_POST['location']) ? $_POST['location'] : '';  // Изменили местоположение на город
-$coordinates = isset($_POST['coordinates']) ? $_POST['coordinates'] : '';
+$address = isset($_POST['address']) ? $_POST['address'] : '';
 
 // Ваш Telegram Bot API Token
 $bot_token = "8188979928:AAGalzT5UfkcM9CQfD986b73Z5W_GII7SaI";
@@ -16,7 +16,7 @@ $message = "Новая заявка на подключение:\n";
 $message .= "Номер телефона: $phone\n";
 $message .= "Выбранный тариф: $tarif\n";
 $message .= "Город: $city\n";
-$message .= "Координаты: $coordinates\n";  // Координаты теперь выделены тегом <code> для Telegram
+$message .= "Адрес: $address\n";  // Координаты теперь выделены тегом <code> для Telegram
 
 // Отправляем сообщение через Telegram Bot API
 $url = "https://api.telegram.org/bot$bot_token/sendMessage?chat_id=$chat_id&text=" . urlencode($message);

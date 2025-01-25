@@ -217,13 +217,13 @@ window.onload = function() {
     const phone = document.getElementById('phone').value;
     const tarif = document.getElementById('tarif').value;
     const location = document.getElementById('location').value;
-    const coordinates = document.getElementById('coordinates').value;
+    const address = document.getElementById('address').value;
 
     const formData = new FormData();
     formData.append('phone', phone);
     formData.append('tarif', tarif);
     formData.append('location', location);
-    formData.append('coordinates', coordinates);
+    formData.append('address', address);
 
     // Отправка данных на сервер
     fetch('send_to_telegram.php', {

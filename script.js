@@ -115,12 +115,14 @@ const existingConnectionBtn = document.getElementById("existingConnection");
 function openPopup(popup) {
   overlay.classList.add("active");
   popup.classList.add("active");
+  document.body.style.overflow = "hidden";
 }
 
 // Функция закрытия попапа
 function closePopup() {
   overlay.classList.remove("active");
   popups.forEach((popup) => popup.classList.remove("active"));
+  document.body.style.overflow = "";
 }
 
 // Закрытие по клику на оверлей
@@ -177,21 +179,30 @@ window.onload = function() {
           city = data.address.city || data.address.town || data.address.village;
           const state = data.address.state;
           const country = data.address.country;
-
+          const village = data.address.village;
+          const road = data.address.road; 
+          const house = data.address.house_number;
+          
           // Проверяем, что город находится в Кемеровской области России
           if (country === "Россия" && state === "Кемеровская область") {
             // Если город в Кемеровской области, подставляем название города
-            document.getElementById('user-city').textContent = `в ${city}`;
+            if(city != undefined) {
+              alert(`Ваш адрес: ${city} ${road} ${house}`)
+            } if (village != undefined) {
+              alert(`Ваш адрес: ${village} ${road} ${house}`)
+            }  if (town != undefined) {
+              alert(`Ваш адрес: ${town} ${road} ${house}`)
+            } else {
+              alert(data)
+            }
+
           } else {
             // Если город не в Кемеровской области, оставляем фразу по умолчанию
-            document.getElementById('user-city').textContent = '';
+            console.log(data)
           }
         })
-        .catch(() => {
-          document.getElementById('user-city').textContent = '';
-        });
     }, function(error) {
-      document.getElementById('user-city').textContent = '';
+      console.log(error)
     });
   }
 
@@ -237,122 +248,3 @@ window.onload = function() {
     });
   });
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-  const cityDisplay = document.getElementById("current-city");
-  const cityPopup = document.getElementById("location-popup");
-  const cityList = document.getElementById("city-list");
-  const citySearch = document.getElementById("city-search");
-  const changeCityLink = document.getElementById("change-city");
-  const editIcon = document.querySelector(".edit-icon");
-  let currentCity = null; // Город по умолчанию не задан
-  let citiesData = [];
-
-  // Используем уже существующую функцию получения локации
-  const initializeLocation = () => {
-    const locationData = {
-      city: document.getElementById("user-city").textContent.trim(),
-    };
-
-    if (locationData.city) {
-      const matchedCity = citiesData.find(city => city.name.includes(locationData.city));
-      if (matchedCity) {
-        setCity(matchedCity);
-      }
-    }
-  };
-
-  // Загрузка городов из JSON
-  fetch("cities.json")
-    .then(response => response.json())
-    .then(data => {
-      citiesData = data.cities;
-      renderCities(citiesData.filter(city => city.visible === "yes"));
-
-      // Инициализируем локацию после загрузки городов
-      initializeLocation();
-    })
-    .catch(error => console.error("Ошибка загрузки cities.json:", error));
-
-  // Установить текущий город
-  const setCity = (city) => {
-    currentCity = city;
-    updateCityDisplay();
-    localStorage.setItem("selectedCity", JSON.stringify(currentCity));
-  };
-
-  // Обновление отображения текущего города
-  const updateCityDisplay = () => {
-    if (currentCity) {
-      cityDisplay.textContent = `${currentCity.type} ${currentCity.name}`;
-      cityDisplay.closest(".location-section").style.display = "block";
-    }
-  };
-
-  // Рендер городов
-  const renderCities = (cities) => {
-    cityList.innerHTML = ""; // Очищаем список
-    cities.forEach(city => {
-      const li = document.createElement("li");
-      const link = document.createElement("a");
-      link.href = "#";
-      link.textContent = city.name; // Отображаем только name в попапе
-      link.dataset.name = city.name;
-      link.dataset.type = city.type;
-
-      if (currentCity && city.name === currentCity.name && city.type === currentCity.type) {
-        li.classList.add("selected");
-      }
-
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        setCity(city);
-        closePopup();
-      });
-
-      li.appendChild(link);
-      cityList.appendChild(li);
-    });
-  };
-
-  // Открытие попапа
-  const openPopup = () => {
-    cityPopup.classList.add("active");
-    document.body.style.overflow = "hidden"; // Блокировка прокрутки
-  };
-
-  // Закрытие попапа
-  const closePopup = () => {
-    cityPopup.classList.remove("active");
-    document.body.style.overflow = ""; // Разблокировка прокрутки
-  };
-
-  // Поиск городов
-  citySearch.addEventListener("input", e => {
-    const searchValue = e.target.value.toLowerCase().trim();
-    if (searchValue.length > 0) {
-      const filteredCities = citiesData.filter(city =>
-        city.name.toLowerCase().includes(searchValue)
-      );
-      renderCities(filteredCities);
-    } else {
-      renderCities(citiesData.filter(city => city.visible === "yes"));
-    }
-  });
-
-  // Обработчики событий для открытия попапа
-  [cityDisplay, editIcon, changeCityLink].forEach(element => {
-    if (element) {
-      element.addEventListener("click", openPopup);
-    }
-  });
-
-  cityPopup.querySelector(".close-btn").addEventListener("click", closePopup);
-
-  // Проверка сохраненного города
-  const savedCity = JSON.parse(localStorage.getItem("selectedCity"));
-  if (savedCity) {
-    currentCity = savedCity;
-    updateCityDisplay();
-  }
-});

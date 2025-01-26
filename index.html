@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./vendor/fonts/fonts.css">
   <link rel="stylesheet" href="./style.css">
   <link rel="icon" href="./images/icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <!-- Yandex.Metrika counter -->
 <!-- <script type="text/javascript" >
   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -29,41 +30,95 @@
 <body class="page">
   <header class="header">
     <img class="header__logo" src="./images/RGB_RT_hor_1_partner.png" alt="Логотип">
+    <a href="#" class="header__location"><img class="header__location-img" src="./images/location-icon.png"></a>
   </header>
   <section>
     <div class="banner">
-      <div class="bunner__title-wrap">
+      <div class="banner__title-wrap">
         <h2 class="banner__title">Подключить интернет от <br>Ростелеком </h2>
       </div>
+      <div class="container">
+        <div class="location__title large">Узнайте все акции и специальные тарифы от Ростелеком в вашем доме</div>
+        <div class="location">
+          <div class="location-icon"></div>
+          <span>Кемерово</span>
+        </div>
+        <div class="search-bar">
+          <div class="search-icon"></div>
+          <div class="search-placeholder">Введите улицу и дом</div>
+          <button class="search-button">Найти тарифы</button>
+          <div class="search-button icon"></div>
+        </div>
+        <div class="call-section">
+          <div class="call-text">Или закажите обратный звонок, и мы перезвоним в течение 10 минут</div>
+          <button class="call-button">
+              <div class="call-icon"></div>
+              <span>Заказать звонок</span>
+          </button>
+        </div>
+      </div>
       <h1 class="banner__subtitle">Почему стоит выбрать Ростелеком</h1>
-      <div class="bunner__icons-wrap">
-        <div class="bunner__icon">
-          <img class="bunner__icon-img" src="./images/person_icon.png" alt="">
-          <p class="bunner__icon-text">20 млн. абонентов</p>
+      <div class="banner__icons-wrap">
+        <div class="banner__icon">
+          <img class="banner__icon-img" src="./images/person_icon.png" alt="">
+          <p class="banner__icon-text">20 млн. абонентов</p>
         </div>
-        <div class="bunner__icon">
-          <img class="bunner__icon-img" src="./images/cell_tower.png" alt="">
-          <p class="bunner__icon-text">Надежная технология подключения</p>
+        <div class="banner__icon">
+          <img class="banner__icon-img" src="./images/cell_tower.png" alt="">
+          <p class="banner__icon-text">Надежная технология подключения</p>
         </div>
-        <div class="bunner__icon">
-          <img class="bunner__icon-img" src="./images/tv_icon.png" alt="">
-          <p class="bunner__icon-text">Кино и ТВ</p>
+        <div class="banner__icon">
+          <img class="banner__icon-img" src="./images/tv_icon.png" alt="">
+          <p class="banner__icon-text">Кино и ТВ</p>
         </div>
-        <div class="bunner__icon">
-          <img class="bunner__icon-img" src="./images/camera_icon.png" alt="">
-          <p class="bunner__icon-text">Умные технологии</p>
+        <div class="banner__icon">
+          <img class="banner__icon-img" src="./images/camera_icon.png" alt="">
+          <p class="banner__icon-text">Умные технологии</p>
         </div>
-        <div class="bunner__icon">
-          <img class="bunner__icon-img" src="./images/wifi_icon.png" alt="">
-          <p class="bunner__icon-text">Скоростной WiFi</p>
+        <div class="banner__icon">
+          <img class="banner__icon-img" src="./images/wifi_icon.png" alt="">
+          <p class="banner__icon-text">Скоростной WiFi</p>
         </div>
-        <div class="bunner__icon">
-          <img class="bunner__icon-img" src="./images/game-contoller_icon.png" alt="">
-          <p class="bunner__icon-text">Облачный гейминг</p>
+        <div class="banner__icon">
+          <img class="banner__icon-img" src="./images/game-contoller_icon.png" alt="">
+          <p class="banner__icon-text">Облачный гейминг</p>
         </div>
       </div>
     </div>
   </section>
+  <div class="tariff-section">
+    <h2>Тарифы Ростелеком </h2>
+    <p>Тарифы по адресу могут отличаться от тарифов по городу. <a href="#">Укажите адрес</a></p>
+
+    <!-- Кнопки категорий -->
+    <div class="tariff-buttons-container">
+      <div class="tariff-buttons">
+        <button class="tariff-button active">Все</button>
+        <button class="tariff-button">Интернет</button>
+        <button class="tariff-button">Интернет + ТВ</button>
+        <button class="tariff-button">Интернет + Моб. связь</button>
+        <button class="tariff-button">Интернет + ТВ + Моб. связь</button>
+      </div>
+    </div>
+
+    <!-- Кнопка сортировки и фильтры -->
+    <div class="tariff-options">
+      <div class="filter-wrapper">
+        <button class="filter-button" id="filterButton">
+          <span class="filter-icon">☰</span> Подешевле
+        </button>
+        <!-- Выпадающее меню -->
+        <ul class="dropdown-menu" id="dropdownMenu">
+          <li class="dropdown-item">Популярные</li>
+          <li class="dropdown-item">Быстрые</li>
+          <li class="dropdown-item active">Подешевле</li>
+          <li class="dropdown-item">Подороже</li>
+          <li class="dropdown-item">Мин. скорость</li>
+          <li class="dropdown-item">Макс. скорость</li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <section>
     <div class="card-wrapper">
       <div class="card">
@@ -271,6 +326,7 @@
       </div>
     </div>
   </section>
+
   <section class="contact-section">
     <div class="contact-section__social-buttons">
       <a class="contact-section__social-button contact-section__social-button_whatsapp" href="https://wa.me/79505908454?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9D%D1%83%D0%B6%D0%BD%D0%B0%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D1%82%D0%B0%D1%80%D0%B8%D1%84%D0%B0%D0%BC!%20">WhatsApp</a>
@@ -326,9 +382,27 @@
     <h3 class="popup__title">Спасибо за выбор нашей компании!</h3>
     <p class="popup__text">В течение 15 минут специалист Вам перезвонит.</p>
   </div>
-</div>
-  <script src="./script.js"></script>
+
+  <div class="popup popup-address">
+    <div class="popup-adress__buttons">
+      <div class="location">
+        <div class="location-icon"></div>
+        <span>Кемерово</span>
+      </div>
+      <button class="popup__close-button">&times;</button>
+    </div>
+    <div class="popup-address__input-wrapper">
+      <input class="popup-address__input" type="text" id="address" autocomplete="off" placeholder="Введите улицу и дом" />
+      <div id="suggestions">
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="./index.js"></script>
   <script src="./carousel.js"></script>
+  <script src="./txb.js"></script>
+  <script src="./swiper.js"></script>
 </body>
 </html>
 

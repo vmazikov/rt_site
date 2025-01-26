@@ -24,3 +24,23 @@
   src: url("Inter-Medium.woff2?v=3.19") format("woff2"),
        url("Inter-Medium.woff?v=3.19") format("woff");
 }
+
+
+@font-face {
+  font-family: 'Roboto';
+  font-style:  normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("./Robotoblack.woff2") format("woff2"),
+       url("./Robotoblack.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style:  normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./Roboto.woff2") format("woff2"),
+       url("./Roboto.woff") format("woff");
+}
+

@@ -4,14 +4,14 @@
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
 @import url(./blocks/banner/banner.css);
-@import url(./blocks/banner/__title/bunner__title.css);
-@import url(./blocks/banner/__title-wrap/bunner__title-wrap.css);
-@import url(./blocks/banner/__subtitle/bunner__subtitle.css);
-@import url(./blocks/banner/__icon/bunner__icon.css);
-@import url(./blocks/banner/__icons-wrap/bunner__icons-wrap.css);
-@import url(./blocks/banner/__icon/bunner__icon.css);
-@import url(./blocks/banner/__icon-text/bunner__icon-text.css);
-@import url(./blocks/banner/__icon-img/bunner__icon-img.css);
+@import url(./blocks/banner/__title/banner__title.css);
+@import url(./blocks/banner/__title-wrap/banner__title-wrap.css);
+@import url(./blocks/banner/__subtitle/banner__subtitle.css);
+@import url(./blocks/banner/__icon/banner__icon.css);
+@import url(./blocks/banner/__icons-wrap/banner__icons-wrap.css);
+@import url(./blocks/banner/__icon/banner__icon.css);
+@import url(./blocks/banner/__icon-text/banner__icon-text.css);
+@import url(./blocks/banner/__icon-img/banner__icon-img.css);
 @import url(./blocks/card/card.css);
 @import url(./blocks/card/__title/card__title.css);
 @import url(./blocks/card/__subtitle/card__subtitle.css);
@@ -98,31 +98,342 @@
 
 
 
-/* Общие стили */
+  
+  .header__location {
+
+  }
+
+  .header__location-img {
+    width: 20px;
+  }
+/* Общий стиль секции */
+.tariff-section {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.tariff-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tariff-section p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.tariff-section a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Кнопки категорий */
+.tariff-buttons-container {
+  overflow-x: auto; /* Прокрутка при переполнении */
+  white-space: nowrap;
+  padding: 10px 0;
+}
+
+.tariff-buttons {
+  display: flex;
+  gap: 10px; /* Отступы между кнопками */
+}
+
+.tariff-button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.tariff-button.active {
+  background: #ff5722;
+  color: white;
+  border-color: #ff5722;
+}
 
 
+/* Кнопка сортировки и фильтры */
+.tariff-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.filter-wrapper {
+  position: relative; /* Контекст для меню */
+}
+
+.filter-button {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Отступ между текстом и иконкой */
+  transition: all 0.3s ease;
+}
+
+.filter-button:hover {
+  background: #ffd6c3;
+}
+
+.filter-icon {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Выпадающее меню */
+.dropdown-menu {
+  list-style: none;
+  margin: 0;
+  padding: 5px 0;
+  position: absolute; /* Абсолютная позиция под кнопкой */
+  left: 0;
+  top: calc(100% + 5px); /* Отступ от кнопки */
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  width: 200px;
+  display: none; /* По умолчанию скрыто */
+  z-index: 10;
+  opacity: 0;
+  transform: scale(0.95);
+  transform-origin: top center;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dropdown-menu.show {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.dropdown-item {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: #ff5722;
+  color: white;
+}
+
+.dropdown-item.active {
+  color: #ff5722;
+  font-weight: bold;
+}
 
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 
+.container {
+  margin: 0 auto;
+  padding: 24px 16px;
+  padding-bottom: 10px;
+  border-radius: 16px;
+  background: #f8f8f8;
+}
 
+.location__title {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #555;
+  text-align: left;
+}
 
+.location__title.large {
+  width: 60%;
+}
 
+.location__title.small {
+  width: 100%;
+}
 
+.location {
+  display: flex;
+  align-items: left;
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #555;
+}
 
+.location-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  background: url('./images/location-icon.png') no-repeat center center;
+  background-size: contain;
+}
 
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #686868;
+  border-radius: 40px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
 
+.search-bar .search-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background: url('./images/location-icon2.png') no-repeat center center;
+  background-size: contain;
+}
 
+.search-placeholder {
+  flex: 1;
+  font-size: 16px;
+  color: #aaa;
+  text-align: left;
+}
 
-/* Карточка формы */
+.search-button {
+  padding: 10px 20px;
+  background: #f8530f;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
 
+.search-button.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
 
-/* Стили полей ввода */
+.call-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
 
+.call-text {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+  text-align: left;
+}
 
+.call-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  background: none;
+  border: 1px solid #7dc65b;
+  border-radius: 20px;
+  color: #7dc65b;
+  font-size: 16px;
+  cursor: pointer;
+}
 
+.call-button .call-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background: url('./images/phone-icon.svg') no-repeat center center;
+  background-size: contain;
+}
 
+@media (max-width: 760px) {
+  .location__title.large {
+      width: 100%;
+  }
 
+  .search-button {
+      display: none;
+  }
 
+  .search-button.icon {
+      display: flex;
+  }
+}
 
+@media (min-width: 761px) {
+  .search-button.icon {
+      display: none;
+  }
 
+  .search-button {
+      display: flex;
+  }
+}
+
+.popup-address {
+  height: 100%;
+  border-radius: 0;
+}
+
+.popup-address__input {
+  background: #efeef3;
+  border: 1px solid #aeaeb8;
+  border-radius: 24px;
+  line-height: 1.5;
+  min-height: 48px;
+  padding: 12px 48px 12px 28px;
+  resize: none;
+  width: 100%;
+  transition: border-color .3s;
+}
+
+#suggestions div {
+  border-bottom: 1px solid #e5e5ed;
+  color: #0f191e;
+  cursor: pointer;
+  min-height: 57px;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: left;
+}
+
+#suggestions div:last-child {
+  border-bottom: none;
+}
+
+#suggestions div:hover {
+  background-color: #f9f9f9;
+}
+
+#suggestions div .icon {
+  margin-right: 8px;
+  font-size: 20px;
+  color: #ff3366; /* Цвет иконки */
+  flex-shrink: 0; /* Убедитесь, что иконка остаётся фиксированного размера */
+}
+
+#suggestions div span {
+  color: #ff3366; /* Красный цвет для совпадающих частей */
+  font-weight: bold;
+  margin-right: 4px;
+  margin-left: 4px;
+}

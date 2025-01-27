@@ -433,3 +433,29 @@
   margin-right: 4px;
   margin-left: 4px;
 }
+
+.flex {
+    display: flex;
+}
+
+.popup-confirm {
+    height: 20%;
+}
+
+.popup-confirm-button {
+    display: block;
+    width: 100%;
+    margin: 8px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #cccccc;
+    cursor: not-allowed;
+    color: #555;
+}
+
+.popup-confirm-button_active {
+    color: #fff;
+    background-color: #f8530f;
+}

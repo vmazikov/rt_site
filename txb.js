@@ -58,13 +58,13 @@
      */
     async function getAddressFromCoords(latitude, longitude, token) {
         const url = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address';
-
+    
         const requestData = {
             lat: latitude,
             lon: longitude,
             count: 1
         };
-
+    
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -74,16 +74,48 @@
                 },
                 body: JSON.stringify(requestData)
             });
-
+    
             if (!response.ok) {
                 throw new Error(`Ошибка API DaData: ${response.statusText}`);
             }
-
+    
+            const popup = document.querySelector('.popup-confirm');
+            const addressElement = document.getElementById('address-init');
+    
             const data = await response.json();
-
+    
             if (data && data.suggestions && data.suggestions.length > 0) {
-                const formattedAddress = formatAddressFromDaData(data.suggestions[0].data);
-                return formattedAddress;
+                const suggestion = data.suggestions[0];
+    
+                // Показываем попап
+                addressElement.querySelector(".popup__title").textContent = suggestion.data.house
+                    ? 'Это ваш адрес?'
+                    : `Ваш город: ${suggestion.data.city_with_type}`;
+                addressElement.querySelector(".popup__text").textContent = suggestion.data.house
+                    ? `Ваш адрес: ${suggestion.value}`
+                    : 'Это ваш город?';
+                openPopup(popup);
+    
+                // Возвращаем Promise, который завершится только после выбора пользователя
+                return new Promise((resolve) => {
+                    document.getElementById('confirm-address').onclick = () => {
+                        closePopup(popup);
+                        document.querySelectorAll('.city-name').forEach(el => el.textContent = suggestion.data.city_with_type);
+                        document.querySelector('.tariff-section__title').textContent = `Тарифы Ростелеком в ${suggestion.data.city_with_type}`;
+                        localStorage.setItem('city', suggestion.data.city_with_type);
+    
+                        // Возвращаем адрес, если подтвержден
+                        resolve(formatAddressFromDaData(suggestion.data));
+                    };
+    
+                    document.getElementById('nonconfirm-address').onclick = () => {
+                        closePopup(popup);
+                        openPopup(popupAddress);
+    
+                        // Возвращаем null, если пользователь отказался
+                        resolve(null);
+                    };
+                });
             } else {
                 console.warn('Не удалось найти адрес по координатам');
                 return null;
@@ -93,6 +125,7 @@
             return null;
         }
     }
+    
 
     /**
      * Проверяет техническую возможность по JSON-данным.
@@ -215,5 +248,5 @@
     $(document).ready(function () {
         loadTechnicalData('./adress.json'); // Загружаем данные из JSON
         initManualAddressInput('.popup-address__input', regionFiasId); // Подключаем автоподсказки для поля ввода
-        $('#useGeo').on('click', getUserLocationWithDaData); // Кнопка для геолокации
+        getUserLocationWithDaData()
     })

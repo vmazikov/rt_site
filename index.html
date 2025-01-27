@@ -30,7 +30,10 @@
 <body class="page">
   <header class="header">
     <img class="header__logo" src="./images/RGB_RT_hor_1_partner.png" alt="Логотип">
-    <a href="#" class="header__location"><img class="header__location-img" src="./images/location-icon.png"></a>
+    <div class="location">
+      <div class="location-icon"></div>
+      <span class="city-name">Кемерово</span>
+    </div>
   </header>
   <section>
     <div class="banner">
@@ -41,7 +44,7 @@
         <div class="location__title large">Узнайте все акции и специальные тарифы от Ростелеком в вашем доме</div>
         <div class="location">
           <div class="location-icon"></div>
-          <span>Кемерово</span>
+          <span class="city-name">Кемерово</span>
         </div>
         <div class="search-bar">
           <div class="search-icon"></div>
@@ -87,7 +90,7 @@
     </div>
   </section>
   <div class="tariff-section">
-    <h2>Тарифы Ростелеком </h2>
+    <h2 class="tariff-section__title">Тарифы Ростелеком  </h2>
     <p>Тарифы по адресу могут отличаться от тарифов по городу. <a href="#">Укажите адрес</a></p>
 
     <!-- Кнопки категорий -->
@@ -140,6 +143,7 @@
             <p class="card__pricing_details">400 ₽ с 5-го мес</p>
           </div>
           <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+          <a href="#" class=""></a>
         </div>
       </div>
       <div class="card">
@@ -382,12 +386,12 @@
     <h3 class="popup__title">Спасибо за выбор нашей компании!</h3>
     <p class="popup__text">В течение 15 минут специалист Вам перезвонит.</p>
   </div>
-
+<!-- попап для выбора адреса -->
   <div class="popup popup-address">
     <div class="popup-adress__buttons">
       <div class="location">
         <div class="location-icon"></div>
-        <span>Кемерово</span>
+        <span class="city-name">Кемерово</span>
       </div>
       <button class="popup__close-button">&times;</button>
     </div>
@@ -397,12 +401,38 @@
       </div>
     </div>
   </div>
+<!-- Попап для выбора города -->
+  <div class="popup popup-address">
+    <div class="popup-adress__buttons">
+      <div class="location">
+        <div class="location-icon"></div>
+        <span>Кемерово</span>
+      </div>
+      <button class="popup__close-button">&times;</button>
+    </div>
+    <div class="popup-address__input-wrapper">
+      <input class="popup-address__input" type="text" id="address" autocomplete="off" placeholder="Введите город" />
+      <div id="suggestions">
+      </div>
+    </div>
+  </div>
+
+  <div id="address-init" class="popup popup-confirm">
+    <button class="popup__close-button">&times;</button>
+    <h3 class="popup__title"></h3>
+    <p id="" class="popup__text"></p>
+    <div class="flex">
+      <button id="confirm-address" class="popup-confirm-button popup-confirm-button_active">Да, мой</button>
+      <button id="nonconfirm-address" class="popup-confirm-button ">Нет, не мой</button>
+    </div>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="./index.js"></script>
   <script src="./carousel.js"></script>
   <script src="./txb.js"></script>
   <script src="./swiper.js"></script>
+  <script src="./createDynamicPlaceholder.js"></script>
 </body>
 </html>
 

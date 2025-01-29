@@ -272,6 +272,10 @@
   color: #555;
 }
 
+.hidden {
+  display: none;
+}
+
 .location-icon {
   width: 20px;
   height: 20px;
@@ -458,4 +462,43 @@
 .popup-confirm-button_active {
     color: #fff;
     background-color: #f8530f;
+}
+
+.card__info-btn {
+  background: url('./images/info-img.png') no-repeat center center;
+  background-size: contain;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+      opacity: 1;
+      transform: translateY(0);
+  }
+  to {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+}
+
+.card {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.card.fade-out {
+  animation: fadeOut 0.3s ease-in forwards;
 }

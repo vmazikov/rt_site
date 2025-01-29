@@ -30,7 +30,7 @@
 <body class="page">
   <header class="header">
     <img class="header__logo" src="./images/RGB_RT_hor_1_partner.png" alt="Логотип">
-    <div class="location">
+    <div class="location hidden">
       <div class="location-icon"></div>
       <span class="city-name">Кемерово</span>
     </div>
@@ -42,7 +42,7 @@
       </div>
       <div class="container">
         <div class="location__title large">Узнайте все акции и специальные тарифы от Ростелеком в вашем доме</div>
-        <div class="location">
+        <div class="location hidden">
           <div class="location-icon"></div>
           <span class="city-name">Кемерово</span>
         </div>
@@ -108,14 +108,13 @@
     <div class="tariff-options">
       <div class="filter-wrapper">
         <button class="filter-button" id="filterButton">
-          <span class="filter-icon">☰</span> Подешевле
+          <span class="filter-icon">☰</span> Популярные
         </button>
         <!-- Выпадающее меню -->
         <ul class="dropdown-menu" id="dropdownMenu">
-          <li class="dropdown-item">Популярные</li>
-          <li class="dropdown-item">Быстрые</li>
-          <li class="dropdown-item active">Подешевле</li>
-          <li class="dropdown-item">Подороже</li>
+          <li class="dropdown-item active">Популярные</li>
+          <li class="dropdown-item">Сначала недорогие</li>
+          <li class="dropdown-item">Сначала дорогие</li>
           <li class="dropdown-item">Мин. скорость</li>
           <li class="dropdown-item">Макс. скорость</li>
         </ul>
@@ -142,8 +141,10 @@
             <p class="card__pricing_discount">-50% первые 4 мес</p>
             <p class="card__pricing_details">400 ₽ с 5-го мес</p>
           </div>
-          <a href="#" class="card__connect-btn connect-btn">Подключить</a>
-          <a href="#" class=""></a>
+          <div class="card__buttons">
+            <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+            <div class="card__info-btn"></div>
+          </div>
         </div>
       </div>
       <div class="card">
@@ -166,7 +167,10 @@
             <div class="card__pricing_discount">-50% первые 4 мес</div>
             <div class="card__pricing_details">600 ₽ с 5-го мес</div>
           </div>
-          <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+          <div class="card__buttons">
+            <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+            <div class="card__info-btn"></div>
+          </div>
         </div>
         </div>
         <div class="card">
@@ -178,7 +182,7 @@
             <div class="card__content">
               <h3 class="card__title">Тариф<br>Хит сезона Х. Пакет</h3>
               <ul class="card__subtitle-list">
-                <li class="card__subtitle"><img class="card__subtitle-img" rc="./images/internet_icon.png" alt="">400 Мбит/с GPON Интернет</li>
+                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">400 Мбит/с GPON Интернет</li>
                 <li class="card__subtitle"><img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">210 Каналов Телевидение</li>
                 <li class="card__subtitle"><img class="card__subtitle-img" src="./images/wink_icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
                 <li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер<br>150 ₽/мес в аренду</li>
@@ -189,7 +193,10 @@
               <div class="card__pricing_discount">-50% первые 4 мес</div>
               <div class="card__pricing_details">700 ₽ с 5-го мес</div>
             </div>
-            <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+            <div class="card__buttons">
+              <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+              <div class="card__info-btn"></div>
+            </div>
           </div>
         </div>
       <div class="card">
@@ -218,7 +225,10 @@
           <div class="card__pricing_discount">-50% первые 4 мес</div>
           <div class="card__pricing_details">750 ₽ с 5-го мес</div>
         </div>
-        <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+        <div class="card__buttons">
+          <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+          <div class="card__info-btn"></div>
+        </div>
       </div>
         </div>
         <div class="card">
@@ -247,7 +257,10 @@
               <div class="card__pricing_discount">-50% первые 2 мес</div>
               <div class="card__pricing_details">950 ₽ с 3-го мес</div>
             </div>
-            <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+            <div class="card__buttons">
+              <a href="#" class="card__connect-btn connect-btn">Подключить</a>
+              <div class="card__info-btn"></div>
+            </div>
           </div>
         </div>
   </section>
@@ -389,7 +402,7 @@
 <!-- попап для выбора адреса -->
   <div class="popup popup-address">
     <div class="popup-adress__buttons">
-      <div class="location">
+      <div class="location hidden">
         <div class="location-icon"></div>
         <span class="city-name">Кемерово</span>
       </div>
@@ -404,7 +417,7 @@
 <!-- Попап для выбора города -->
   <div class="popup popup-address">
     <div class="popup-adress__buttons">
-      <div class="location">
+      <div class="location hidden">
         <div class="location-icon"></div>
         <span>Кемерово</span>
       </div>
@@ -433,6 +446,7 @@
   <script src="./txb.js"></script>
   <script src="./swiper.js"></script>
   <script src="./createDynamicPlaceholder.js"></script>
+  <script src="./cards.js"></script>
 </body>
 </html>
 

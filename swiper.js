@@ -1,3 +1,13 @@
+const searchBar = document.querySelector(".search-bar");
+const popupAddress = document.querySelector(".popup-address");
+
+searchBar.addEventListener("click", (e) =>{
+  e.preventDefault(); // Отключаем стандартное поведение ссылки
+  openPopup(popupAddress)
+});
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const filterButton = document.getElementById("filterButton");
   const dropdownMenu = document.getElementById("dropdownMenu");

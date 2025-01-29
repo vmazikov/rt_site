@@ -13,15 +13,6 @@ const newConnectionBtn = document.getElementById("newConnection");
 const existingConnectionBtn = document.getElementById("existingConnection");
 const connectButtons = document.querySelectorAll(".connect-btn");
 const callButton = document.querySelector(".call-button");
-const searchBar = document.querySelector(".search-bar");
-const popupAddress = document.querySelector(".popup-address");
-
-searchBar.addEventListener("click", (e) =>{
-  e.preventDefault(); // Отключаем стандартное поведение ссылки
-  openPopup(popupAddress)
-});
-
-
 
 
 callButton.addEventListener("click", (e) =>{
@@ -66,10 +57,10 @@ function openFirstPopup() {
   }
   
 // Открытие первого попапа
-document.querySelector(".connect-btn").addEventListener("click", (e) => {
-e.preventDefault();
-openPopup(popup1);
-});
+// document.querySelector(".connect-btn").addEventListener("click", (e) => {
+// e.preventDefault();
+// openPopup(popup1);
+// });
 
 // Логика кнопок в первом попапе
 newConnectionBtn.addEventListener("click", () => {

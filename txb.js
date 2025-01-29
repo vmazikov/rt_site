@@ -250,3 +250,5 @@
         initManualAddressInput('.popup-address__input', regionFiasId); // Подключаем автоподсказки для поля ввода
         getUserLocationWithDaData()
     })
+
+    

@@ -30,9 +30,9 @@
 <body class="page">
   <header class="header">
     <img class="header__logo" src="./images/RGB_RT_hor_1_partner.png" alt="Логотип">
-    <div class="location hidden">
-      <div class="location-icon"></div>
-      <span class="city-name">Кемерово</span>
+    <div class="location__city">
+      <div class="location__city-icon"></div>
+      <span class="location__city-name">Кемерово</span>
     </div>
   </header>
   <section>
@@ -40,22 +40,24 @@
       <div class="banner__title-wrap">
         <h2 class="banner__title">Подключить интернет от <br>Ростелеком </h2>
       </div>
-      <div class="container">
+      <div class="location__wrapper">
         <div class="location__title large">Узнайте все акции и специальные тарифы от Ростелеком в вашем доме</div>
-        <div class="location hidden">
-          <div class="location-icon"></div>
-          <span class="city-name">Кемерово</span>
+        <div class="location__city">
+          <div class="location__city-icon"></div>
+          <span class="location__city-name">Кемерово</span>
         </div>
-        <div class="search-bar">
-          <div class="search-icon"></div>
-          <div class="search-placeholder">Введите улицу и дом</div>
-          <button class="search-button">Найти тарифы</button>
-          <div class="search-button icon"></div>
+        <div class="location__search-bar">
+          <div class="location__search-icon"></div>
+          <div class="location__search-placeholder">Введите улицу и дом</div>
+          <button class="location__search-button">Найти тарифы</button>
+          <div class="location__search-button__icon">
+            <img class="location__search-button__img" src="./images/seacrh-icon.png">
+          </div>
         </div>
-        <div class="call-section">
-          <div class="call-text">Или закажите обратный звонок, и мы перезвоним в течение 10 минут</div>
-          <button class="call-button">
-              <div class="call-icon"></div>
+        <div class="location__call-section">
+          <div class="location__call-text">Или закажите обратный звонок, и мы перезвоним в течение 10 минут</div>
+          <button class="location__call-button">
+              <div class="location__call-icon"></div>
               <span>Заказать звонок</span>
           </button>
         </div>
@@ -89,180 +91,40 @@
       </div>
     </div>
   </section>
-  <div class="tariff-section">
-    <h2 class="tariff-section__title">Тарифы Ростелеком  </h2>
-    <p>Тарифы по адресу могут отличаться от тарифов по городу. <a href="#">Укажите адрес</a></p>
-
-    <!-- Кнопки категорий -->
-    <div class="tariff-buttons-container">
-      <div class="tariff-buttons">
-        <button class="tariff-button active">Все</button>
-        <button class="tariff-button">Интернет</button>
-        <button class="tariff-button">Интернет + ТВ</button>
-        <button class="tariff-button">Интернет + Моб. связь</button>
-        <button class="tariff-button">Интернет + ТВ + Моб. связь</button>
-      </div>
-    </div>
-
-    <!-- Кнопка сортировки и фильтры -->
-    <div class="tariff-options">
-      <div class="filter-wrapper">
-        <button class="filter-button" id="filterButton">
-          <span class="filter-icon">☰</span> Популярные
-        </button>
-        <!-- Выпадающее меню -->
-        <ul class="dropdown-menu" id="dropdownMenu">
-          <li class="dropdown-item active">Популярные</li>
-          <li class="dropdown-item">Сначала недорогие</li>
-          <li class="dropdown-item">Сначала дорогие</li>
-          <li class="dropdown-item">Мин. скорость</li>
-          <li class="dropdown-item">Макс. скорость</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <section>
-    <div class="card-wrapper">
-      <div class="card">
-        <div class="card">
-          <div class="card__highlights">
-            <span class="card__highlight card__highlight_hit">Хит подключений</span>
-            <span class="card__highlight card__highlight_promo">Акция</span>
-          </div>
-          <div class="card__content">
-            <h3 class="card__title">Тариф<br>Хит сезона Х</h3>
-            <ul class="card__subtitle-list">
-              <li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">200 Мбит/с GPON Интернет</li>
-              <li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер<br>150 ₽/мес в аренду</li>
-            </ul>
-          </div>
-          <div class="card__pricing">
-            <p class="card__pricing_price">200 ₽/мес</p>
-            <p class="card__pricing_discount">-50% первые 4 мес</p>
-            <p class="card__pricing_details">400 ₽ с 5-го мес</p>
-          </div>
-          <div class="card__buttons">
-            <a href="#" class="card__connect-btn connect-btn">Подключить</a>
-            <div class="card__info-btn"></div>
-          </div>
+  <nav>
+    <div class="nav-section">
+      <h2 class="nav-section__title">Тарифы Ростелеком  </h2>
+      <p class="nav-section__subtitile">Тарифы по адресу могут отличаться от тарифов по городу. <a href="#" class="nav-section__link">Укажите адрес</a></p>
+      <div class="nav-section__buttons-container">
+        <div class="nav-section__buttons">
+          <button class="nav-section__button nav-section__button_active">Все</button>
+          <button class="nav-section__button">Интернет</button>
+          <button class="nav-section__button">Интернет + ТВ</button>
+          <button class="nav-section__button">Интернет + Моб. связь</button>
+          <button class="nav-section__button">Интернет + ТВ + Моб. связь</button>
         </div>
       </div>
-      <div class="card">
-        <div class="card">
-          <div class="card__highlights">
-            <span class="card__highlight card__highlight_hit">Хит подключений</span>
-            <span class="card__highlight card__highlight_promo">Акция</span>
-          </div>
-          <div class="card__content">
-            <h3 class="card__title">Тариф<br>Хит сезона Х. Пакет</h3>
-            <ul class="card__subtitle-list">
-              <li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">200 Мбит/с GPON Интернет</li>
-              <li class="card__subtitle"><img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">210 Каналов Телевидение</li>
-              <li class="card__subtitle"><img class="card__subtitle-img" src="./images/wink_icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
-              <li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер<br>150 ₽/мес в аренду</li>
-            </ul>
-          </div>
-          <div class="card__pricing">
-            <div class="card__pricing_price">300 ₽/мес</div>
-            <div class="card__pricing_discount">-50% первые 4 мес</div>
-            <div class="card__pricing_details">600 ₽ с 5-го мес</div>
-          </div>
-          <div class="card__buttons">
-            <a href="#" class="card__connect-btn connect-btn">Подключить</a>
-            <div class="card__info-btn"></div>
-          </div>
-        </div>
-        </div>
-        <div class="card">
-          <div class="card">
-            <div class="card__highlights">
-              <span class="card__highlight card__highlight_hit">Хит подключений</span>
-              <span class="card__highlight card__highlight_promo">Акция</span>
-            </div>
-            <div class="card__content">
-              <h3 class="card__title">Тариф<br>Хит сезона Х. Пакет</h3>
-              <ul class="card__subtitle-list">
-                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">400 Мбит/с GPON Интернет</li>
-                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">210 Каналов Телевидение</li>
-                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/wink_icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
-                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер<br>150 ₽/мес в аренду</li>
-              </ul>
-            </div>
-            <div class="card__pricing">
-              <div class="card__pricing_price">350 ₽/мес</div>
-              <div class="card__pricing_discount">-50% первые 4 мес</div>
-              <div class="card__pricing_details">700 ₽ с 5-го мес</div>
-            </div>
-            <div class="card__buttons">
-              <a href="#" class="card__connect-btn connect-btn">Подключить</a>
-              <div class="card__info-btn"></div>
-            </div>
-          </div>
-        </div>
-      <div class="card">
-        <div class="card">
-          <div class="card__highlights">
-            <span class="card__highlight card__highlight_hit">Хит подключений</span>
-            <span class="card__highlight card__highlight_promo">Акция</span>
-          </div>
-        <div class="card__content">
-          <h3 class="card__title">Тариф<br>Хит сезона Х</h3>
-          <ul class="card__subtitle-list">
-            <li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">200 Мбит/с GPON Интернет</li>
-            <li class="card__subtitle"><img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">210 Каналов Телевидение</li>
-            <li class="card__subtitle"><img class="card__subtitle-img" src="./images/smartphone_icon.png" alt="">40 ГБ и 2000 Мин Моб. связь</li>
-            <li class="card__subtitle"><img class="card__subtitle-img" src="./images/wink_icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
-            <li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер<br>150 ₽/мес в аренду</li>
+      <div class="filter">
+        <div class="filter__wrapper">
+          <button class="filter__button" id="filterButton">
+            <span class="filter__icon">☰</span> Популярные
+          </button>
+          <ul class="filter__dropdown-menu" id="dropdownMenu">
+            <li class="filter__dropdown-item filter__dropdown-item_active">Популярные</li>
+            <li class="filter__dropdown-item">Сначала недорогие</li>
+            <li class="filter__dropdown-item">Сначала дорогие</li>
+            <li class="filter__dropdown-item">Мин. скорость</li>
+            <li class="filter__dropdown-item">Макс. скорость</li>
           </ul>
-          <div class="card__additional-info">
-            <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Безлимитный доступ к Одноклассники и ВКонтакте</p>
-            <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Безлимитный доступ к мессенджерам WhatsApp, Telegram и ещё +2</p>
-            <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Перенос остатков минут и Гб</p>
-          </div>
-        </div>
-        <div class="card__pricing">
-          <div class="card__pricing_price">375 ₽/мес</div>
-          <div class="card__pricing_discount">-50% первые 4 мес</div>
-          <div class="card__pricing_details">750 ₽ с 5-го мес</div>
-        </div>
-        <div class="card__buttons">
-          <a href="#" class="card__connect-btn connect-btn">Подключить</a>
-          <div class="card__info-btn"></div>
         </div>
       </div>
-        </div>
-        <div class="card">
-          <div class="card">
-            <div class="card__highlights">
-              <span class="card__highlight card__highlight_hit">Хит подключений</span>
-              <span class="card__highlight card__highlight_promo">Акция</span>
-            </div>
-            <div class="card__content">
-              <h3 class="card__title">Тариф<br>Семья</h3>
-              <ul class="card__subtitle-list">
-                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">200 Мбит/с GPON Интернет</li>
-                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">210 Каналов Телевидение</li>
-                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/smartphone_icon.png" alt="">40 ГБ и 2000 Мин Моб. связь</li>
-                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/wink_icon.png" alt="">Wink<br>25 000 фильмов и сериалов</li>
-                <li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер<br>150 ₽/мес в аренду</li>
-              </ul>
-              <div class="card__additional-info">
-                <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Бесплатно до 5 сим-карт в тарифе</p>
-                <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Безлимитный доступ к мессенджерам WhatsApp, Telegram и ещё +2</p>
-                <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Перенос остатков минут и Гб</p>
-              </div>
-            </div>
-            <div class="card__pricing">
-              <div class="card__pricing_price">475 ₽/мес</div>
-              <div class="card__pricing_discount">-50% первые 2 мес</div>
-              <div class="card__pricing_details">950 ₽ с 3-го мес</div>
-            </div>
-            <div class="card__buttons">
-              <a href="#" class="card__connect-btn connect-btn">Подключить</a>
-              <div class="card__info-btn"></div>
-            </div>
-          </div>
-        </div>
+    </div>
+  </nav>
+  <section>
+    <div class="card-wrapper"></div>
+    <div class="card-wrapper__snow-more-button-container">
+      <button class="card-wrapper__show-more-button">Показать еще</button>
+    </div>
   </section>
  <section class="equipment-section card">
   <h2 class="equipment-section__title">Оборудование</h2>
@@ -402,9 +264,9 @@
 <!-- попап для выбора адреса -->
   <div class="popup popup-address">
     <div class="popup-adress__buttons">
-      <div class="location hidden">
-        <div class="location-icon"></div>
-        <span class="city-name">Кемерово</span>
+      <div class="location__city">
+        <div class="location__city-icon"></div>
+        <span class="location__city-name">Кемерово</span>
       </div>
       <button class="popup__close-button">&times;</button>
     </div>
@@ -415,18 +277,13 @@
     </div>
   </div>
 <!-- Попап для выбора города -->
-  <div class="popup popup-address">
+  <div class="popup popup-address popup-city-change">
     <div class="popup-adress__buttons">
-      <div class="location hidden">
-        <div class="location-icon"></div>
-        <span>Кемерово</span>
-      </div>
       <button class="popup__close-button">&times;</button>
     </div>
     <div class="popup-address__input-wrapper">
       <input class="popup-address__input" type="text" id="address" autocomplete="off" placeholder="Введите город" />
-      <div id="suggestions">
-      </div>
+      <div id="suggestions"></div>
     </div>
   </div>
 
@@ -440,13 +297,27 @@
     </div>
   </div>
 
+  <div id="locationPopup" class="popup-cities hidden">
+    <button id="closePopupButton" class="popup-close">&times;</button>
+    <div class="popup-header">
+      <p><span class="popup-icon">📍</span> Хочу подключить услугу в</p>
+      <span id="currentCity" class="popup-selected-city">...</span>
+    </div>
+    <ul id="cityList" class="popup-city-list"></ul>
+    <div class="popup-buttons">
+      <button id="confirmCity" class="popup-button">Да, верно</button>
+      <button id="changeCity" class="popup-button popup-button-secondary">Нет, изменить</button>
+    </div>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="./index.js"></script>
   <script src="./carousel.js"></script>
-  <script src="./txb.js"></script>
+  <!-- <script src="./txb.js"></script> -->
   <script src="./swiper.js"></script>
   <script src="./createDynamicPlaceholder.js"></script>
   <script src="./cards.js"></script>
+  <script src="./popup.js"></script>
 </body>
 </html>
 

@@ -1,0 +1,12 @@
+.location__call-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 24px;
+    background: none;
+    border: 1px solid #7dc65b;
+    border-radius: 20px;
+    color: #7dc65b;
+    font-size: 16px;
+    cursor: pointer;
+  }

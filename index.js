@@ -12,7 +12,7 @@ const closeButtons = document.querySelectorAll(".popup__close-button");
 const newConnectionBtn = document.getElementById("newConnection");
 const existingConnectionBtn = document.getElementById("existingConnection");
 const connectButtons = document.querySelectorAll(".connect-btn");
-const callButton = document.querySelector(".call-button");
+const callButton = document.querySelector(".location__call-button");
 
 
 callButton.addEventListener("click", (e) =>{
@@ -57,11 +57,14 @@ function openFirstPopup() {
   }
   
 // Открытие первого попапа
-// document.querySelector(".connect-btn").addEventListener("click", (e) => {
-// e.preventDefault();
-// openPopup(popup1);
-// });
-
+function attachEventListeners() {
+  document.querySelectorAll(".connect-btn").forEach(button => {
+      button.addEventListener("click", (e) => {
+          e.preventDefault();
+          openPopup(popup1);
+      });
+  });
+}
 // Логика кнопок в первом попапе
 newConnectionBtn.addEventListener("click", () => {
 closePopup();
@@ -120,7 +123,4 @@ function validatePhone() {
     submitButton.style.backgroundColor = isValid ? "#f8530f" : "#cccccc";
     errorText.style.display = isValid ? "none" : "block";
   });
-  
-  
-  
   

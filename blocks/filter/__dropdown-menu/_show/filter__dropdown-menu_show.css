@@ -1,0 +1,5 @@
+.filter__dropdown-menu_show {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }

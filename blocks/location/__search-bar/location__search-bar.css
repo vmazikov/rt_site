@@ -1,0 +1,8 @@
+.location__search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #686868;
+    border-radius: 40px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }

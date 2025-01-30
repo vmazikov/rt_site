@@ -1,0 +1,17 @@
+.filter__button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Отступ между текстом и иконкой */
+    transition: all 0.3s ease;
+  }
+
+  .filter__button:hover {
+    background: #ffd6c3;
+  }
+  

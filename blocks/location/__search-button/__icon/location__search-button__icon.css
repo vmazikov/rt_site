@@ -1,0 +1,18 @@
+.location__search-button__icon {
+    background-color: #f74d0d;
+    border-radius: 100%;
+    padding: 10px   ;
+}
+
+@media (max-width: 760px) {
+    .location__search-button__icon {
+        display: flex;
+    }
+  }
+  
+  @media (min-width: 761px) {
+    .location__search-button__icon {
+        display: none;
+    }
+  }
+  

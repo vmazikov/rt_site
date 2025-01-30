@@ -1,0 +1,12 @@
+.filter__dropdown-item {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .filter__dropdown-item:hover {
+    background: #ff5722;
+    color: white;
+  }

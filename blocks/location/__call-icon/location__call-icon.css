@@ -1,0 +1,8 @@
+.location__call-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background: url('../../../images/phone-icon.svg') no-repeat center center;
+    background-size: contain;
+  }
+  

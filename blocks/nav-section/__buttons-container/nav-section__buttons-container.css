@@ -1,0 +1,6 @@
+.nav-section__buttons-container {
+    overflow-x: auto; /* Прокрутка при переполнении */
+    white-space: nowrap;
+    padding: 10px 0;
+  }
+  

@@ -6,11 +6,8 @@
     color: white;
     text-decoration: none;
     border-radius: 8px;
-    background: #f8530f;
+    background: #ff4f12;
   }
 
-  .card__buttons {
-    display: flex;
-    margin-top: 20px;
-  }
+
   

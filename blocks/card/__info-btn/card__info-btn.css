@@ -1,0 +1,8 @@
+.card__info-btn {
+    background: url('../../../images/info-img.png') no-repeat center center;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+  }
+  

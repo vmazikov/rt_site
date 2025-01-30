@@ -1,0 +1,7 @@
+.location__city {
+    display: flex;
+    align-items: left;
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #555;
+  }

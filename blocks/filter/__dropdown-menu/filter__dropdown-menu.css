@@ -1,0 +1,20 @@
+.filter__dropdown-menu {
+    list-style: none;
+    margin: 0;
+    padding: 5px 0;
+    position: absolute; /* Абсолютная позиция под кнопкой */
+    left: 0;
+    top: calc(100% + 5px); /* Отступ от кнопки */
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    width: 200px;
+    display: none; /* По умолчанию скрыто */
+    z-index: 10;
+    opacity: 0;
+    transform: scale(0.95);
+    transform-origin: top center;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+

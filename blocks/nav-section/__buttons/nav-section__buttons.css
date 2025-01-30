@@ -1,0 +1,4 @@
+.nav-section__buttons {
+    display: flex;
+    gap: 10px; /* Отступы между кнопками */
+  }

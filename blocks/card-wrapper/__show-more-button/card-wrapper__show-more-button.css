@@ -1,0 +1,9 @@
+.card-wrapper__show-more-button {
+    font-size: 16px; /* размер текста */
+    color: #ff4081; /* розовый цвет текста */
+    background-color: transparent; /* прозрачный фон */
+    border: none; /* без рамки */
+    cursor: pointer; /* указатель курсора при наведении */
+    padding: 0; /* убрать внутренние отступы */
+    text-align: center; /* текст в центре */
+  }

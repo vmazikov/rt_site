@@ -100,7 +100,7 @@
                 return new Promise((resolve) => {
                     document.getElementById('confirm-address').onclick = () => {
                         closePopup(popup);
-                        document.querySelectorAll('.city-name').forEach(el => el.textContent = suggestion.data.city_with_type);
+                        document.querySelectorAll('.location__city-name').forEach(el => el.textContent = suggestion.data.city_with_type);
                         document.querySelector('.tariff-section__title').textContent = `Тарифы Ростелеком в ${suggestion.data.city_with_type}`;
                         localStorage.setItem('city', suggestion.data.city_with_type);
     

@@ -1,18 +1,15 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const tariffsContainer = document.querySelector('.card-wrapper');
-    const showMoreButton = document.createElement("button");
-    showMoreButton.classList.add("show-more-button");
-    showMoreButton.innerText = "Показать еще";
-    tariffsContainer.after(showMoreButton);
+    const showMoreButton = document.querySelector(".card-wrapper__show-more-button");
 
     let allTariffs = [];
     let filteredTariffs = [];
     let displayedTariffs = [];
-    let userCity = "Яшкино"; // Тестовый город, замените на реальное получение
-    let userTechnology = "gpon"; // Технология, позже можно передавать динамически
+    let userCity = "Яшкино"; // Тестовый город
+    let userTechnology = "gpon"; // Фильтр по технологии
     let cityClusters = {};
-    let currentCategory = "Все";
-    let currentSort = "Популярные";
+    let currentCategory = localStorage.getItem("selectedCategory") || "Все";
+    let currentSort = localStorage.getItem("selectedSort") || "Популярные";
     let tariffsPerPage = 5;
     let currentPage = 0;
 
@@ -30,7 +27,23 @@ document.addEventListener("DOMContentLoaded", async function () {
             return acc;
         }, {});
 
+        updateUI(); // Устанавливаем активные кнопки фильтрации и сортировки
         updateTariffs();
+    }
+
+    function updateUI() {
+        // Устанавливаем активный стиль для кнопок фильтрации тарифов
+        document.querySelectorAll('.nav-section__button').forEach(button => {
+            button.classList.toggle('nav-section__button_active', button.innerText === currentCategory);
+        });
+
+        // Устанавливаем активный стиль для сортировки
+        document.querySelectorAll('.filter__dropdown-item').forEach(item => {
+            item.classList.toggle('filter__dropdown-item_active', item.innerText === currentSort);
+        });
+
+        // Меняем текст кнопки сортировки
+        document.getElementById("filterButton").innerHTML = `<span class="filter__icon">☰</span> ${currentSort}`;
     }
 
     function getCluster(city) {
@@ -58,7 +71,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     function sortTariffs(tariffs) {
-        if (currentSort === "Популярные") return tariffs.filter(t => t.card__highlight_hit);
+        if (currentSort === "Популярные") {
+            return [...tariffs.filter(t => t.card__highlight_hit), ...tariffs.filter(t => !t.card__highlight_hit)];
+        }
         if (currentSort === "Сначала недорогие") return tariffs.sort((a, b) => a.price_promo - b.price_promo);
         if (currentSort === "Сначала дорогие") return tariffs.sort((a, b) => b.price_promo - a.price_promo);
         if (currentSort === "Мин. скорость") return tariffs.sort((a, b) => a.speed - b.speed);
@@ -69,50 +84,40 @@ document.addEventListener("DOMContentLoaded", async function () {
     function createTariffCard(tariff) {
         return `
             <div class="card">
-              <div class="card">
-                <div class="card__highlights">
-                  ${tariff.card__highlight_hit ? `<span class="card__highlight card__highlight_hit">${tariff.card__highlight_hit}</span>` : ''}
-                  ${tariff.card__highlight_promo ? `<span class="card__highlight card__highlight_promo">${tariff.card__highlight_promo}</span>` : ''}
-                </div>
-                <div class="card__content">
-                  <h3 class="card__title">Тариф<br>${tariff.name}</h3>
-                  <ul class="card__subtitle-list">
-                    ${tariff.speed ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">${tariff.speed} Мбит/с GPON Интернет</li>` : ''}
-                    ${tariff.channels ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">${tariff.channels} Каналов Телевидение</li>` : ''}
-                    ${tariff.sim_details ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/smartphone_icon.png" alt="">${tariff.sim_details}</li>` : ''}
-                    ${tariff.subscription ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/wink_icon.png" alt="">${tariff.subscription}</li>` : ''}
-                    ${tariff.router_price ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер ${tariff.router_price}</li>` : ''}
-                  </ul>
-                  ${tariff.additional_info ? `
-                    <div class="card__additional-info">
-                      ${tariff.additional_info.map(info => `<p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> ${info}</p>`).join('')}
-                    </div>
-                  ` : ''}
-                </div>
-                <div class="card__pricing">
-                  <div class="card__pricing_price">${tariff.price_promo} ₽/мес</div>
-                  <div class="card__pricing_discount">-${tariff.discount_duration}</div>
-                  <div class="card__pricing_details">${tariff.price_after_promo} ₽ с ${parseInt(tariff.discount_duration)}-го мес</div>
-                </div>
-                <div class="card__buttons">
-                  <a href="#" class="card__connect-btn connect-btn">Подключить</a>
-                  <div class="card__info-btn"></div>
-                </div>
-              </div>
+            <div class="card__highlights">
+                ${tariff.card__highlight_hit ? `<span class="card__highlight card__highlight_hit">${tariff.card__highlight_hit}</span>` : ''}
+                ${tariff.card__highlight_promo ? `<span class="card__highlight card__highlight_promo">${tariff.card__highlight_promo}</span>` : ''}
+            </div>
+            <div class="card__content">
+                <h3 class="card__title">Тариф<br>${tariff.name}</h3>
+                <ul class="card__subtitle-list">
+                ${tariff.speed ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">${tariff.speed} Мбит/с GPON Интернет</li>` : ''}
+                ${tariff.channels ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">${tariff.channels} Каналов Телевидение</li>` : ''}
+                ${tariff.sim_details ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/smartphone_icon.png" alt="">${tariff.sim_details}</li>` : ''}
+                ${tariff.subscription ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/wink_icon.png" alt="">${tariff.subscription}</li>` : ''}
+                ${tariff.router_price ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер ${tariff.router_price}</li>` : ''}
+                </ul>
+            </div>
+            <div class="card__pricing">
+                <div class="card__pricing_price">${tariff.price_promo} ₽/мес</div>
+                ${tariff.discount_duration ? `<div class="card__pricing_discount">-${tariff.discount_duration}</div>` : ''}
+                ${tariff.price_after_promo ? `<div class="card__pricing_details">${tariff.price_after_promo} ₽ с ${tariff.discount_duration ? parseInt(tariff.discount_duration) : ''}-го мес</div>` : ''}
+            </div>
+            <div class="card__buttons">
+                <a href="#" class="card__connect-btn card__connect-btn${tariff.button} connect-btn">Подключить</a>
+                <div class="card__info-btn"></div>
+            </div>
             </div>`;
     }
 
-
     function renderTariffs() {
         tariffsContainer.innerHTML = displayedTariffs.map(createTariffCard).join("");
-        if (displayedTariffs.length >= filteredTariffs.length) {
-            showMoreButton.style.display = "none";
-        } else {
-            showMoreButton.style.display = "block";
-        }
+        attachEventListeners();
+        showMoreButton.style.display = displayedTariffs.length >= filteredTariffs.length ? "none" : "block";
     }
 
     function updateTariffs() {
+        userCity = localStorage.getItem("userCity") || "";
         filteredTariffs = sortTariffs(filterTariffs());
         currentPage = 0;
         displayedTariffs = filteredTariffs.slice(0, tariffsPerPage);
@@ -121,56 +126,31 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     showMoreButton.addEventListener("click", function () {
         currentPage++;
-        const nextTariffs = filteredTariffs.slice(0, (currentPage + 1) * tariffsPerPage);
-        displayedTariffs = nextTariffs;
+        displayedTariffs = filteredTariffs.slice(0, (currentPage + 1) * tariffsPerPage);
         renderTariffs();
     });
 
-    document.querySelectorAll('.tariff-button').forEach(button => {
+    document.querySelectorAll('.nav-section__button').forEach(button => {
         button.addEventListener('click', function () {
-            document.querySelectorAll('.tariff-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.nav-section__button').forEach(btn => btn.classList.remove('nav-section__button_active'));
             this.classList.add('active');
             currentCategory = this.innerText;
+            localStorage.setItem("selectedCategory", currentCategory);
+            updateUI();
             updateTariffs();
         });
     });
 
-    document.querySelectorAll('.dropdown-item').forEach(item => {
+    document.querySelectorAll('.filter__dropdown-item').forEach(item => {
         item.addEventListener('click', function () {
-            document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
+            document.querySelectorAll('.filter__dropdown-item').forEach(i => i.classList.remove('filter__dropdown-item_active'));
             this.classList.add('active');
             currentSort = this.innerText;
+            localStorage.setItem("selectedSort", currentSort);
+            updateUI();
             updateTariffs();
         });
     });
 
     loadData();
 });
-
-function renderTariffs() {
-    const cards = document.querySelectorAll('.card');
-    
-    // Плавно скрываем старые карточки перед заменой
-    cards.forEach(card => {
-        card.classList.add("fade-out");
-        setTimeout(() => card.remove(), 300); // Удаляем карточки после завершения анимации
-    });
-
-    // Задержка перед добавлением новых карточек для плавного эффекта
-    setTimeout(() => {
-        tariffsContainer.innerHTML = displayedTariffs.map(createTariffCard).join("");
-
-        // Добавляем анимацию к новым карточкам
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.opacity = "0"; // Начальное состояние
-            setTimeout(() => card.style.opacity = "1", 50); // Плавное появление
-        });
-
-        // Контролируем кнопку "Показать еще"
-        if (displayedTariffs.length >= filteredTariffs.length) {
-            showMoreButton.style.display = "none";
-        } else {
-            showMoreButton.style.display = "block";
-        }
-    }, 300); // Задержка для завершения анимации исчезновения
-}

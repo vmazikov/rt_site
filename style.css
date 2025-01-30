@@ -1,15 +1,16 @@
-@import url(./blocks/page/page.css);
-@import url(./blocks/header/header.css);
-@import url(./blocks/header/__logo/header__logo.css);
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
 @import url(./blocks/banner/banner.css);
 @import url(./blocks/banner/__title/banner__title.css);
 @import url(./blocks/banner/__title-wrap/banner__title-wrap.css);
 @import url(./blocks/banner/__subtitle/banner__subtitle.css);
-@import url(./blocks/banner/__icon/banner__icon.css);
 @import url(./blocks/banner/__icons-wrap/banner__icons-wrap.css);
 @import url(./blocks/banner/__icon/banner__icon.css);
 @import url(./blocks/banner/__icon-text/banner__icon-text.css);
 @import url(./blocks/banner/__icon-img/banner__icon-img.css);
+@import url(./blocks/card-wrapper/card-wrapper.css);
+@import url(./blocks/card-wrapper/__snow-more-button-container/card-wrapper__snow-more-button-container.css);
+@import url(./blocks/card-wrapper/__show-more-button/card-wrapper__show-more-button.css);
 @import url(./blocks/card/card.css);
 @import url(./blocks/card/__title/card__title.css);
 @import url(./blocks/card/__subtitle/card__subtitle.css);
@@ -19,28 +20,17 @@
 @import url(./blocks/card/__pricing/_price/card__pricing_price.css);
 @import url(./blocks/card/__pricing/_discount/card__pricing_discount.css);
 @import url(./blocks/card/__pricing/_details/card__pricing_details.css);
+@import url(./blocks/card/__info-btn/card__info-btn.css);
 @import url(./blocks/card/__highlights/card__highlights.css);
 @import url(./blocks/card/__highlight/card__highlight.css);
 @import url(./blocks/card/__highlight/_promo/card__highlight_promo.css);
 @import url(./blocks/card/__highlight/_hit/card__highlight_hit.css);
 @import url(./blocks/card/__connect-btn/card__connect-btn.css);
+@import url(./blocks/card/__connect-btn/_promo/card__connect-btn_promo.css);
+@import url(./blocks/card/__buttons/card__buttons.css);
 @import url(./blocks/card/__additional-info/card__additional-info.css);
 @import url(./blocks/card/__additional-info-text/card__additional-info-text.css);
 @import url(./blocks/card/__additional-info-img/card__additional-info-img.css);
-@import url(./blocks/equipment-section/equipment-section.css);
-@import url(./blocks/equipment-section/__title/equipment-section__title.css);
-@import url(./blocks/equipment-section/__subtitle/equipment-section__subtitle.css);
-@import url(./blocks/equipment-section/__carousel/equipment-section__carousel.css);
-@import url(./blocks/equipment-section/__carousel/__track/equipment-section__carousel__track.css);
-@import url(./blocks/equipment-section/__carousel/__item/equipment-section__carousel__item.css);
-@import url(./blocks/equipment-section/__carousel/__item-text/equipment-section__carousel__item-text.css);
-@import url(./blocks/equipment-section/__carousel/__item-img/equipment-section__carousel__item-img.css);
-@import url(./blocks/equipment-section/__carousel/__dots/equipment-section__carousel__dots.css);
-@import url(./blocks/equipment-section/__carousel/__dot/equipment-section__carousel__dot.css);
-@import url(./blocks/equipment-section/__carousel/__dot/_active/equipment-section__carousel__dot_active.css);
-@import url(./blocks/equipment-section/__buttons/equipment-section__buttons.css);
-@import url(./blocks/equipment-section/__button/equipment-section__button.css);
-@import url(./blocks/equipment-section/__button/_active/equipment-section__button_active.css);
 @import url(./blocks/connect-section/connect-section.css);
 @import url(./blocks/connect-section/__title/connect-section__title.css);
 @import url(./blocks/connect-section/__text/connect-section__text.css);
@@ -57,10 +47,60 @@
 @import url(./blocks/contact-section/__social-button/_whatsapp/contact-section__social-button_whatsapp.css);
 @import url(./blocks/contact-section/__social-button/_telegram/contact-section__social-button_telegram.css);
 @import url(./blocks/contact-section/__call-button/contact-section__call-button.css);
+@import url(./blocks/equipment-section/equipment-section.css);
+@import url(./blocks/equipment-section/__title/equipment-section__title.css);
+@import url(./blocks/equipment-section/__subtitle/equipment-section__subtitle.css);
+@import url(./blocks/equipment-section/__carousel/equipment-section__carousel.css);
+@import url(./blocks/equipment-section/__carousel/__track/equipment-section__carousel__track.css);
+@import url(./blocks/equipment-section/__carousel/__item/equipment-section__carousel__item.css);
+@import url(./blocks/equipment-section/__carousel/__item-text/equipment-section__carousel__item-text.css);
+@import url(./blocks/equipment-section/__carousel/__item-img/equipment-section__carousel__item-img.css);
+@import url(./blocks/equipment-section/__carousel/__dots/equipment-section__carousel__dots.css);
+@import url(./blocks/equipment-section/__carousel/__dot/equipment-section__carousel__dot.css);
+@import url(./blocks/equipment-section/__carousel/__dot/_active/equipment-section__carousel__dot_active.css);
+@import url(./blocks/equipment-section/__buttons/equipment-section__buttons.css);
+@import url(./blocks/equipment-section/__button/equipment-section__button.css);
+@import url(./blocks/equipment-section/__button/_active/equipment-section__button_active.css);
+@import url(./blocks/filter/filter.css);
+@import url(./blocks/filter/__wrapper/filter__wrapper.css);
+@import url(./blocks/filter/__icon/filter__icon.css);
+@import url(./blocks/filter/__dropdown-menu/filter__dropdown-menu.css);
+@import url(./blocks/filter/__dropdown-menu/_show/filter__dropdown-menu_show.css);
+@import url(./blocks/filter/__dropdown-item/filter__dropdown-item.css);
+@import url(./blocks/filter/__dropdown-item/_active/filter__dropdown-item_active.css);
+@import url(./blocks/filter/__button/filter__button.css);
 @import url(./blocks/footer/footer.css);
 @import url(./blocks/footer/__text/footer__text.css);
+@import url(./blocks/header/header.css);
+@import url(./blocks/header/__logo/header__logo.css);
+@import url(./blocks/header/__location-img/header__location-img.css);
+@import url(./blocks/location/location.css);
+@import url(./blocks/location/__wrapper/location__wrapper.css);
+@import url(./blocks/location/__title/location__title.css);
+@import url(./blocks/location/__search-placeholder/location__search-placeholder.css);
+@import url(./blocks/location/__search-icon/location__search-icon.css);
+@import url(./blocks/location/__search-button/location__search-button.css);
+@import url(./blocks/location/__search-button/__img/location__search-button__img.css);
+@import url(./blocks/location/__search-button/__icon/location__search-button__icon.css);
+@import url(./blocks/location/__search-bar/location__search-bar.css);
+@import url(./blocks/location/__city/location__city.css);
+@import url(./blocks/location/__city-name/location__city-name.css);
+@import url(./blocks/location/__city-icon/location__city-icon.css);
+@import url(./blocks/location/__call-text/location__call-text.css);
+@import url(./blocks/location/__call-section/location__call-section.css);
+@import url(./blocks/location/__call-icon/location__call-icon.css);
+@import url(./blocks/location/__call-button/location__call-button.css);
+@import url(./blocks/nav-section/nav-section.css);
+@import url(./blocks/nav-section/_button/nav-section__button.css);
+@import url(./blocks/nav-section/_button/_active/nav-section__button_active.css);
+@import url(./blocks/nav-section/__title/nav-section__title.css);
+@import url(./blocks/nav-section/__subtitle/nav-section__subtitile.css);
+@import url(./blocks/nav-section/__link/nav-section__link.css);
+@import url(./blocks/nav-section/__buttons/nav-section__buttons.css);
+@import url(./blocks/nav-section/__buttons-container/nav-section__buttons-container.css);
 @import url(./blocks/overlay/overlay.css);
 @import url(./blocks/overlay/_active/overlay_active.css);
+@import url(./blocks/page/page.css);
 @import url(./blocks/popup/popup.css);
 @import url(./blocks/popup/_active/popup_active.css);
 @import url(./blocks/popup/__title/popup__title.css);
@@ -68,23 +108,18 @@
 @import url(./blocks/popup/__submit-button/popup__submit-button.css);
 @import url(./blocks/popup/__submit-button/_active/popup__submit-button_active.css);
 @import url(./blocks/popup/__close-btn/popup__close-btn.css);
-@import url(./blocks/popup-check-client/popup-check-client.css);
-@import url(./blocks/popup-check-client/__client-button/popup-check-client__client-button.css);
-@import url(./blocks/popup-client/popup-client.css);
-@import url(./blocks/popup-client/__phone-number/popup-client__phone-number.css);
-@import url(./blocks/popup-client/__link/popup-client__link.css);
+@import url(./blocks/popup-submit/popup-submit.css);
 @import url(./blocks/popup-form/popup-form.css);
 @import url(./blocks/popup-form/__hint/popup-form__hint.css);
 @import url(./blocks/popup-form/__group/popup-form__group.css);
 @import url(./blocks/popup-form/__group-label/popup-form__group-label.css);
 @import url(./blocks/popup-form/__group-input/popup-form__group-input.css);
 @import url(./blocks/popup-form/__card/popup-form__card.css);
-@import url(./blocks/popup-submit/popup-submit.css);
-@import url(./vendor/normalize.css);
-@import url(./vendor/fonts/fonts.css);
-
-
-
+@import url(./blocks/popup-client/popup-client.css);
+@import url(./blocks/popup-client/__phone-number/popup-client__phone-number.css);
+@import url(./blocks/popup-client/__link/popup-client__link.css);
+@import url(./blocks/popup-check-client/popup-check-client.css);
+@import url(./blocks/popup-check-client/__client-button/popup-check-client__client-button.css);
 
 
 
@@ -95,297 +130,6 @@
     
   }
 
-
-
-  
-
-  .header__location-img {
-    width: 20px;
-  }
-/* Общий стиль секции */
-.tariff-section {
-  font-family: Arial, sans-serif;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.tariff-section h2 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.tariff-section p {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.tariff-section a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-/* Кнопки категорий */
-.tariff-buttons-container {
-  overflow-x: auto; /* Прокрутка при переполнении */
-  white-space: nowrap;
-  padding: 10px 0;
-}
-
-.tariff-buttons {
-  display: flex;
-  gap: 10px; /* Отступы между кнопками */
-}
-
-.tariff-button {
-  padding: 8px 16px;
-  border: 1px solid #ddd;
-  background: #f9f9f9;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  white-space: nowrap;
-  transition: all 0.3s ease;
-}
-
-.tariff-button.active {
-  background: #ff5722;
-  color: white;
-  border-color: #ff5722;
-}
-
-
-/* Кнопка сортировки и фильтры */
-.tariff-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 15px;
-}
-
-.filter-wrapper {
-  position: relative; /* Контекст для меню */
-}
-
-.filter-button {
-  font-size: 0.9rem;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  background: #f9f9f9;
-  border-radius: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Отступ между текстом и иконкой */
-  transition: all 0.3s ease;
-}
-
-.filter-button:hover {
-  background: #ffd6c3;
-}
-
-.filter-icon {
-  font-size: 1.2rem;
-  color: #555;
-}
-
-/* Выпадающее меню */
-.dropdown-menu {
-  list-style: none;
-  margin: 0;
-  padding: 5px 0;
-  position: absolute; /* Абсолютная позиция под кнопкой */
-  left: 0;
-  top: calc(100% + 5px); /* Отступ от кнопки */
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  width: 200px;
-  display: none; /* По умолчанию скрыто */
-  z-index: 10;
-  opacity: 0;
-  transform: scale(0.95);
-  transform-origin: top center;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.dropdown-menu.show {
-  display: block;
-  opacity: 1;
-  transform: scale(1);
-}
-
-.dropdown-item {
-  padding: 8px 15px;
-  font-size: 0.9rem;
-  color: #333;
-  cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.dropdown-item:hover {
-  background: #ff5722;
-  color: white;
-}
-
-.dropdown-item.active {
-  color: #ff5722;
-  font-weight: bold;
-}
-
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-
-.container {
-  margin: 0 auto;
-  padding: 24px 16px;
-  padding-bottom: 10px;
-  border-radius: 16px;
-  background: #f8f8f8;
-}
-
-.location__title {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #555;
-  text-align: left;
-}
-
-.location__title.large {
-  width: 60%;
-}
-
-.location__title.small {
-  width: 100%;
-}
-
-.location {
-  display: flex;
-  align-items: left;
-  margin-bottom: 12px;
-  font-size: 16px;
-  color: #555;
-}
-
-.hidden {
-  display: none;
-}
-
-.location-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-  background: url('./images/location-icon.png') no-repeat center center;
-  background-size: contain;
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  border: 1px solid #686868;
-  border-radius: 40px;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-.search-bar .search-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  background: url('./images/location-icon2.png') no-repeat center center;
-  background-size: contain;
-}
-
-.search-placeholder {
-  flex: 1;
-  font-size: 16px;
-  color: #aaa;
-  text-align: left;
-}
-
-.search-button {
-  padding: 10px 20px;
-  background: #f8530f;
-  border: none;
-  border-radius: 20px;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.search-button.icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.call-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.call-text {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 12px;
-  text-align: left;
-}
-
-.call-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 24px;
-  background: none;
-  border: 1px solid #7dc65b;
-  border-radius: 20px;
-  color: #7dc65b;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.call-button .call-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  background: url('./images/phone-icon.svg') no-repeat center center;
-  background-size: contain;
-}
-
-@media (max-width: 760px) {
-  .location__title.large {
-      width: 100%;
-  }
-
-  .search-button {
-      display: none;
-  }
-
-  .search-button.icon {
-      display: flex;
-  }
-}
-
-@media (min-width: 761px) {
-  .search-button.icon {
-      display: none;
-  }
-
-  .search-button {
-      display: flex;
-  }
-}
 
 .popup-address {
   height: 100%;
@@ -464,41 +208,104 @@
     background-color: #f8530f;
 }
 
-.card__info-btn {
-  background: url('./images/info-img.png') no-repeat center center;
-  background-size: contain;
-  width: 40px;
-  height: 40px;
-  margin-left: 10px;
+
+.popup-cities {
+  position: absolute;
+  width: 320px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-      transform: translateY(10px);
-  }
-  to {
-      opacity: 1;
-      transform: translateY(0);
-  }
+.hidden {
+  display: none;
 }
 
-@keyframes fadeOut {
-  from {
-      opacity: 1;
-      transform: translateY(0);
-  }
-  to {
-      opacity: 0;
-      transform: translateY(10px);
-  }
+.popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #ccc;
+  cursor: pointer;
 }
 
-.card {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-out forwards;
+.popup-close:hover {
+  color: #999;
 }
 
-.card.fade-out {
-  animation: fadeOut 0.3s ease-in forwards;
+.popup-header {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.popup-icon {
+  font-size: 18px;
+  color: #f8530f;
+  margin-right: 5px;
+}
+
+.popup-selected-city {
+  font-weight: bold;
+  color: #f8530f;
+}
+
+.popup-city-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 12px;
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.popup-city-list li {
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.popup-city-list li:hover {
+  text-decoration: underline;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.popup-button {
+  background-color: #f8530f;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.popup-button:hover {
+  background-color: #d9430c;
+}
+
+.popup-button-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.popup-button-secondary:hover {
+  background-color: #c9c9c9;
 }

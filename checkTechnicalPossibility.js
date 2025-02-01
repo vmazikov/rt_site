@@ -222,6 +222,7 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       updateCityInElements(cityName);
       // Сохраняем данные о местоположении (город, полный адрес и результат проверки)
       saveUserLocation({ city: cityName, address: formattedAddress, techResult: techResult });
+      closePopup()
       if (techResult.isPossible) {
         alert(`Техническая возможность: ${techResult.txb}`);
       } else {
@@ -440,6 +441,7 @@ function initCityPopup(popupSelector) {
         name: suggestionData.city || formatted,
         cityFiasId: suggestionData.city_fias_id || ''
       };
+      closePopup()
       saveUserLocation({ city: selectedCity.name });
     }
   });
@@ -458,6 +460,7 @@ function initCityPopup(popupSelector) {
     $(popupSelector).find('#local-cities .local-city').removeClass('input_active');
     $(this).addClass('input_active');
     saveUserLocation({ city: cityObj.name, address: "" });
+    closePopup()
   });
 
   // Обработка нажатия клавиши Enter в попапе
@@ -469,6 +472,7 @@ function initCityPopup(popupSelector) {
       if (inputVal.indexOf(',') !== -1) {
         const techResult = checkTechnicalPossibility(inputVal);
         const cityName = inputVal.split(',')[0].trim();
+        closePopup()
         saveUserLocation({ city: cityName, address: inputVal, techResult: techResult });
         if (techResult.isPossible) {
           alert(`Техническая возможность: ${techResult.txb}`);
@@ -476,6 +480,7 @@ function initCityPopup(popupSelector) {
           alert('Технической возможности нет');
         }
       } else {
+        closePopup()
         saveUserLocation({ city: inputVal });
       }
     }

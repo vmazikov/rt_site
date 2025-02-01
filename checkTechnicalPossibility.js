@@ -505,43 +505,43 @@ $(document).ready(function() {
   initManualAddressInput('.popup-address__input', regionFiasId); // Инициализируем автоподсказки для поля адреса
   initCityPopup('.popup-city-change', regionFiasId); // Инициализируем попап выбора города/адреса
   // Инициализируем попап только если в localStorage нет сохранённого userLocation с непустым городом
-  (async function initPopup() {
-    console.log("[LOG] Инициализация попапа...");
-    const storedData = localStorage.getItem("userLocation");
-    if (storedData) {
-      try {
-        const storedLocation = JSON.parse(storedData);
-        if (storedLocation.city && storedLocation.city.trim() !== "") {
-          console.log("[LOG] Данные найдены в localStorage:", storedLocation);
-          userLocation = storedLocation;
-          currentCity.textContent = `г. ${storedLocation.city}`;
-          updateCityInElements(storedLocation.city);
-          return; // Не перезаписываем сохранённый город
-        }
-      } catch (e) {
-        console.error("[ERROR] Ошибка парсинга userLocation из localStorage:", e);
-      }
-    }
-    // Если данных нет – загружаем список городов и устанавливаем дефолтный город
-    const defaultCityName = await loadCities();
-    console.log("[LOG] Устанавливаем дефолтный город...");
-    currentCity.textContent = `г. ${defaultCityName}`;
-    locationPopup.classList.remove("hidden");
-    // Позиционируем попап
-    const bannerCityElement = document.querySelector(".banner .location__city");
-    if (bannerCityElement) {
-      const bounds = bannerCityElement.getBoundingClientRect();
-      locationPopup.style.top = `${bounds.bottom + window.scrollY + 10}px`;
-      locationPopup.style.left = `${bounds.left + window.scrollX}px`;
-    }
-    // Пытаемся определить город по координатам
-    const detectedCity = await detectCityByCoordinates();
-    if (detectedCity && detectedCity.cityName) {
-      console.log(`[LOG] Определён город по координатам: ${detectedCity.cityName}`);
-      currentCity.textContent = detectedCity.cityName;
-      saveUserLocation({ city: detectedCity.cityName });
-    } else {
-      console.warn("[WARNING] Город не удалось определить, остаётся дефолтный город.");
-    }
-  })();
+//   (async function initPopup() {
+//     console.log("[LOG] Инициализация попапа...");
+//     const storedData = localStorage.getItem("userLocation");
+//     if (storedData) {
+//       try {
+//         const storedLocation = JSON.parse(storedData);
+//         if (storedLocation.city && storedLocation.city.trim() !== "") {
+//           console.log("[LOG] Данные найдены в localStorage:", storedLocation);
+//           userLocation = storedLocation;
+//           currentCity.textContent = `г. ${storedLocation.city}`;
+//           updateCityInElements(storedLocation.city);
+//           return; // Не перезаписываем сохранённый город
+//         }
+//       } catch (e) {
+//         console.error("[ERROR] Ошибка парсинга userLocation из localStorage:", e);
+//       }
+//     }
+    // // Если данных нет – загружаем список городов и устанавливаем дефолтный город
+    // const defaultCityName = await loadCities();
+    // console.log("[LOG] Устанавливаем дефолтный город...");
+    // currentCity.textContent = `г. ${defaultCityName}`;
+    // locationPopup.classList.remove("hidden");
+    // // Позиционируем попап
+    // const bannerCityElement = document.querySelector(".banner .location__city");
+    // if (bannerCityElement) {
+    //   const bounds = bannerCityElement.getBoundingClientRect();
+    //   locationPopup.style.top = `${bounds.bottom + window.scrollY + 10}px`;
+    //   locationPopup.style.left = `${bounds.left + window.scrollX}px`;
+    // }
+//     // Пытаемся определить город по координатам
+//     const detectedCity = await detectCityByCoordinates();
+//     if (detectedCity && detectedCity.cityName) {
+//       console.log(`[LOG] Определён город по координатам: ${detectedCity.cityName}`);
+//       currentCity.textContent = detectedCity.cityName;
+//       saveUserLocation({ city: detectedCity.cityName });
+//     } else {
+//       console.warn("[WARNING] Город не удалось определить, остаётся дефолтный город.");
+//     }
+//   })();
 });

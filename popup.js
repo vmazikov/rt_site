@@ -7,7 +7,7 @@ const currentCity = document.getElementById("currentCity");
 const confirmCityButton = document.getElementById("confirmCity");
 const changeCityButton = document.getElementById("changeCity");
 const closePopupButton = document.getElementById("closePopupButton");
-const bannerCityElement = document.querySelector(".banner .location__city");
+const bannerCityElement = document.querySelector(".popup-city-location");
 const locationCityElements = document.querySelectorAll(".location__city-name");
 
 // ================================
@@ -62,7 +62,7 @@ window.addEventListener("storage", (event) => {
 function positionPopup() {
   const bounds = bannerCityElement.getBoundingClientRect();
   locationPopup.style.top = `${bounds.bottom + window.scrollY + 10}px`;
-  locationPopup.style.left = `${bounds.left + window.scrollX}px`;
+  locationPopup.style.left = `${bounds.left + window.scrollX - 227}px`;
 }
 
 /**

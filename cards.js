@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Исправленный updateTariffs: теперь данные читаются напрямую из localStorage.
     function updateTariffs() {
         const storedLocationStr = localStorage.getItem("userLocation");
-        let userCity = "";
+        let userCity = "Юрга";
         let techResult = null;
         let technologyFilter = "gpon"; // По умолчанию GPON
         if (storedLocationStr) {

@@ -1,5 +1,12 @@
 const searchBar = document.querySelector(".location__search-bar");
 const popupAddress = document.querySelector(".popup-address");
+const navLink = document.querySelector(".nav-section__link");
+
+navLink.addEventListener("click", (e) => {
+  e.preventDefault(); // Отключаем стандартное поведение ссылки
+  openPopup(popupAddress)
+})
+
 
 searchBar.addEventListener("click", (e) =>{
   e.preventDefault(); // Отключаем стандартное поведение ссылки

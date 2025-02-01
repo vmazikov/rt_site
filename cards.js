@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     let allTariffs = [];
     let filteredTariffs = [];
     let displayedTariffs = [];
-    let userCity = "Яшкино"; // Тестовый город
     let userTechnology = "gpon"; // Фильтр по технологии
     let cityClusters = {};
     let currentCategory = localStorage.getItem("selectedCategory") || "Все";
@@ -50,10 +49,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         return cityClusters[city] || null;
     }
 
-    function filterTariffs() {
+    function filterTariffs(userCity, technologyFilter, currentCategory) {
         let cluster = getCluster(userCity);
-        let cityTariffs = allTariffs.filter(tariff => tariff.city === userCity && tariff.technology === userTechnology);
-        let clusterTariffs = allTariffs.filter(tariff => tariff.cluster === cluster?.toString() && tariff.technology === userTechnology);
+        let cityTariffs = allTariffs.filter(tariff => tariff.city === userCity && tariff.technology === technologyFilter);
+        let clusterTariffs = allTariffs.filter(tariff => tariff.cluster === (cluster ? cluster.toString() : "") && tariff.technology === technologyFilter);
 
         let selectedTariffs = cityTariffs.length > 0 ? cityTariffs : clusterTariffs;
 
@@ -66,7 +65,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 return true;
             });
         }
-
         return selectedTariffs;
     }
 
@@ -116,9 +114,29 @@ document.addEventListener("DOMContentLoaded", async function () {
         showMoreButton.style.display = displayedTariffs.length >= filteredTariffs.length ? "none" : "block";
     }
 
+    // Исправленный updateTariffs: теперь данные читаются напрямую из localStorage.
     function updateTariffs() {
-        userCity = localStorage.getItem("userCity") || "";
-        filteredTariffs = sortTariffs(filterTariffs());
+        const storedLocationStr = localStorage.getItem("userLocation");
+        let userCity = "";
+        let techResult = null;
+        let technologyFilter = "gpon"; // По умолчанию GPON
+        if (storedLocationStr) {
+            try {
+                const locationData = JSON.parse(storedLocationStr);
+                userCity = locationData.city || "";
+                techResult = locationData.techResult || null;
+            } catch (e) {
+                console.error("[ERROR] Не удалось распарсить userLocation:", e);
+            }
+        }
+        if (techResult) {
+            if (techResult.isPossible) {
+                technologyFilter = techResult.txb.toLowerCase();
+            } else {
+                return;
+            }
+        }
+        filteredTariffs = sortTariffs(filterTariffs(userCity, technologyFilter, currentCategory));
         currentPage = 0;
         displayedTariffs = filteredTariffs.slice(0, tariffsPerPage);
         renderTariffs();
@@ -150,6 +168,13 @@ document.addEventListener("DOMContentLoaded", async function () {
             updateUI();
             updateTariffs();
         });
+    });
+    window.addEventListener("userLocationChanged", updateTariffs);
+    // Слушатель события storage – при изменении userLocation в другом окне обновляем карточки
+    window.addEventListener("storage", function (e) {
+        if (e.key === "userLocation") {
+            updateTariffs();
+        }
     });
 
     loadData();

@@ -276,25 +276,17 @@
       </div>
     </div>
   </div>
-<!-- Попап для выбора города -->
+  <!-- Попап для выбора города -->
   <div class="popup popup-address popup-city-change">
     <div class="popup-adress__buttons">
       <button class="popup__close-button">&times;</button>
     </div>
     <div class="popup-address__input-wrapper">
-      <input class="popup-address__input" type="text" id="address" autocomplete="off" placeholder="Введите город" />
-      <div id="suggestions"></div>
+      <input class="popup-address__input" type="text" autocomplete="off" placeholder="Введите город" />
+      <div id="suggestions" style="display: none;"></div>
     </div>
-  </div>
-
-  <div id="address-init" class="popup popup-confirm">
-    <button class="popup__close-button">&times;</button>
-    <h3 class="popup__title"></h3>
-    <p id="" class="popup__text"></p>
-    <div class="flex">
-      <button id="confirm-address" class="popup-confirm-button popup-confirm-button_active">Да, мой</button>
-      <button id="nonconfirm-address" class="popup-confirm-button ">Нет, не мой</button>
-    </div>
+    <!-- Изначально блок с локальными городами показывается -->
+    <div id="local-cities"></div>
   </div>
 
   <div id="locationPopup" class="popup-cities hidden">
@@ -313,7 +305,7 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="./index.js"></script>
   <script src="./carousel.js"></script>
-  <!-- <script src="./txb.js"></script> -->
+  <script src="./checkTechnicalPossibility.js"></script>
   <script src="./swiper.js"></script>
   <script src="./createDynamicPlaceholder.js"></script>
   <script src="./cards.js"></script>

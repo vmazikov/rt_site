@@ -14,8 +14,7 @@ const existingConnectionBtn = document.getElementById("existingConnection");
 const connectButtons = document.querySelectorAll(".connect-btn");
 const callButton = document.querySelector(".location__call-button");
 const cityPopup = document.querySelector(".popup-city-change")
-const cityButtons = document.querySelectorAll(".location__city")
-
+const cityButtons = document.querySelectorAll(".location__city-name")
 
 // Назначаем обработчик событий для всех кнопок открытия попапа с городом
 cityButtons.forEach((button) => {

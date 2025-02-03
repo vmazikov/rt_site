@@ -1,3 +1,9 @@
 .popup-check-client {
     height: 40%;
   }
+
+  @media (min-width: 650px) {
+    .popup-check-client {
+      height: 530px;
+    }
+  }

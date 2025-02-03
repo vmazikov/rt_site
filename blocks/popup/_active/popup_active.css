@@ -3,4 +3,9 @@
     bottom: 0;
   }
 
-  
+  @media (min-width: 650px) {
+    .popup_active {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  }

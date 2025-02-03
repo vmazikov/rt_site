@@ -82,29 +82,36 @@ document.addEventListener("DOMContentLoaded", async function () {
     function createTariffCard(tariff) {
         return `
             <div class="card">
-            <div class="card__highlights">
-                ${tariff.card__highlight_hit ? `<span class="card__highlight card__highlight_hit">${tariff.card__highlight_hit}</span>` : ''}
-                ${tariff.card__highlight_promo ? `<span class="card__highlight card__highlight_promo">${tariff.card__highlight_promo}</span>` : ''}
-            </div>
-            <div class="card__content">
-                <h3 class="card__title">Тариф<br>${tariff.name}</h3>
-                <ul class="card__subtitle-list">
-                ${tariff.speed ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">${tariff.speed} Мбит/с GPON Интернет</li>` : ''}
-                ${tariff.channels ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">${tariff.channels} Каналов Телевидение</li>` : ''}
-                ${tariff.sim_details ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/smartphone_icon.png" alt="">${tariff.sim_details}</li>` : ''}
-                ${tariff.subscription ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/wink_icon.png" alt="">${tariff.subscription}</li>` : ''}
-                ${tariff.router_price ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер ${tariff.router_price}</li>` : ''}
-                </ul>
-            </div>
-            <div class="card__pricing">
-                <div class="card__pricing_price">${tariff.price_promo} ₽/мес</div>
-                ${tariff.discount_duration ? `<div class="card__pricing_discount">-${tariff.discount_duration}</div>` : ''}
-                ${tariff.price_after_promo ? `<div class="card__pricing_details">${tariff.price_after_promo} ₽ с ${tariff.discount_duration ? parseInt(tariff.discount_duration) : ''}-го мес</div>` : ''}
-            </div>
-            <div class="card__buttons">
-                <a href="#" class="card__connect-btn card__connect-btn${tariff.button} connect-btn">Подключить</a>
-                <div class="card__info-btn"></div>
-            </div>
+              <div class="card">
+                <div class="card__highlights">
+                  ${tariff.card__highlight_hit ? `<span class="card__highlight card__highlight_hit">${tariff.card__highlight_hit}</span>` : ''}
+                  ${tariff.card__highlight_promo ? `<span class="card__highlight card__highlight_promo">${tariff.card__highlight_promo}</span>` : ''}
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Тариф<br>${tariff.name}</h3>
+                  <ul class="card__subtitle-list">
+                    ${tariff.speed ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/internet_icon.png" alt="">${tariff.speed} Мбит/с GPON Интернет</li>` : ''}
+                    ${tariff.channels ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">${tariff.channels} Каналов Телевидение</li>` : ''}
+                    ${tariff.sim_details ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/smartphone_icon.png" alt="">${tariff.sim_details}</li>` : ''}
+                    ${tariff.subscription ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/wink_icon.png" alt="">${tariff.subscription}</li>` : ''}
+                    ${tariff.router_price ? `<li class="card__subtitle"><img class="card__subtitle-img" src="./images/router_icon.png" alt="">Wi-Fi роутер ${tariff.router_price}</li>` : ''}
+                  </ul>
+                  ${tariff.additional_info ? `
+                    <div class="card__additional-info">
+                      ${tariff.additional_info.map(info => `<p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> ${info}</p>`).join('')}
+                    </div>
+                  ` : ''}
+                </div>
+                <div class="card__pricing">
+                  <div class="card__pricing_price">${tariff.price_promo} ₽/мес</div>
+                  ${tariff.discount_duration ? `<div class="card__pricing_discount">-${tariff.discount_duration}</div>` : ''}
+                  ${tariff.price_after_promo ? `<div class="card__pricing_details">${tariff.price_after_promo} ₽ с ${tariff.discount_duration ? parseInt(tariff.discount_duration) : ''}-го мес</div>` : ''}
+                </div>
+                <div class="card__buttons">
+                  <a href="#" class="card__connect-btn card__connect-btn${tariff.button} connect-btn">Подключить</a>
+                  <div class="card__info-btn"></div>
+                </div>
+              </div>
             </div>`;
     }
 
@@ -154,6 +161,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             this.classList.add('active');
             currentCategory = this.innerText;
             localStorage.setItem("selectedCategory", currentCategory);
+            console.log(localStorage.userLocation)
             updateUI();
             updateTariffs();
         });

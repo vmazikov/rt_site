@@ -10,3 +10,20 @@
     z-index: 999;
     transition: bottom 0.3s ease;
   }
+
+  @media (min-width: 650px) {
+    .popup {
+        position: fixed;
+        bottom: auto;
+        left: 50%;
+        top: 50%;
+        width: 630px;
+        height: 530px;
+        transform: translate(-50%, -50%);
+        border-radius: 16px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        opacity: 0;
+        pointer-events: none;
+    }
+}

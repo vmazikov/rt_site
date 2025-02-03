@@ -40,53 +40,55 @@
       <div class="banner__title-wrap">
         <h2 class="banner__title">Подключить интернет от <br>Ростелеком </h2>
       </div>
-      <div class="location__wrapper">
-        <div class="location__title large">Узнайте все акции и специальные тарифы от Ростелеком в вашем доме</div>
-        <div class="location__city">
-          <div class="location__city-icon"></div>
-          <span class="location__city-name">Кемерово</span>
-        </div>
-        <div class="location__search-bar">
-          <div class="location__search-icon"></div>
-          <div class="location__search-placeholder">Введите улицу и дом</div>
-          <button class="location__search-button">Найти тарифы</button>
-          <div class="location__search-button__icon">
-            <img class="location__search-button__img" src="./images/seacrh-icon.png">
+      <div class="banner-wrap">
+        <div class="location__wrapper">
+          <div class="location__title large">Узнайте все акции и специальные тарифы от Ростелеком в вашем доме</div>
+          <div class="location__city">
+            <div class="location__city-icon"></div>
+            <span class="location__city-name">Кемерово</span>
+          </div>
+          <div class="location__search-bar">
+            <div class="location__search-icon"></div>
+            <div class="location__search-placeholder">Введите улицу и дом</div>
+            <button class="location__search-button">Найти тарифы</button>
+            <div class="location__search-button__icon">
+              <img class="location__search-button__img" src="./images/seacrh-icon.png">
+            </div>
+          </div>
+          <div class="location__call-section">
+            <div class="location__call-text">Или закажите обратный звонок, и мы перезвоним в течение 10 минут</div>
+            <button class="location__call-button">
+                <div class="location__call-icon"></div>
+                <span>Заказать звонок</span>
+            </button>
           </div>
         </div>
-        <div class="location__call-section">
-          <div class="location__call-text">Или закажите обратный звонок, и мы перезвоним в течение 10 минут</div>
-          <button class="location__call-button">
-              <div class="location__call-icon"></div>
-              <span>Заказать звонок</span>
-          </button>
-        </div>
-      </div>
-      <h1 class="banner__subtitle">Почему стоит выбрать Ростелеком</h1>
-      <div class="banner__icons-wrap">
-        <div class="banner__icon">
-          <img class="banner__icon-img" src="./images/person_icon.png" alt="">
-          <p class="banner__icon-text">20 млн. абонентов</p>
-        </div>
-        <div class="banner__icon">
-          <img class="banner__icon-img" src="./images/cell_tower.png" alt="">
-          <p class="banner__icon-text">Надежная технология подключения</p>
-        </div>
-        <div class="banner__icon">
-          <img class="banner__icon-img" src="./images/tv_icon.png" alt="">
-          <p class="banner__icon-text">Кино и ТВ</p>
-        </div>
-        <div class="banner__icon">
-          <img class="banner__icon-img" src="./images/camera_icon.png" alt="">
-          <p class="banner__icon-text">Умные технологии</p>
-        </div>
-        <div class="banner__icon">
-          <img class="banner__icon-img" src="./images/wifi_icon.png" alt="">
-          <p class="banner__icon-text">Скоростной WiFi</p>
-        </div>
-        <div class="banner__icon">
-          <img class="banner__icon-img" src="./images/game-contoller_icon.png" alt="">
-          <p class="banner__icon-text">Облачный гейминг</p>
+        <h1 class="banner__subtitle">Почему стоит выбрать Ростелеком</h1>
+        <div class="banner__icons-wrap">
+          <div class="banner__icon">
+            <img class="banner__icon-img" src="./images/person_icon.png" alt="">
+            <p class="banner__icon-text">20 млн. абонентов</p>
+          </div>
+          <div class="banner__icon">
+            <img class="banner__icon-img" src="./images/cell_tower.png" alt="">
+            <p class="banner__icon-text">Надежная технология подключения</p>
+          </div>
+          <div class="banner__icon">
+            <img class="banner__icon-img" src="./images/tv_icon.png" alt="">
+            <p class="banner__icon-text">Кино и ТВ</p>
+          </div>
+          <div class="banner__icon">
+            <img class="banner__icon-img" src="./images/camera_icon.png" alt="">
+            <p class="banner__icon-text">Умные технологии</p>
+          </div>
+          <div class="banner__icon">
+            <img class="banner__icon-img" src="./images/wifi_icon.png" alt="">
+            <p class="banner__icon-text">Скоростной WiFi</p>
+          </div>
+          <div class="banner__icon">
+            <img class="banner__icon-img" src="./images/game-contoller_icon.png" alt="">
+            <p class="banner__icon-text">Облачный гейминг</p>
+          </div>
         </div>
       </div>
     </div>
@@ -292,7 +294,7 @@
   <div id="locationPopup" class="popup-cities hidden">
     <button id="closePopupButton" class="popup-close">&times;</button>
     <div class="popup-header">
-      <p><span class="popup-icon">📍</span> Хочу подключить услугу в</p>
+      <p><span class="popup-icon">📍</span> Хочу подключить услуги в </p>
       <span id="currentCity" class="popup-selected-city">...</span>
     </div>
     <ul id="cityList" class="popup-city-list"></ul>
@@ -310,6 +312,7 @@
   <script src="./createDynamicPlaceholder.js"></script>
   <script src="./cards.js"></script>
   <script src="./popup.js"></script>
+  <script src="./updateAddress.js"></script>
 </body>
 </html>
 

@@ -1,3 +1,9 @@
 .popup-client {
     height: 50%;
   }
+
+  @media (min-width: 650px) {
+    .popup-client {
+      height: 530px;
+    }
+  }

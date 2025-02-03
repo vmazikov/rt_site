@@ -232,7 +232,9 @@ async function initPopup() {
   const defaultCityName = await loadCities();
   console.log("[LOG] Устанавливаем дефолтный город...");
   currentCity.textContent = `г. ${defaultCityName}`;
-  locationPopup.classList.remove("hidden");
+  setTimeout(() => {
+    locationPopup.classList.remove("hidden");
+}, 3000);
   positionPopup();
   popupShown = true;
 
@@ -240,8 +242,7 @@ async function initPopup() {
   const detectedCity = await detectCityByCoordinates();
   if (detectedCity && detectedCity.cityName && detectedCity.cityName !== defaultCityName) {
     console.log(`[LOG] Определён город по координатам: ${detectedCity.cityName}`);
-    currentCity.textContent = detectedCity.cityName;
-    saveUserLocation({ city: detectedCity.cityName });
+    currentCity.textContent = detectedCity.cityWithType;
   } else {
     console.warn("[WARNING] Город не удалось определить или он совпадает с дефолтным.");
   }
@@ -256,8 +257,9 @@ confirmCityButton.addEventListener("click", () => {
 
 changeCityButton.addEventListener("click", () => {
   console.log("[LOG] Открытие попапа для смены города...");
-  locationPopup.classList.remove("hidden");
-  positionPopup();
+  locationPopup.classList.add("hidden");
+  openPopup(cityPopup)
+  // locationPopup.classList.remove("hidden");
 });
 
 closePopupButton.addEventListener("click", () => {

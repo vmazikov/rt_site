@@ -2,3 +2,8 @@
     height: 50%;
   }
   
+  @media (min-width: 650px) {
+    .popup-form {
+      height: 530px;
+    }
+  }

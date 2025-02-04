@@ -123,7 +123,71 @@
     </div>
   </nav>
   <section>
-    <div class="card-wrapper"></div>
+    <div class="card-wrapper">
+      <div class="card">
+        <div class="card__highlights">
+          <span class="card__highlight card__highlight_hit">Хит подключений</span>
+          <span class="card__highlight card__highlight_promo">Акция</span>
+        </div>
+        <div class="card__content">
+          <div class="card__subtitle__items">
+            <span class="card__subtitle__span card__subtitle__span_tarif-name">Тариф</span>
+            <h4 class="card__subtitle__item card__subtitle__item_tarif-name">Семья</h4>
+          </div>
+          <div class="card__subtitle-list">
+            <div class="card__subtitle">
+              <img class="card__subtitle-img" src="./images/internet_icon.png" alt="">
+              <div class="card__subtitle__items">
+                <span class="card__subtitle__span">Интернет</span>
+                <h4 class="card__subtitle__item">200 Мбит/с</h4>
+              </div>
+            </div>
+            <div class="card__subtitle">
+              <img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">
+              <div class="card__subtitle__items">
+                <span class="card__subtitle__span">Телевидение</span>
+                <h4 class="card__subtitle__item">210 Каналов</h4>
+              </div>
+            </div>
+            <div class="card__subtitle">
+              <img class="card__subtitle-img" src="./images/smartphone_icon.png" alt="">
+              <div class="card__subtitle__items">
+                <span class="card__subtitle__span">Моб. Связь</span>
+                <h4 class="card__subtitle__item">40 ГБ и 2000 Мин</h4>
+              </div>
+            </div>
+            <div class="card__subtitle">
+              <img class="card__subtitle-img" src="./images/wink_icon.png" alt="">
+              <div class="card__subtitle__items">
+                <span class="card__subtitle__span">Wink</span>
+                <h4 class="card__subtitle__item">25 000 фильмов и сериалов</h4>
+              </div>
+            </div>
+            <div class="card__subtitle">
+              <img class="card__subtitle-img" src="./images/router_icon.png" alt="">
+              <div class="card__subtitle__items">
+                <span class="card__subtitle__span">Wi-Fi роутер</span>
+                <h4 class="card__subtitle__item card__subtitle__item_router">150 ₽/мес в аренду</h4>
+              </div>
+            </div>
+          </div>
+          <div class="card__additional-info">
+            <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Бесплатно до 5 сим-карт в тарифе</p>
+            <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Безлимитный доступ к мессенджерам WhatsApp, Telegram и ещё +2</p>
+            <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Перенос остатков минут и Гб</p>
+          </div>
+        </div>
+        <div class="card__pricing">
+          <div class="card__pricing_price">475 ₽/мес</div>
+          <div class="card__pricing_discount">-50% первые 2 мес</div>
+          <div class="card__pricing_details">950 ₽ с 3-го мес</div>
+        </div>
+        <div class="card__buttons">
+          <a href="#" class="card__connect-btn card__connect-btn connect-btn">Подключить</a>
+          <div class="card__info-btn"></div>
+        </div>
+      </div>
+    </div>
     <div class="card-wrapper__snow-more-button-container">
       <button class="card-wrapper__show-more-button">Показать еще</button>
     </div>
@@ -207,7 +271,6 @@
       </div>
     </div>
   </section>
-
   <section class="contact-section">
     <div class="contact-section__social-buttons">
       <a class="contact-section__social-button contact-section__social-button_whatsapp" href="https://wa.me/79505908454?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9D%D1%83%D0%B6%D0%BD%D0%B0%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D1%82%D0%B0%D1%80%D0%B8%D1%84%D0%B0%D0%BC!%20">WhatsApp</a>
@@ -273,7 +336,7 @@
       <button class="popup__close-button">&times;</button>
     </div>
     <div class="popup-address__input-wrapper">
-      <input class="popup-address__input" type="text" id="address" autocomplete="off" placeholder="Введите улицу и дом" />
+      <input class="popup-address__input" type="text" id="addressInput" autocomplete="off" placeholder="Введите улицу и дом" />
       <div id="suggestions">
       </div>
     </div>
@@ -284,7 +347,7 @@
       <button class="popup__close-button">&times;</button>
     </div>
     <div class="popup-address__input-wrapper">
-      <input class="popup-address__input" type="text" autocomplete="off" placeholder="Введите город" />
+      <input class="popup-address__input" id="cityInput" type="text" autocomplete="off" placeholder="Введите город" />
       <div id="suggestions" style="display: none;"></div>
     </div>
     <!-- Изначально блок с локальными городами показывается -->

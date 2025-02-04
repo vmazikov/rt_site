@@ -1,6 +1,3 @@
-// ================================
-// ПЕРЕМЕННЫЕ И НАСТРОЙКИ
-// ================================
 const dadataToken = '549f6e44bb6269eed79da8d09d37e0ff7042035f'; // Токен DaData
 const regionFiasId = '393aeccb-89ef-4a7e-ae42-08d5cebc2e30';       // FIAS ID области
 let technicalData = []; // Технические данные, загружаемые из JSON
@@ -8,40 +5,54 @@ let technicalData = []; // Технические данные, загружае
 // Глобальный объект для хранения данных о местоположении пользователя
 let userLocation = {
   city: "",
-  address: "",
+  address: "",      // Отформатированный адрес для проверки технической возможности (например: "г Кемерово Свободы улица 7")
   techResult: null,
+  fullAddress: "",  // Полное представление адреса для отображения (например: "г Кемерово, пр-кт ленина, д 115")
 };
 
-// ================================
-// ФУНКЦИИ ОБРАБОТКИ АДРЕСА
-// ================================
-
-/**
- * Нормализует тип улицы (например, «ул.», «улица» → «улица»; «пр-кт», «проспект» → «проспект» и т.д.).
- * @param {string} streetWithType - строка с улицей и типом.
- * @returns {string} - нормализованный тип.
- */
+// Функция нормализации типа улицы. Если обнаруживается "микрорайон" или его сокращения, возвращает "микрорайон"
 function determineFullStreetType(streetWithType) {
-  if (!streetWithType) return '';
-  const lower = streetWithType.toLowerCase();
-  if (lower.includes('ул.') || lower.includes('ул ') || lower.includes('улица')) {
-    return 'улица';
-  }
-  if (lower.includes('пр-кт') || lower.includes('проспект')) {
-    return 'проспект';
-  }
-  if (lower.includes('пер.') || lower.includes('переулок')) {
-    return 'переулок';
-  }
-  if (lower.includes('ш.') || lower.includes('шоссе')) {
-    return 'шоссе';
-  }
-  if (lower.includes('б-р') || lower.includes('бульвар')) {
-    return 'бульвар';
-  }
-  return streetWithType;
+    if (!streetWithType) return '';
+    const lower = streetWithType.toLowerCase();
+    if (lower.includes('микрорайон') || lower.includes(' мкр') || lower.includes('мкр.')) {
+        return 'микрорайон';
+    }
+    if (lower.includes('ул.') || lower.includes('ул ') || lower.includes('улица')) {
+        return 'улица';
+    }
+    if (lower.includes('пр-кт') || lower.includes('проспект')) {
+        return 'проспект';
+    }
+    if (lower.includes('пер.') || lower.includes('переулок')) {
+        return 'переулок';
+    }
+    if (lower.includes('ш.') || lower.includes('шоссе')) {
+        return 'шоссе';
+    }
+    if (lower.includes('б-р') || lower.includes('бульвар')) {
+        return 'бульвар';
+    }
+    return streetWithType;
 }
-
+  
+// Формирует отформатированную строку адреса для проверки технической возможности.
+// Пример: если поля DaData таковы:
+//   data.city_with_type = "г Кемерово"
+//   data.street = "Свободы"
+//   data.street_with_type = "улица"
+//   data.house = "7"
+// то функция вернёт: "г Кемерово Свободы улица 7"
+function getFormattedAddressString(data) {
+    const city = data.city_with_type || data.settlement_with_type || data.city || "";
+    let street = "";
+    if (data.street) {
+        const streetType = determineFullStreetType(data.street_with_type || "");
+        street = data.street + ' ' + streetType;
+    }
+    const building = data.house || "";
+    return `${city.trim()} ${street.trim()} ${building.trim()}`.replace(/\s+/g, " ").trim();
+}
+  
 /**
  * Форматирует адрес на основе объекта, полученного от DaData.
  * @param {Object} data - объект адреса из DaData.
@@ -55,181 +66,220 @@ function formatAddressFromDaData(data) {
   return `${settlementWithType} ${streetName} ${streetType} ${building}`.replace(/\s+/g, ' ').trim();
 }
 
-/**
- * Проверяет техническую возможность по загруженным JSON-данным.
- * @param {string} address - отформатированный адрес.
- * @returns {Object} - результат проверки, например: { isPossible: true, txb: 'fttb' }.
- */
-function checkTechnicalPossibility(address) {
-  console.log('Проверяем техническую возможность для:', address);
-  const normalizedAddress = address.toLowerCase().replace(/\s+/g, ' ').trim();
-  const match = technicalData.find(item => {
-    const itemAddress = `${item.city} ${item.street} ${item.building}`
-      .toLowerCase()
-      .replace(/\s+/g, ' ')
-      .trim();
-    return itemAddress === normalizedAddress;
-  });
-  if (match) {
-    console.log(`Техвозможность ${match.txb}`);
-    return { isPossible: true, txb: match.txb };
-  } else {
-    console.log('Техвозможность не найдена');
-    return { isPossible: false };
-  }
-}
 
-/**
- * Загружает технические данные из JSON-файла и нормализует их.
- * @param {string} jsonUrl - путь к JSON файлу.
- */
-function loadTechnicalData(jsonUrl) {
-  $.getJSON(jsonUrl, function(data) {
-    technicalData = data.map(item => ({
-      city: item.city.toLowerCase(),
-      street: item.street.toLowerCase(),
-      building: item.building.toLowerCase(),
-      txb: item.txb
-    }));
-    console.log('Technical data loaded and normalized:', technicalData);
-  });
-}
-
-// ================================
-// ФУНКЦИИ ДЛЯ РАБОТЫ С ЛОКАЛЬНЫМ ХРАНИЛИЩЕМ
-// ================================
-
-/**
- * Сохраняет данные о местоположении в объект userLocation и localStorage.
- * @param {Object} data - объект с полями: city (обязательно), address (опционально), techResult (опционально)
- */
-function saveUserLocation({ city, address = "", techResult = null }) {
-  userLocation = { city, address, techResult };
-  localStorage.setItem("userLocation", JSON.stringify(userLocation));
-  console.log("[LOG] userLocation сохранён:", userLocation);
-  updateCityInElements(city);
-  // Можно также вызвать updateTariffs() здесь, если требуется обновление карточек
-  // updateTariffs();
-}
-
-// ================================
-// ФУНКЦИИ АВТОПОДСКАЗОК ДАДАТА (АДРЕС)
-// ================================
-
-/**
- * Функция для удаления дубликатов подсказок по отформатированному адресу.
- * @param {Array} suggestions - массив объектов с полем data.
- * @returns {Array} - отфильтрованный массив подсказок.
- */
-function deduplicateSuggestions(suggestions) {
-  const seen = {};
-  return suggestions.filter(item => {
-    const formatted = formatAddressFromDaData(item.data);
-    if (seen[formatted]) return false;
-    seen[formatted] = true;
-    return true;
-  });
-}
-
-/**
- * Инициализирует автоподсказки для поля ввода адреса.
- * @param {string} inputSelector - селектор поля ввода.
- * @param {string} regionFiasId - FIAS ID региона.
- */
-function initManualAddressInput(inputSelector, regionFiasId = '') {
-  $(inputSelector).on('input', function() {
-    const inputVal = $(this).val();
-    // Разбиваем введённый текст по запятым и убираем лишние пробелы
-    const parts = inputVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
-
-    // Определяем режим ввода:
-    // 1 часть – свободный режим;
-    // 2 части – выбран город, вводится улица;
-    // 3 и более – вводится дом.
-    let stage = 'free';
-    let requestData = {
-      query: inputVal.trim(),
-      count: 5,
-      locations: regionFiasId ? [{ region_fias_id: regionFiasId }] : []
-    };
-
-    if (parts.length === 2) {
-      stage = 'street';
-      requestData.from_bound = { value: "street" };
-      requestData.to_bound = { value: "street" };
-      requestData.query = (parts[0] ? parts[0] + ' ' : '') + parts[1];
-    } else if (parts.length >= 3) {
-      stage = 'house';
-      requestData.from_bound = { value: "house" };
-      requestData.to_bound = { value: "house" };
-      requestData.query = ((parts[0] ? parts[0] + ' ' : '') + (parts[1] ? parts[1] + ' ' : '')) + parts[2];
+// Формирует полное представление адреса для отображения (с разделителями и сокращениями).
+// Если поле street_with_type уже содержит название улицы, то используется оно без дублирования.
+// Пример 1:
+//   data.city_with_type = "г Кемерово"
+//   data.street = "Ленина"
+//   data.street_with_type = "пр-кт ленина"
+//   data.house = "115"
+// Вернёт: "г Кемерово, пр-кт ленина, д 115"
+// Пример 2:
+//   data.city_with_type = "г Кемерово"
+//   data.street = "Свободы"
+//   data.street_with_type = "улица"
+//   data.house = "7"
+// Вернёт: "г Кемерово, ул Свободы, д 7"
+function getFullAddressString(data) {
+    const city = data.city_with_type || data.settlement_with_type || data.city || "";
+    const building = data.house || "";
+    const street = data.street || "";
+    const street_with_type = data.street_with_type || "";
+    
+    const streetNormalized = street.trim().toLowerCase();
+    const streetWithTypeNormalized = street_with_type.trim().toLowerCase();
+    
+    // Если street_with_type уже содержит street, то используем его как есть
+    if (streetNormalized && streetWithTypeNormalized.includes(streetNormalized)) {
+        return `${city.trim()}, ${street_with_type.trim()}, д ${building.trim()}`.replace(/\s+/g, " ").trim();
+    } else {
+        // Иначе, определяем сокращённое обозначение типа улицы
+        let streetAbbr = "";
+        let streetTypeFull = street_with_type.toLowerCase();
+        if (streetTypeFull.includes("улица")) {
+            streetAbbr = "ул";
+        } else if (streetTypeFull.includes("проспект")) {
+            streetAbbr = "пр-кт";
+        } else if (streetTypeFull.includes("переулок")) {
+            streetAbbr = "пер";
+        } else if (streetTypeFull.includes("шоссе")) {
+            streetAbbr = "ш.";
+        } else if (streetTypeFull.includes("бульвар")) {
+            streetAbbr = "бул";
+        } else if (streetTypeFull.includes("микрорайон") || streetTypeFull.includes(" мкр") || streetTypeFull.includes("мкр.")) {
+            streetAbbr = "мкр";
+        } else {
+            streetAbbr = street_with_type;
+        }
+        return `${city.trim()}, ${streetAbbr} ${street.trim()}, д ${building.trim()}`.replace(/\s+/g, " ").trim();
     }
-
-    if (requestData.query.trim().length < 3) {
-      $('#suggestions').empty();
-      return;
-    }
-
-    $.ajax({
-      url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
-      method: 'POST',
-      headers: { "Authorization": `Token ${dadataToken}` },
-      contentType: 'application/json',
-      data: JSON.stringify(requestData),
-      success: function(data) {
-        let suggestions = data.suggestions || [];
-        // Убираем дублирующиеся подсказки
-        suggestions = deduplicateSuggestions(suggestions);
-        const suggestionsDiv = $('#suggestions');
-        suggestionsDiv.empty();
-
-        suggestions.forEach(item => {
-          const formattedAddress = formatAddressFromDaData(item.data);
-          if (!formattedAddress || formattedAddress.trim() === '') return;
-          if (stage === 'house') {
-            if (item.data.fias_level !== '8' || !item.data.house) return;
-          }
-          suggestionsDiv.append(
-            `<div data-full-address='${JSON.stringify(item.data)}'>${formattedAddress}</div>`
-          );
-        });
-      },
-      error: function(err) {
-        console.error('Ошибка DaData:', err);
-      }
+}
+  
+// Проверяет техническую возможность, сравнивая нормализованный отформатированный адрес с техническими данными
+function checkTechnicalPossibility(formattedAddress) {
+    console.log('Проверяем техническую возможность для:', formattedAddress);
+    const normalizedAddress = formattedAddress.toLowerCase().replace(/\s+/g, ' ').trim();
+    const match = technicalData.find(item => {
+      const itemAddress = `${item.city} ${item.street} ${item.building}`.toLowerCase().replace(/\s+/g, ' ').trim();
+      return itemAddress === normalizedAddress;
     });
-  });
-
-  // При клике по подсказке – обновляем инпут и, если адрес полный, сохраняем данные.
-  $('#suggestions').on('click', 'div', function() {
-    let itemData = $(this).data('full-address');
-    if (typeof itemData === 'string') {
-      try {
-        itemData = JSON.parse(itemData);
-      } catch (e) {
-        console.error('Ошибка парсинга данных подсказки', e);
+    if (match) {
+      console.log(`Техвозможность ${match.txb}`);
+      return { isPossible: true, txb: match.txb };
+    } else {
+      console.log('Техвозможность не найдена');
+      return { isPossible: false };
+    }
+}
+  
+// Загружает технические данные из JSON-файла и нормализует их (приводит все строки к нижнему регистру)
+function loadTechnicalData(jsonUrl) {
+    $.getJSON(jsonUrl, function(data) {
+      technicalData = data.map(item => ({
+        city: item.city.toLowerCase(),
+        street: item.street.toLowerCase(),
+        building: item.building.toLowerCase(),
+        txb: item.txb
+      }));
+      console.log('Technical data loaded and normalized:', technicalData);
+    });
+}
+  
+// Сохраняет данные о местоположении пользователя
+// city – название города,
+// address – отформатированный адрес (например, "г Кемерово Свободы улица 7"),
+// fullAddress – полное представление адреса (например, "г Кемерово, пр-кт ленина, д 115"),
+// techResult – результат проверки технической возможности.
+function saveUserLocation({ city, address = "", techResult = null, fullAddress = "" }) {
+    userLocation = { city, address, techResult, fullAddress };
+    localStorage.setItem("userLocation", JSON.stringify(userLocation));
+    console.log("[LOG] userLocation сохранён:", userLocation);
+    window.dispatchEvent(new Event("userLocationChanged"));
+    updateCityInElements(city);
+    // При необходимости можно вызвать updateTariffs()
+}
+  
+// Удаляет дубликаты подсказок, сравнивая отформатированные адреса (приводим к нижнему регистру)
+function deduplicateSuggestions(suggestions) {
+    const seen = {};
+    return suggestions.filter(item => {
+      const formatted = getFormattedAddressString(item.data);
+      if (seen[formatted.toLowerCase()]) return false;
+      seen[formatted.toLowerCase()] = true;
+      return true;
+    });
+}
+  
+// Обновляет элементы на странице, где отображается название города
+function updateCityInElements(city) {
+    const locationCityElements = document.querySelectorAll(".location__city-name");
+    locationCityElements.forEach(element => {
+      element.textContent = city;
+    });
+    console.log(`[LOG] Город обновлён в элементах: ${city}`);
+}
+  
+// Инициализирует подсказки DaData для инпута адреса
+function initManualAddressInput(inputSelector, regionFiasId = '') {
+    $(inputSelector).on('input', function() {
+      const inputVal = $(this).val();
+      // Разбиваем введённый текст по запятым, убираем лишние пробелы и пустые элементы
+      const parts = inputVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
+  
+      // Определяем режим ввода:
+      // 1 часть – свободный режим;
+      // 2 части – выбран город, вводится улица;
+      // 3 и более – вводится дом.
+      let stage = 'free';
+      let requestData = {
+        query: inputVal.trim(),
+        count: 5,
+        locations: regionFiasId ? [{ region_fias_id: regionFiasId }] : []
+      };
+  
+      if (parts.length === 2) {
+        stage = 'street';
+        requestData.from_bound = { value: "street" };
+        requestData.to_bound = { value: "street" };
+        requestData.query = (parts[0] ? parts[0] + ' ' : '') + parts[1];
+      } else if (parts.length >= 3) {
+        stage = 'house';
+        requestData.from_bound = { value: "house" };
+        requestData.to_bound = { value: "house" };
+        requestData.query = ((parts[0] ? parts[0] + ' ' : '') + (parts[1] ? parts[1] + ' ' : '')) + parts[2];
+      }
+  
+      if (requestData.query.trim().length < 3) {
+        $('#suggestions').empty();
         return;
       }
-    }
-    const formattedAddress = formatAddressFromDaData(itemData);
-    const isComplete = itemData.house && itemData.house.trim() !== '';
-    $(inputSelector).val(formattedAddress);
-    $('#suggestions').empty();
-    if (isComplete) {
-      const techResult = checkTechnicalPossibility(formattedAddress);
-      // Определяем город – берем itemData.city, если есть, иначе первую часть форматированного адреса
-      const cityName = itemData.city || formattedAddress.split(' ')[0];
-      updateCityInElements(cityName);
-      // Сохраняем данные о местоположении (город, полный адрес и результат проверки)
-      saveUserLocation({ city: cityName, address: formattedAddress, techResult: techResult });
-      closePopup()
-      if (techResult.isPossible) {
-        alert(`Техническая возможность: ${techResult.txb}`);
-      } else {
-        alert('Технической возможности нет');
+  
+      $.ajax({
+        url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
+        method: 'POST',
+        headers: { "Authorization": `Token ${dadataToken}` },
+        contentType: 'application/json',
+        data: JSON.stringify(requestData),
+        success: function(data) {
+          let suggestions = data.suggestions || [];
+          // Удаляем дубликаты подсказок
+          suggestions = deduplicateSuggestions(suggestions);
+          const suggestionsDiv = $('#suggestions');
+          suggestionsDiv.empty();
+  
+          suggestions.forEach(item => {
+            // Для отображения используем неотформатированный адрес, полученный от DaData (item.value)
+            const rawAddress = item.value;
+            // Если режим "house", проверяем, что адрес полный (fias_level === "8" и поле house присутствует)
+            if (stage === 'house') {
+              if (item.data.fias_level !== '8' || !item.data.house) return;
+            }
+            suggestionsDiv.append(
+              `<div data-suggestion='${JSON.stringify(item)}'>${rawAddress}</div>`
+            );
+          });
+        },
+        error: function(err) {
+          console.error('Ошибка DaData:', err);
+        }
+      });
+    });
+  
+    // Обработка клика по подсказке: обновляем инпут и сохраняем данные, если адрес полный
+    $('#suggestions').on('click', 'div', function() {
+      let suggestion = $(this).data('suggestion');
+      if (typeof suggestion === 'string') {
+        try {
+          suggestion = JSON.parse(suggestion);
+        } catch (e) {
+          console.error('Ошибка парсинга данных подсказки', e);
+          return;
+        }
       }
-    }
-  });
+  
+      // Формируем отформатированную строку адреса (без запятых) для проверки технической возможности
+      const formattedAddress = getFormattedAddressString(suggestion.data);
+      // Формируем полное представление адреса (с разделителями и сокращениями)
+      const fullAddressFormatted = getFullAddressString(suggestion.data);
+      const isComplete = suggestion.data.house && suggestion.data.house.trim() !== '';
+      // Обновляем инпут неотформатированным адресом, полученным от DaData
+      $(inputSelector).val(suggestion.value);
+      $('#suggestions').empty();
+      if (isComplete) {
+        const techResult = checkTechnicalPossibility(formattedAddress);
+        const cityName = suggestion.data.city_with_type || suggestion.data.settlement_with_type || suggestion.data.city || "";
+        updateCityInElements(cityName);
+        // Сохраняем данные: address – отформатированный адрес, fullAddress – полное представление адреса
+        saveUserLocation({ city: cityName, address: formattedAddress, techResult: techResult, fullAddress: fullAddressFormatted });
+        closePopup();
+        if (techResult.isPossible) {
+          alert(`Техническая возможность: ${techResult.txb}`);
+        } else {
+          alert('Технической возможности нет');
+        }
+      }
+    });
 
   // Обработка нажатия клавиши Enter – для подтверждения адреса, введённого вручную.
 //   $(inputSelector).on('keydown', function(e) {
@@ -285,8 +335,8 @@ function initCityPopup(popupSelector) {
   // Таким образом, данные сохраняются в localStorage под ключом "userLocation".
   
   // Устанавливаем стили для контейнеров с подсказками и локальными городами
-  $(popupSelector).find('#suggestions, #local-cities').css({
-    'max-height': '300px',
+  $(popupSelector).find('#suggestions').css({
+    'max-height': '700px',
     'overflow-y': 'auto'
   });
 
@@ -297,7 +347,7 @@ function initCityPopup(popupSelector) {
     localCities.forEach(function(city) {
       $localCitiesDiv.append(
         `<div class="local-city" data-city='${JSON.stringify(city)}'>
-          ${city.name} ${city.type}
+         ${city.type} ${city.name} 
         </div>`
       );
     });

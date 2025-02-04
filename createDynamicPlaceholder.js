@@ -30,7 +30,12 @@ function createDynamicPlaceholder(inputElement, cities) {
 }
 
 // Пример использования:
-const input = document.getElementById("cityInput");
+const cityInput = document.getElementById("cityInput");
+const addressInput = document.getElementById("addressInput");
 const cities = ["Кемерово", "Новокузнецк", "Прокопьевск", "Междуреченск", "Белово"];
+const address = ["Ленина 14", "Тореза 32", "Есенина 48", "Волкова 35", "Мичурина 61"];
 
 // createDynamicPlaceholder(input, cities);
+
+createDynamicPlaceholder(cityInput, cities)
+createDynamicPlaceholder(addressInput, address)

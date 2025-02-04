@@ -69,12 +69,12 @@ function positionPopup() {
  * Сохраняет объект userLocation в localStorage и диспатчит событие "userLocationChanged".
  * @param {Object} data - объект с полями: city (обязательно), address (опционально), techResult (опционально)
  */
-function saveUserLocation({ city, address = "", techResult = null }) {
-  userLocation = { city, address, techResult };
-  localStorage.setItem("userLocation", JSON.stringify(userLocation));
-  console.log("[LOG] userLocation сохранён:", userLocation);
-  window.dispatchEvent(new CustomEvent("userLocationChanged", { detail: userLocation }));
-}
+// function saveUserLocation({ city, address = "", techResult = null, fullAddress = "" }) {
+//   userLocation = { city, address, techResult };
+//   localStorage.setItem("userLocation", JSON.stringify(userLocation));
+//   console.log("[LOG] userLocation сохранён:", userLocation);
+//   window.dispatchEvent(new CustomEvent("userLocationChanged", { detail: userLocation }));
+// }
 
 /**
  * Обновляет текст во всех элементах, где отображается город.

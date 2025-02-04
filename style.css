@@ -121,6 +121,38 @@
 @import url(./blocks/popup-check-client/popup-check-client.css);
 @import url(./blocks/popup-check-client/__client-button/popup-check-client__client-button.css);
 
+.card__subtitle__span {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.card__subtitle__span_tarif-name {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.card__subtitle__item {
+  font-size: 20px;
+  font-weight: lighter;
+  color: #141819;
+}
+
+.card__subtitle__item_router {
+  font-size: 15px;
+}
+
+.card__subtitle__item_tarif-name {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.popup-card {
+  width: 980px;
+  height: 820px;
+  border-radius: 16px;
+}
 
 
 * {
@@ -130,11 +162,11 @@
     
   }
 
+  .popup-address {
+    height: 100%;
+    border-radius: 0;
+  }
 
-.popup-address {
-  height: 100%;
-  border-radius: 0;
-}
 
 .popup-address__input {
   background: #efeef3;
@@ -388,4 +420,24 @@
   color: #686868;
   margin-top: 10px;
   text-align: left;
+}
+
+.local-city {
+  margin-top: 10px;
+  text-align: left;
+  font-size: 16px;
+  color: #686868;
+}
+
+.local-city_active {
+  font-weight: bold;
+}
+
+@media (min-width: 650px) {
+  
+}
+
+#local-cities {
+  overflow-y: auto;
+  max-height: 100%;
 }

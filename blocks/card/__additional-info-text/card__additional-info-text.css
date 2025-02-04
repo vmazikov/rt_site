@@ -1,3 +1,5 @@
 .card__additional-info-text {
-    
+    display: flex;
+    align-items: flex-start; /* Выравнивание текста относительно верхней части изображения */
+    gap: 8px; /* Расстояние между изображением и текстом */
 }

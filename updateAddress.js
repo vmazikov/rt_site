@@ -42,7 +42,7 @@ function updateUIBasedOnTechResult() {
                     <div>
                         <p class="tech-result-banner__status-text">Есть возможность подключения по адресу: </p>
                         <div class="flex">
-                            <p class="tech-result-banner__address-text">${userLocation.address}</p>
+                            <p class="tech-result-banner__address-text">${userLocation.fullAddress}</p>
                             <span class="tech-result-banner__edit-icon" onclick="openPopup(popupAddress)"></span>
                         </div>
                     </div>
@@ -56,7 +56,7 @@ function updateUIBasedOnTechResult() {
                     <div>
                         <p class="tech-result-banner__status-text">Не удалось определить возможность подключения по адресу: </p>
                         <div class="flex">
-                            <p class="tech-result-banner__address-text">${userLocation.address}</p>
+                            <p class="tech-result-banner__address-text">${userLocation.fullAddress}</p>
                             <span class="tech-result-banner__edit-icon" onclick="openPopup(popupAddress)"></span>
                         </div>
                         <p class="tech-result-banner__edit-text">Попробуйте изменить <a class="tech-result-banner__edit-link" href="#" onclick="openPopup(popupAddress)">адрес</a></p>
@@ -83,7 +83,7 @@ function updateUIBasedOnTechResult() {
 }
 
 // Слушаем событие "userLocationChanged" для обработки изменений
-window.addEventListener('userLocationChanged', updateUIBasedOnTechResult);
+window.addEventListener("userLocationChanged", updateUIBasedOnTechResult);
 
 // Проверяем данные при загрузке страницы
 document.addEventListener('DOMContentLoaded', updateUIBasedOnTechResult);

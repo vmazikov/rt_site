@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             ${tariff.price_after_promo ? `<div class="card__pricing_details">${tariff.price_after_promo} ₽ с ${tariff.discount_duration ? parseInt(tariff.discount_duration) +1 : ''}-го мес</div>` : ''}
         </div>
         <div class="card__buttons">
-            <a href="#" class="card__connect-btn card__connect-btn connect-btn">Подключить</a>
+            <a href="#" class="card__connect-btn card__connect-btn${tariff.button} connect-btn">Подключить</a>
             <div class="card__info-btn"></div>
         </div>
         </div>`;

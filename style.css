@@ -130,6 +130,7 @@
 .card__subtitle__span_tarif-name {
   font-size: 20px;
   margin-bottom: 15px;
+  color: #000;
 }
 
 .card__subtitle__item {
@@ -464,3 +465,34 @@
   max-height: 80%;
   overflow-y: auto;
 }
+
+.popup-check-client__title {
+  font-size: 24px;
+}
+
+.popup-form__title {
+  font-size: 24px;
+}
+
+.popup-form__text {
+  font-size: 18px;
+}
+
+.popup-client__title {
+  font-size: 24px;
+}
+
+@media (min-width: 650px) {
+  .popup-check-client__title {
+    font-size: 32px;
+  }
+
+  .popup-form__title {
+    font-size: 32px;
+  }
+
+  .popup-client__title {
+    font-size: 32px;
+  }
+}
+

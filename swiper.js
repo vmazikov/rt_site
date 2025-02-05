@@ -54,3 +54,38 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+const navSection = document.querySelector(".nav-section__buttons-container");
+let isDragging = false;
+let startX;
+let scrollLeft;
+
+const startDrag = (e) => {
+    isDragging = true;
+    startX = e.pageX || e.touches[0].pageX;
+    scrollLeft = navSection.scrollLeft;
+    navSection.classList.add("dragging");
+};
+
+const moveDrag = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX || e.touches[0].pageX;
+    const walk = (x - startX) * 1.5; // Ускоряем движение
+    navSection.scrollLeft = scrollLeft - walk;
+};
+
+const stopDrag = () => {
+    isDragging = false;
+    navSection.classList.remove("dragging");
+};
+
+// 🖱️ События для мыши
+navSection.addEventListener("mousedown", startDrag);
+navSection.addEventListener("mousemove", moveDrag);
+navSection.addEventListener("mouseup", stopDrag);
+navSection.addEventListener("mouseleave", stopDrag);
+
+// 📱 События для тач-устройств (пальцем)
+navSection.addEventListener("touchstart", startDrag);
+navSection.addEventListener("touchmove", moveDrag);
+navSection.addEventListener("touchend", stopDrag);

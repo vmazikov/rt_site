@@ -124,70 +124,7 @@
   </nav>
   <section>
     <div class="card-wrapper">
-      <div class="card">
-        <div class="card__highlights">
-          <span class="card__highlight card__highlight_hit">Хит подключений</span>
-          <span class="card__highlight card__highlight_promo">Акция</span>
-        </div>
-        <div class="card__content">
-          <div class="card__subtitle__items">
-            <span class="card__subtitle__span card__subtitle__span_tarif-name">Тариф</span>
-            <h4 class="card__subtitle__item card__subtitle__item_tarif-name">Семья</h4>
-          </div>
-          <div class="card__subtitle-list">
-            <div class="card__subtitle">
-              <img class="card__subtitle-img" src="./images/internet_icon.png" alt="">
-              <div class="card__subtitle__items">
-                <span class="card__subtitle__span">Интернет</span>
-                <h4 class="card__subtitle__item">200 Мбит/с</h4>
-              </div>
-            </div>
-            <div class="card__subtitle">
-              <img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">
-              <div class="card__subtitle__items">
-                <span class="card__subtitle__span">Телевидение</span>
-                <h4 class="card__subtitle__item">210 Каналов</h4>
-              </div>
-            </div>
-            <div class="card__subtitle">
-              <img class="card__subtitle-img" src="./images/smartphone_icon.png" alt="">
-              <div class="card__subtitle__items">
-                <span class="card__subtitle__span">Моб. Связь</span>
-                <h4 class="card__subtitle__item">40 ГБ и 2000 Мин</h4>
-              </div>
-            </div>
-            <div class="card__subtitle">
-              <img class="card__subtitle-img" src="./images/wink_icon.png" alt="">
-              <div class="card__subtitle__items">
-                <span class="card__subtitle__span">Wink</span>
-                <h4 class="card__subtitle__item">25 000 фильмов и сериалов</h4>
-              </div>
-            </div>
-            <div class="card__subtitle">
-              <img class="card__subtitle-img" src="./images/router_icon.png" alt="">
-              <div class="card__subtitle__items">
-                <span class="card__subtitle__span">Wi-Fi роутер</span>
-                <h4 class="card__subtitle__item card__subtitle__item_router">150 ₽/мес в аренду</h4>
-              </div>
-            </div>
-          </div>
-          <div class="card__additional-info">
-            <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Бесплатно до 5 сим-карт в тарифе</p>
-            <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Безлимитный доступ к мессенджерам WhatsApp, Telegram и ещё +2</p>
-            <p class="card__additional-info-text"><img class="card__additional-info-img" src="./images/check_icon.png"> Перенос остатков минут и Гб</p>
-          </div>
-        </div>
-        <div class="card__pricing">
-          <div class="card__pricing_price">475 ₽/мес</div>
-          <div class="card__pricing_discount">-50% первые 2 мес</div>
-          <div class="card__pricing_details">950 ₽ с 3-го мес</div>
-        </div>
-        <div class="card__buttons">
-          <a href="#" class="card__connect-btn card__connect-btn connect-btn">Подключить</a>
-          <div class="card__info-btn"></div>
-        </div>
-      </div>
-    </div>
+    
     <div class="card-wrapper__snow-more-button-container">
       <button class="card-wrapper__show-more-button">Показать еще</button>
     </div>
@@ -283,19 +220,49 @@
   </footer>
   <div id="overlay" class="overlay"></div>
 
+  <div id="popupCallBack" class="popup popup-check-client popup-callback">
+    <button class="popup__close-button">&times;</button>
+    <h3 class="popup__title popup-check-client__title">Вас интересует новое подключение?</h3>
+    <div class="popup-check-client__buttons">
+      <button id="newConnectionCallBack" class="popup__submit-button popup__submit-button_active">Новое подключение</button>
+      <button id="existingConnection" class="popup__submit-button popup-check-client__client-button">Уже подключен к Ростелеком</button>
+    </div>
+  </div>
+
+  <div id="popupCallBackForm" class="popup popup-form popup-callback-form">
+    <button class="popup__close-button">&times;</button>
+    <h3 class="popup__title popup-form__title">Заказать звонок</h3>
+    <p class="popup__text popup-form__text"></p>
+    <div class="form-card">
+      <form id="phoneForm" method="POST" action="send_to_telegram.php">
+        <div class="popup-form__group">
+          <label for="phone" class="popup-form__group-label">Введите телефон</label>
+          <input class="popup-form__group-input" type="text" id="phone" name="phone" placeholder="+7 (___) ___-__-__" maxlength="12" value="+7" required />
+        </div>
+        <input type="hidden" id="tarif" name="tarif" />
+        <input type="hidden" id="location" name="location" />
+        <input type="hidden" id="address" name="address" />
+        <p class="popup-form__hint">Перезвоним в течение 15 минут</p>
+        <button type="submit" id="submitButton" class="popup__submit-button" disabled>Отправить заявку</button>
+      </form>
+    </div>
+  </div>
+
   <!-- Попап 1 -->
   <div id="popup1" class="popup popup-check-client">
     <button class="popup__close-button">&times;</button>
-    <h3 class="popup__title">Хотите новое подключение или уже подключены к Ростелеком?</h3>
-    <button id="newConnection" class="popup__submit-button popup__submit-button_active">Новое подключение</button>
-    <button id="existingConnection" class="popup__submit-button popup-check-client__client-button">Уже подключен к Ростелеком</button>
+    <h3 class="popup__title popup-check-client__title">Хотите новое подключение или уже подключены к Ростелеком?</h3>
+    <div class="popup-check-client__buttons">
+      <button id="newConnection" class="popup__submit-button popup__submit-button_active">Новое подключение</button>
+      <button id="existingConnection" class="popup__submit-button popup-check-client__client-button">Уже подключен к Ростелеком</button>
+    </div>
   </div>
   
 <!-- Popup2 -->
 <div id="popup2" class="popup popup-form">
   <button class="popup__close-button">&times;</button>
-  <h3 class="popup__title">Заявка на подключение</h3>
-  <p class="popup__text">Перезвоним для уточнения деталей и согласования времени</p>
+  <h3 class="popup__title popup-form__title">Заявка на подключение</h3>
+  <p class="popup__text popup-form__text">Перезвоним для уточнения деталей и согласования времени</p>
   <div class="form-card">
     <form id="phoneForm" method="POST" action="send_to_telegram.php">
       <div class="popup-form__group">
@@ -313,7 +280,7 @@
   <!-- Попап 3 -->
   <div id="popup3" class="popup popup-client">
     <button class="popup__close-button">&times;</button>
-    <h3 class="popup__title">Вы являетесь действующим абонентом Ростелеком</h3>
+    <h3 class="popup__title popup-client__title">Вы являетесь действующим абонентом Ростелеком</h3>
     <p class="popup__text">Мы не сможем ответить на вопросы по действующему подключению или сменить ваш текущий тариф.</p>
     <p class="popup__text">Для смены тарифа необходимо позвонить по номеру</p>
     <a class="popup-client__phone-number" href="tel:+88001000800">8 800 100-08-00</a>

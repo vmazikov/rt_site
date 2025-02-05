@@ -1,6 +1,12 @@
 .nav-section__buttons-container {
     overflow-x: auto; /* Прокрутка при переполнении */
     white-space: nowrap;
+    white-space: nowrap;
+    scrollbar-width: none; /* Скрываем скролл в Firefox */
+    -ms-overflow-style: none; /* Скрываем скролл в IE и Edge */
     padding: 10px 0;
   }
   
+  .nav-section__buttons-container::-webkit-scrollbar {
+    display: none; /* Скрывает скроллбар в Chrome, Edge, Safari */
+}

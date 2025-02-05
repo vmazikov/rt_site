@@ -168,6 +168,14 @@
   }
 
 
+  @media (min-width: 650px) {
+    .popup-address {
+      width: 630px;
+      height: 530px;
+      border-radius: 16px;
+    }
+  }
+
 .popup-address__input {
   background: #efeef3;
   border: 1px solid #aeaeb8;
@@ -434,10 +442,25 @@
 }
 
 @media (min-width: 650px) {
-  
+  #local-cities {
+    margin-top: 20px;
+    overflow-y: auto;
+    max-height: 500px;
+  }
+
+  #suggestions {
+    margin-top: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+  }
 }
 
 #local-cities {
   overflow-y: auto;
-  max-height: 100%;
+  max-height: 80%;
+}
+
+#suggestions {
+  max-height: 80%;
+  overflow-y: auto;
 }

@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         </div>
         <div class="card__buttons">
             <a href="#" class="card__connect-btn card__connect-btn${tariff.button} connect-btn">Подключить</a>
-            <div class="card__info-btn"></div>
+            <div class="card__info-btn hidden"></div>
         </div>
         </div>`;
     }

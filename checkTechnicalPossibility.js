@@ -43,7 +43,7 @@ function determineFullStreetType(streetWithType) {
 //   data.house = "7"
 // то функция вернёт: "г Кемерово Свободы улица 7"
 function getFormattedAddressString(data) {
-    const city = data.city_with_type || data.settlement_with_type || data.city || "";
+    const city = data.settlement_with_type || data.city_with_type || data.city || "";
     let street = "";
     if (data.street) {
         const streetType = determineFullStreetType(data.street_with_type || "");
@@ -82,7 +82,7 @@ function formatAddressFromDaData(data) {
 //   data.house = "7"
 // Вернёт: "г Кемерово, ул Свободы, д 7"
 function getFullAddressString(data) {
-    const city = data.city_with_type || data.settlement_with_type || data.city || "";
+    const city = data.settlement_with_type || data.city_with_type || data.city || "";
     const building = data.house || "";
     const street = data.street || "";
     const street_with_type = data.street_with_type || "";
@@ -151,8 +151,8 @@ function loadTechnicalData(jsonUrl) {
 // address – отформатированный адрес (например, "г Кемерово Свободы улица 7"),
 // fullAddress – полное представление адреса (например, "г Кемерово, пр-кт ленина, д 115"),
 // techResult – результат проверки технической возможности.
-function saveUserLocation({ city, address = "", techResult = null, fullAddress = "" }) {
-    userLocation = { city, address, techResult, fullAddress };
+function saveUserLocation({ city, address = "", techResult = null, fullAddress = "", cityFias = "" }) {
+    userLocation = { city, address, techResult, fullAddress, cityFias };
     localStorage.setItem("userLocation", JSON.stringify(userLocation));
     console.log("[LOG] userLocation сохранён:", userLocation);
     window.dispatchEvent(new Event("userLocationChanged"));
@@ -182,104 +182,108 @@ function updateCityInElements(city) {
   
 // Инициализирует подсказки DaData для инпута адреса
 function initManualAddressInput(inputSelector, regionFiasId = '') {
-    $(inputSelector).on('input', function() {
-      const inputVal = $(this).val();
-      // Разбиваем введённый текст по запятым, убираем лишние пробелы и пустые элементы
-      const parts = inputVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
-  
-      // Определяем режим ввода:
-      // 1 часть – свободный режим;
-      // 2 части – выбран город, вводится улица;
-      // 3 и более – вводится дом.
-      let stage = 'free';
-      let requestData = {
-        query: inputVal.trim(),
-        count: 5,
-        locations: regionFiasId ? [{ region_fias_id: regionFiasId }] : []
-      };
-  
-      if (parts.length === 2) {
-        stage = 'street';
-        requestData.from_bound = { value: "street" };
-        requestData.to_bound = { value: "street" };
-        requestData.query = (parts[0] ? parts[0] + ' ' : '') + parts[1];
-      } else if (parts.length >= 3) {
-        stage = 'house';
-        requestData.from_bound = { value: "house" };
-        requestData.to_bound = { value: "house" };
-        requestData.query = ((parts[0] ? parts[0] + ' ' : '') + (parts[1] ? parts[1] + ' ' : '')) + parts[2];
+  $(inputSelector).on('input', function() {
+    const inputVal = $(this).val();
+    // Разбиваем введённый текст по запятым, убираем лишние пробелы и пустые элементы
+    const parts = inputVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
+
+    // Определяем режим ввода:
+    // 1 часть – свободный режим;
+    // 2 части – выбран город, вводится улица;
+    // 3 и более – вводится дом.
+    let stage = 'free';
+    let requestData = {
+      query: inputVal.trim(),
+      count: 5,
+      locations: regionFiasId ? [{ region_fias_id: regionFiasId }] : []
+    };
+
+    if (parts.length === 2) {
+      stage = 'street';
+      requestData.from_bound = { value: "street" };
+      requestData.to_bound = { value: "street" };
+      requestData.query = (parts[0] ? parts[0] + ' ' : '') + parts[1];
+    } else if (parts.length >= 3) {
+      stage = 'house';
+      requestData.from_bound = { value: "house" };
+      requestData.to_bound = { value: "house" };
+      requestData.query = ((parts[0] ? parts[0] + ' ' : '') + (parts[1] ? parts[1] + ' ' : '')) + parts[2];
+    }
+
+    if (requestData.query.trim().length < 3) {
+      $('#suggestions').empty();
+      return;
+    }
+
+    $.ajax({
+      url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
+      method: 'POST',
+      headers: { "Authorization": `Token ${dadataToken}` },
+      contentType: 'application/json',
+      data: JSON.stringify(requestData),
+      success: function(data) {
+        let suggestions = data.suggestions || [];
+        // Удаляем дубликаты подсказок
+        suggestions = deduplicateSuggestions(suggestions);
+        const suggestionsDiv = $('#suggestions');
+        suggestionsDiv.empty();
+
+        suggestions.forEach(item => {
+          // Для отображения используем неотформатированный адрес, полученный от DaData (item.value)
+          const rawAddress = item.value;
+          // Если режим "house", проверяем, что адрес полный (fias_level === "8" и поле house присутствует)
+          if (stage === 'house') {
+            if (item.data.fias_level !== '8' || !item.data.house) return;
+          }
+          suggestionsDiv.append(
+            `<div data-suggestion='${JSON.stringify(item)}'>${rawAddress}</div>`
+          );
+        });
+      },
+      error: function(err) {
+        console.error('Ошибка DaData:', err);
       }
-  
-      if (requestData.query.trim().length < 3) {
-        $('#suggestions').empty();
+    });
+  });
+
+  // Обработка клика по подсказке: обновляем инпут и сохраняем данные, если адрес полный
+  $('#suggestions').on('click', 'div', function() {
+    let suggestion = $(this).data('suggestion');
+    if (typeof suggestion === 'string') {
+      try {
+        suggestion = JSON.parse(suggestion);
+      } catch (e) {
+        console.error('Ошибка парсинга данных подсказки', e);
         return;
       }
-  
-      $.ajax({
-        url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
-        method: 'POST',
-        headers: { "Authorization": `Token ${dadataToken}` },
-        contentType: 'application/json',
-        data: JSON.stringify(requestData),
-        success: function(data) {
-          let suggestions = data.suggestions || [];
-          // Удаляем дубликаты подсказок
-          suggestions = deduplicateSuggestions(suggestions);
-          const suggestionsDiv = $('#suggestions');
-          suggestionsDiv.empty();
-  
-          suggestions.forEach(item => {
-            // Для отображения используем неотформатированный адрес, полученный от DaData (item.value)
-            const rawAddress = item.value;
-            // Если режим "house", проверяем, что адрес полный (fias_level === "8" и поле house присутствует)
-            if (stage === 'house') {
-              if (item.data.fias_level !== '8' || !item.data.house) return;
-            }
-            suggestionsDiv.append(
-              `<div data-suggestion='${JSON.stringify(item)}'>${rawAddress}</div>`
-            );
-          });
-        },
-        error: function(err) {
-          console.error('Ошибка DaData:', err);
-        }
-      });
-    });
-  
-    // Обработка клика по подсказке: обновляем инпут и сохраняем данные, если адрес полный
-    $('#suggestions').on('click', 'div', function() {
-      let suggestion = $(this).data('suggestion');
-      if (typeof suggestion === 'string') {
-        try {
-          suggestion = JSON.parse(suggestion);
-        } catch (e) {
-          console.error('Ошибка парсинга данных подсказки', e);
-          return;
-        }
+    }
+
+    // Формируем отформатированную строку адреса (без запятых) для проверки технической возможности
+    const formattedAddress = getFormattedAddressString(suggestion.data);
+    // Формируем полное представление адреса (с разделителями и сокращениями)
+    const fullAddressFormatted = getFullAddressString(suggestion.data);
+    const isComplete = suggestion.data.house && suggestion.data.house.trim() !== '';
+    // Обновляем инпут неотформатированным адресом, полученным от DaData
+    $(inputSelector).val(suggestion.value);
+    $('#suggestions').empty();
+    if (isComplete) {
+      const techResult = checkTechnicalPossibility(formattedAddress);
+      console.log(suggestion);
+      // Если в ответе от DaData присутствует другой населённый пункт (например, пгт, село и т.д.), используем его,
+      // иначе возвращаем значение для города
+      const cityName = suggestion.data.settlement || suggestion.data.city|| suggestion.data.city_with_type || "";
+      updateCityInElements(cityName);
+      // Сохраняем данные: address – отформатированный адрес, fullAddress – полное представление адреса
+      saveUserLocation({ city: cityName, address: formattedAddress, techResult: techResult, fullAddress: fullAddressFormatted, cityFias: suggestion.data.city_fias_id });
+      closePopup();
+      if (techResult.isPossible) {
+        alert(`Техническая возможность: ${techResult.txb}`);
+      } else {
+        alert('Технической возможности нет');
       }
-  
-      // Формируем отформатированную строку адреса (без запятых) для проверки технической возможности
-      const formattedAddress = getFormattedAddressString(suggestion.data);
-      // Формируем полное представление адреса (с разделителями и сокращениями)
-      const fullAddressFormatted = getFullAddressString(suggestion.data);
-      const isComplete = suggestion.data.house && suggestion.data.house.trim() !== '';
-      // Обновляем инпут неотформатированным адресом, полученным от DaData
-      $(inputSelector).val(suggestion.value);
-      $('#suggestions').empty();
-      if (isComplete) {
-        const techResult = checkTechnicalPossibility(formattedAddress);
-        const cityName = suggestion.data.city_with_type || suggestion.data.settlement_with_type || suggestion.data.city || "";
-        updateCityInElements(cityName);
-        // Сохраняем данные: address – отформатированный адрес, fullAddress – полное представление адреса
-        saveUserLocation({ city: cityName, address: formattedAddress, techResult: techResult, fullAddress: fullAddressFormatted });
-        closePopup();
-        if (techResult.isPossible) {
-          alert(`Техническая возможность: ${techResult.txb}`);
-        } else {
-          alert('Технической возможности нет');
-        }
-      }
-    });
+    }
+  });
+
 
   // Обработка нажатия клавиши Enter – для подтверждения адреса, введённого вручную.
 //   $(inputSelector).on('keydown', function(e) {
@@ -335,10 +339,9 @@ function initCityPopup(popupSelector) {
   // Таким образом, данные сохраняются в localStorage под ключом "userLocation".
   
   // Устанавливаем стили для контейнеров с подсказками и локальными городами
-  $(popupSelector).find('#suggestions').css({
-    'max-height': '700px',
-    'overflow-y': 'auto'
-  });
+  // $(popupSelector).find('#suggestions').css({
+
+  // });
 
   // Функция отображения локальных городов из файла cities.json
   function showLocalCities() {
@@ -479,7 +482,8 @@ function initCityPopup(popupSelector) {
       saveUserLocation({
         city: selectedCity.name,
         address: formatted,
-        techResult: techResult
+        techResult: techResult,
+        cityFias: suggestionData.city_fias_id
       });
       if (techResult.isPossible) {
         alert(`Техническая возможность: ${techResult.txb}`);
@@ -492,7 +496,7 @@ function initCityPopup(popupSelector) {
         cityFiasId: suggestionData.city_fias_id || ''
       };
       closePopup()
-      saveUserLocation({ city: selectedCity.name });
+      saveUserLocation({ city: selectedCity.name, cityFias: suggestionData.city_fias_id });
     }
   });
 
@@ -509,7 +513,7 @@ function initCityPopup(popupSelector) {
     $(popupSelector).find('.popup-address__input').val(cityObj.name);
     $(popupSelector).find('#local-cities .local-city').removeClass('input_active');
     $(this).addClass('input_active');
-    saveUserLocation({ city: cityObj.name, address: "" });
+    saveUserLocation({ city: cityObj.name, address: "", cityFias: cityObj.cityFiasId });
     closePopup()
   });
 

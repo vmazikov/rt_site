@@ -434,8 +434,9 @@
 .local-city {
   margin-top: 10px;
   text-align: left;
-  font-size: 16px;
+  font-size: 18px;
   color: #686868;
+  cursor: pointer;
 }
 
 .local-city_active {

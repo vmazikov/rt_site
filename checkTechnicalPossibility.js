@@ -2,6 +2,18 @@ const dadataToken = '549f6e44bb6269eed79da8d09d37e0ff7042035f'; // Токен Da
 const regionFiasId = '393aeccb-89ef-4a7e-ae42-08d5cebc2e30';       // FIAS ID области
 let technicalData = []; // Технические данные, загружаемые из JSON
 
+let localCities = [];
+
+// Загружаем список городов из файла cities.json
+$.getJSON('cities.json', function(data) {
+  if (data && data.cities) {
+    // Игнорируем поле visible при проверке наличия города
+    localCities = data.cities; // Все города, без фильтрации по visible
+  }
+}).fail(function(jqxhr, textStatus, error) {
+  console.error("Ошибка загрузки cities.json:", textStatus, error);
+});
+
 // Глобальный объект для хранения данных о местоположении пользователя
 let userLocation = {
   city: "",
@@ -43,16 +55,30 @@ function determineFullStreetType(streetWithType) {
 //   data.house = "7"
 // то функция вернёт: "г Кемерово Свободы улица 7"
 function getFormattedAddressString(data) {
-    const city = data.settlement_with_type || data.city_with_type || data.city || "";
-    let street = "";
-    if (data.street) {
-        const streetType = determineFullStreetType(data.street_with_type || "");
-        street = data.street + ' ' + streetType;
+  // Проверка на наличие settlement в файле cities.json
+  let city = data.city_with_type || data.settlement_with_type || data.city || "";
+
+  // Если есть settlement, проверим его в файле localCities (игнорируя поле visible)
+  if (data.settlement) {
+    const candidate = data.settlement.trim().toLowerCase();
+    // Если settlement найдено среди городов, используем его
+    const found = localCities.some(function(cityData) {
+      return cityData.name.trim().toLowerCase() === candidate;
+    });
+    if (found) {
+      city = data.settlement_with_type || data.settlement || "";
     }
-    const building = data.house || "";
-    return `${city.trim()} ${street.trim()} ${building.trim()}`.replace(/\s+/g, " ").trim();
+  }
+
+  let street = "";
+  if (data.street) {
+    const streetType = determineFullStreetType(data.street_with_type || "");
+    street = data.street + ' ' + streetType;
+  }
+  const building = data.house || "";
+
+  return `${city.trim()} ${street.trim()} ${building.trim()}`.replace(/\s+/g, " ").trim();
 }
-  
 /**
  * Форматирует адрес на основе объекта, полученного от DaData.
  * @param {Object} data - объект адреса из DaData.
@@ -182,15 +208,46 @@ function updateCityInElements(city) {
   
 // Инициализирует подсказки DaData для инпута адреса
 function initManualAddressInput(inputSelector, regionFiasId = '') {
+  let localCities = [];
+
+  // Загружаем список городов из файла cities.json
+  $.getJSON('cities.json', function(data) {
+    if (data && data.cities) {
+      // Игнорируем поле visible при проверке наличия города
+      localCities = data.cities; // Все города, без фильтрации по visible
+    }
+  }).fail(function(jqxhr, textStatus, error) {
+    console.error("Ошибка загрузки cities.json:", textStatus, error);
+  });
+
+  /**
+   * Определяет, какое название населённого пункта использовать.
+   * Если в ответе DaData есть поле settlement и оно совпадает с полем name у одного из городов из cities.json,
+   * то возвращается settlement. Если совпадения нет, возвращается значение поля city (или city_with_type).
+   *
+   * @param {Object} data - объект с данными, полученными от DaData.
+   * @returns {string} - выбранное название населённого пункта.
+   */
+  function resolveCityName(data) {
+    if (data.settlement) {
+      var candidate = data.settlement.trim().toLowerCase();
+      // Если среди локальных городов есть объект, у которого поле name совпадает с candidate, возвращаем settlement
+      var found = localCities.some(function(city) {
+        return city.name.trim().toLowerCase() === candidate;
+      });
+      if (found) {
+        return data.settlement;
+      }
+    }
+    return data.city || data.city_with_type || "";
+  }
+
   $(inputSelector).on('input', function() {
     const inputVal = $(this).val();
     // Разбиваем введённый текст по запятым, убираем лишние пробелы и пустые элементы
     const parts = inputVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
 
     // Определяем режим ввода:
-    // 1 часть – свободный режим;
-    // 2 части – выбран город, вводится улица;
-    // 3 и более – вводится дом.
     let stage = 'free';
     let requestData = {
       query: inputVal.trim(),
@@ -223,6 +280,7 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       data: JSON.stringify(requestData),
       success: function(data) {
         let suggestions = data.suggestions || [];
+        console.log(suggestions);
         // Удаляем дубликаты подсказок
         suggestions = deduplicateSuggestions(suggestions);
         const suggestionsDiv = $('#suggestions');
@@ -266,16 +324,29 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
     // Обновляем инпут неотформатированным адресом, полученным от DaData
     $(inputSelector).val(suggestion.value);
     $('#suggestions').empty();
+
     if (isComplete) {
       const techResult = checkTechnicalPossibility(formattedAddress);
       console.log(suggestion);
-      // Если в ответе от DaData присутствует другой населённый пункт (например, пгт, село и т.д.), используем его,
-      // иначе возвращаем значение для города
-      const cityName = suggestion.data.settlement || suggestion.data.city|| suggestion.data.city_with_type || "";
+
+      // Используем resolveCityName для корректного города
+      const cityName = resolveCityName(suggestion.data) || suggestion.data.settlement || suggestion.data.city || suggestion.data.city_with_type || "";
+
+      // Формируем правильный адрес (город + улица + дом)
+      const formattedAddressWithCity = `${cityName} ${suggestion.data.street_with_type || ''} ${suggestion.data.house || ''}`.trim();
+
+      // Сохраняем данные
+      saveUserLocation({
+        city: cityName,
+        address: formattedAddressWithCity, // Сохраняем отформатированный адрес
+        techResult: techResult,
+        fullAddress: fullAddressFormatted, // Неотформатированный адрес
+        cityFias: suggestion.data.city_fias_id
+      });
+
       updateCityInElements(cityName);
-      // Сохраняем данные: address – отформатированный адрес, fullAddress – полное представление адреса
-      saveUserLocation({ city: cityName, address: formattedAddress, techResult: techResult, fullAddress: fullAddressFormatted, cityFias: suggestion.data.city_fias_id });
       closePopup();
+
       if (techResult.isPossible) {
         alert(`Техническая возможность: ${techResult.txb}`);
       } else {
@@ -283,6 +354,8 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       }
     }
   });
+
+
 
 
   // Обработка нажатия клавиши Enter – для подтверждения адреса, введённого вручную.
@@ -335,77 +408,90 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
 function initCityPopup(popupSelector) {
   let localCities = [];
 
-  // Используем уже существующую функцию saveUserLocation вместо отдельного saveSelection.
-  // Таким образом, данные сохраняются в localStorage под ключом "userLocation".
-  
-  // Устанавливаем стили для контейнеров с подсказками и локальными городами
-  // $(popupSelector).find('#suggestions').css({
+  /**
+   * Определяет, какое название населённого пункта использовать.
+   * Если в ответе DaData есть поле settlement и оно совпадает с полем name у одного из городов из cities.json,
+   * то возвращается settlement. Если совпадения нет, возвращается значение поля city (или city_with_type).
+   *
+   * @param {Object} data - объект с данными, полученными от DaData.
+   * @returns {string} - выбранное название населённого пункта.
+   */
+  function resolveCityName(data) {
+    if (data.settlement) {
+      var candidate = data.settlement.trim().toLowerCase();
+      // Ищем в localCities (уже загруженных из cities.json) город с таким именем, игнорируя поле visible
+      var found = localCities.some(function(city) {
+        return city.name.trim().toLowerCase() === candidate;
+      });
+      if (found) {
+        return data.settlement;
+      }
+    }
+    return data.city || data.city_with_type || "";
+  }
 
-  // });
-
-  // Функция отображения локальных городов из файла cities.json
+  // Функция отображения локальных городов из файла cities.json (выводим только видимые города)
   function showLocalCities() {
     const $localCitiesDiv = $(popupSelector).find('#local-cities');
     $localCitiesDiv.empty();
     localCities.forEach(function(city) {
-      $localCitiesDiv.append(
-        `<div class="local-city" data-city='${JSON.stringify(city)}'>
-         ${city.type} ${city.name} 
-        </div>`
-      );
+      if (city.visible === "yes") { // Показываем только те города, у которых visible === "yes"
+        $localCitiesDiv.append(
+          `<div class="local-city" data-city='${JSON.stringify(city)}'>
+             ${city.type} ${city.name}
+           </div>`
+        );
+      }
     });
     $localCitiesDiv.show();
   }
 
-  // Загружаем список городов из файла cities.json (отбираем записи с "visible": "yes")
+  // Загружаем список городов из файла cities.json
   $.getJSON('cities.json', function(data) {
     if (data && data.cities) {
-      localCities = data.cities.filter(function(city) {
-        return city.visible === "yes";
-      });
-      localCities.sort((a, b) => a.name.localeCompare(b.name));
-      showLocalCities();
+      // Игнорируем поле visible при проверке наличия города
+      localCities = data.cities; // Все города, без фильтрации по visible
+      showLocalCities(); // Показываем только видимые города в интерфейсе
     }
   }).fail(function(jqxhr, textStatus, error) {
     console.error("Ошибка загрузки cities.json:", textStatus, error);
   });
 
-  // Функция для удаления дубликатов подсказок по отформатированному адресу
+  // Функция удаления дубликатов подсказок (сравниваем по сырому значению)
   function deduplicateSuggestions(suggestions) {
     const seen = {};
     return suggestions.filter(suggestion => {
-      if (seen[suggestion.formatted]) return false;
-      seen[suggestion.formatted] = true;
+      if (seen[suggestion.raw]) return false;
+      seen[suggestion.raw] = true;
       return true;
     });
   }
 
-  /**
-   * Запрашивает подсказки от DaData.
-   * Если в localStorage уже сохранён userLocation, то первым ищутся адреса по его city_fias_id (если он указан),
-   * затем – по региональному fias.
-   * @param {string} query - запрос пользователя.
-   */
-  function fetchDaDataSuggestions(query) {
+  // Запрос подсказок от DaData для поиска города
+  // Возвращаются варианты, в которых присутствует хотя бы одно из полей: city, settlement или settlement_with_type.
+  function fetchCitySuggestions(query) {
+    const requestData = {
+      query: query,
+      count: 10,
+      locations: []
+    };
+
+    // Не задаём from_bound и to_bound, чтобы получить и варианты с settlement.
+    // Если в localStorage уже сохранён город, добавляем его fias_id для уточнения запроса.
     let locations = [];
     const storedLocationStr = localStorage.getItem('userLocation');
     if (storedLocationStr) {
       try {
         const storedLocation = JSON.parse(storedLocationStr);
-        if (storedLocation.city && storedLocation.cityFiasId) {
-          locations.push({ city_fias_id: storedLocation.cityFiasId });
+        if (storedLocation.city && storedLocation.cityFias) {
+          locations.push({ city_fias_id: storedLocation.cityFias });
         }
       } catch (e) {
         console.error("Ошибка парсинга userLocation:", e);
       }
     }
     locations.push({ region_fias_id: regionFiasId });
-
-    const requestData = {
-      query: query,
-      count: 10,
-      locations: locations
-    };
+    requestData.locations = locations;
 
     $.ajax({
       url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
@@ -413,12 +499,28 @@ function initCityPopup(popupSelector) {
       headers: { "Authorization": `Token ${dadataToken}` },
       contentType: 'application/json',
       data: JSON.stringify(requestData),
-      success: function(data) {
-        let suggestions = data.suggestions || [];
+      success: function(response) {
+        let suggestions = response.suggestions || [];
+        // Преобразуем ответ – сохраняем сырой адрес (item.value) и объект с данными (item.data)
         suggestions = suggestions.map(item => ({
           data: item.data,
-          formatted: formatAddressFromDaData(item.data)
+          raw: item.value
         }));
+
+        // Фильтруем подсказки:
+        suggestions = suggestions.filter(item => {
+          if (!item.raw || item.raw.trim() === "") return false;
+          const lowerRaw = item.raw.toLowerCase();
+          // Отбрасываем варианты с «район» или «территория»
+          if (lowerRaw.includes("район") || lowerRaw.includes("территория")) return false;
+          // Исключаем варианты, где указан номер дома (это не чистый выбор города)
+          if (item.data.house && item.data.house.trim() !== "") return false;
+          // Разрешаем подсказку, если в данных присутствует хотя бы одно из полей:
+          // city, settlement или settlement_with_type
+          if (!item.data.city && !item.data.settlement && !item.data.settlement_with_type) return false;
+          return true;
+        });
+
         suggestions = deduplicateSuggestions(suggestions);
 
         const $suggestionsDiv = $(popupSelector).find('#suggestions');
@@ -426,9 +528,9 @@ function initCityPopup(popupSelector) {
         if (suggestions.length > 0) {
           suggestions.forEach(function(suggestion) {
             $suggestionsDiv.append(
-              `<div class="dadata-suggestion" data-data='${JSON.stringify(suggestion.data)}'>
-                ${suggestion.formatted}
-              </div>`
+              `<div class="dadata-suggestion" data-suggestion='${JSON.stringify(suggestion)}'>
+                 ${suggestion.raw}
+               </div>`
             );
           });
           $suggestionsDiv.show();
@@ -444,102 +546,74 @@ function initCityPopup(popupSelector) {
     });
   }
 
-  // Обработка ввода в поле попапа
+  // Обработка ввода в поле попапа (поиск города)
   $(popupSelector).find('.popup-address__input').on('input', function() {
     const query = $(this).val().trim();
     if (query.length >= 3) {
-      fetchDaDataSuggestions(query);
+      fetchCitySuggestions(query);
     } else {
-      $(popupSelector).find('#suggestions').hide();
+      $(popupSelector).find('#suggestions').empty().hide();
       $(popupSelector).find('#local-cities').show();
     }
+    // Сбрасываем активное состояние у подсказок и локальных городов
     $(popupSelector).find('.dadata-suggestion, .local-city').removeClass('input_active');
   });
 
-  // При клике по подсказке DaData
+  // Обработка клика по подсказке DaData
   $(popupSelector).on('click', '.dadata-suggestion', function() {
-    let dataAttr = $(this).attr('data-data');
-    let suggestionData;
+    let suggestionObj;
     try {
-      suggestionData = JSON.parse(dataAttr);
+      suggestionObj = JSON.parse($(this).attr('data-suggestion'));
     } catch (e) {
-      console.error("Ошибка парсинга данных DaData:", e);
+      console.error("Ошибка парсинга данных подсказки DaData:", e);
       return;
     }
-    const formatted = formatAddressFromDaData(suggestionData);
-    const isFullAddress = suggestionData.house && suggestionData.house.trim() !== '';
-    $(popupSelector).find('.popup-address__input').val(formatted);
+    const { data, raw } = suggestionObj;
+    // Используем resolveCityName: если settlement присутствует и входит в localCities, возвращается settlement;
+    // иначе – используется city (или city_with_type).
+    const cityName = resolveCityName(data) || raw;
+    // Очищаем инпут после выбора подсказки
+    $(popupSelector).find('.popup-address__input').val('');
     $(popupSelector).find('#suggestions').empty().hide();
     $(popupSelector).find('.dadata-suggestion').removeClass('input_active');
     $(this).addClass('input_active');
-
-    if (isFullAddress) {
-      const techResult = checkTechnicalPossibility(formatted);
-      const selectedCity = {
-        name: suggestionData.city || formatted,
-        cityFiasId: suggestionData.city_fias_id || ''
-      };
-      saveUserLocation({
-        city: selectedCity.name,
-        address: formatted,
-        techResult: techResult,
-        cityFias: suggestionData.city_fias_id
-      });
-      if (techResult.isPossible) {
-        alert(`Техническая возможность: ${techResult.txb}`);
-      } else {
-        alert('Технической возможности нет');
-      }
-    } else {
-      const selectedCity = {
-        name: suggestionData.city || formatted,
-        cityFiasId: suggestionData.city_fias_id || ''
-      };
-      closePopup()
-      saveUserLocation({ city: selectedCity.name, cityFias: suggestionData.city_fias_id });
-    }
+    saveUserLocation({ city: cityName, fullAddress: "", cityFias: data.city_fias_id || "" });
+    updateCityInElements(cityName);
+    closePopup();
   });
 
-  // При клике по локальному городу (из cities.json)
+  // Обработка клика по локальному городу (из списка cities.json)
   $(popupSelector).on('click', '.local-city', function() {
-    let dataAttr = $(this).attr('data-city');
     let cityObj;
     try {
-      cityObj = JSON.parse(dataAttr);
+      cityObj = JSON.parse($(this).attr('data-city'));
     } catch (e) {
       console.error("Ошибка парсинга данных локального города", e);
       return;
     }
     $(popupSelector).find('#local-cities .local-city').removeClass('input_active');
     $(this).addClass('input_active');
-    saveUserLocation({ city: cityObj.name, address: "", cityFias: cityObj.cityFiasId });
-    closePopup()
+    // Очищаем инпут после выбора
+    $(popupSelector).find('.popup-address__input').val('');
+    saveUserLocation({ city: cityObj.name, fullAddress: "", cityFias: cityObj.cityFiasId });
+    updateCityInElements(cityObj.name);
+    closePopup();
   });
 
-  // Обработка нажатия клавиши Enter в попапе
+  // Обработка нажатия клавиши Enter – сохраняем введённый город и очищаем инпут
   $(popupSelector).find('.popup-address__input').on('keydown', function(e) {
     if (e.key === 'Enter') {
       e.preventDefault();
       const inputVal = $(this).val().trim();
       $(popupSelector).find('#suggestions').empty().hide();
-      if (inputVal.indexOf(',') !== -1) {
-        const techResult = checkTechnicalPossibility(inputVal);
-        const cityName = inputVal.split(',')[0].trim();
-        closePopup()
-        saveUserLocation({ city: cityName, address: inputVal, techResult: techResult });
-        if (techResult.isPossible) {
-          alert(`Техническая возможность: ${techResult.txb}`);
-        } else {
-          alert('Технической возможности нет');
-        }
-      } else {
-        closePopup()
-        saveUserLocation({ city: inputVal });
-      }
+      // Очищаем инпут
+      $(popupSelector).find('.popup-address__input').val('');
+      saveUserLocation({ city: inputVal, fullAddress: "" });
+      updateCityInElements(inputVal);
+      closePopup();
     }
   });
 }
-
 // ================================
 // ФУНКЦИЯ ОБНОВЛЕНИЯ ЭЛЕМЕНТОВ С ГОРОДОМ
 // ================================

@@ -79,9 +79,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         return tariffs;
     }
 
+
     function createTariffCard(tariff) {
         return `
-        <div class="card">
+        <div class="card" data-tariff='${JSON.stringify(tariff)}'>
         <div class="card__highlights">
             ${tariff.card__highlight_hit ? `<span class="card__highlight card__highlight_hit">${tariff.card__highlight_hit}</span>` : ''}
             ${tariff.card__highlight_promo ? `<span class="card__highlight card__highlight_promo">${tariff.card__highlight_promo}</span>` : ''}

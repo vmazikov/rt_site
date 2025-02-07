@@ -33,12 +33,13 @@ cityButtons.forEach((button) => {
 
 // Назначаем обработчик событий для всех кнопок
 connectButtons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      e.preventDefault(); // Отключаем стандартное поведение ссылки
-      openFirstPopup();
-    });
+  button.addEventListener("click", function(e) {
+    e.preventDefault(); // Отключаем стандартное поведение ссылки
+    console.log("Клик по кнопке 'Подключить', передаем кнопку:", this);
+    openFirstPopup(this); // Передаем саму кнопку, на которую был совершен клик
   });
-  
+});
+
 // Функция открытия попапа
 function openPopup(popup) {
     overlay.classList.add("overlay_active");
@@ -60,38 +61,85 @@ function closePopup() {
   closeButtons.forEach((btn) => {
     btn.addEventListener("click", closePopup);
   });
-
-  // Функция для открытия первого попапа
-function openFirstPopup() {
-    openPopup(popup1); // popup1 — ваш первый попап
-  }
   
 // Открытие первого попапа
 function attachEventListeners() {
-  document.querySelectorAll(".connect-btn").forEach(button => {
-      button.addEventListener("click", (e) => {
-          e.preventDefault();
-          openPopup(popup1);
-      });
+// Заменяем обработчики событий для кнопок на делегирование событий
+document.querySelector('.card-wrapper').addEventListener("click", function(e) {
+  // Проверяем, был ли клик именно по кнопке "Подключить"
+  if (e.target && e.target.classList.contains('connect-btn')) {
+      e.preventDefault();
+      openFirstPopup(e.target); // Передаем кнопку, на которую был совершен клик
+  }
+});
+}
+
+function openFirstPopup(button) {
+  const card = button.closest(".card"); // Находим родительский элемент .card
+  const tariffValue = card.getAttribute("data-tariff");
+
+  // Логируем, что мы получаем из атрибута
+  console.log("Данные о тарифе из data-tariff:", tariffValue);
+
+  // Проверка, что значение существует
+  if (!tariffValue) {
+    console.error("Данные о тарифе не найдены в карточке");
+    alert("Данные о тарифе не найдены!");
+    return;
+  }
+
+  const tariff = JSON.parse(tariffValue); // Преобразуем строку JSON в объект
+  console.log("Тариф после парсинга:", tariff);
+
+  // Получаем данные пользователя из localStorage
+  const userLocation = JSON.parse(localStorage.getItem("userLocation"));
+  console.log("Данные о местоположении пользователя:", userLocation);
+
+  // Открываем первый попап (popup1)
+  openPopup(popup1);
+
+  // Когда пользователь выберет новый клиент, передаем данные в popup2
+  newConnectionBtn.addEventListener("click", () => {
+    closePopup();
+    openPopup(popup2);
+
+    // Логируем перед передачей данных
+    console.log("Передаем данные в popup2:", tariff, userLocation);
+
+    // Заполняем скрытые поля в форме (формируем popup2)
+    document.getElementById('tarif').value = JSON.stringify(tariff); // Передаем данные о тарифе в скрытое поле
+    document.getElementById('location').value = userLocation.city;   // Передаем город
+    document.getElementById('address').value = userLocation.fullAddress; // Передаем адрес
+
+    // Логируем, что скрытые поля формы заполнены
+    console.log("Заполнили скрытые поля: ", document.getElementById('tarif').value);
+  });
+
+  // Когда пользователь выберет "Уже подключен", открываем popup3
+  existingConnectionBtn.addEventListener("click", () => {
+    closePopup();
+    openPopup(popup3);
   });
 }
-// Логика кнопок в первом попапе
-newConnectionBtn.addEventListener("click", () => {
-closePopup();
-openPopup(popup2);
-});
+
+
   
-existingConnectionBtn.addEventListener("click", () => {
-closePopup();
-openPopup(popup3);
-});
+// // Логика кнопок в первом попапе
+// existingConnectionBtn.addEventListener("click", () => {
+//   closePopup();
+//   openPopup(popup3);
+// });
+
+// newConnectionBtn.addEventListener("click", () => {
+//   closePopup();
+//   openPopup(popup2);
+// });
 
 // Функция для валидации телефона
 function validatePhone() {
     const phoneValue = phoneInput.value.trim();
     const isValid = phoneValue.length === 12 && phoneValue.startsWith("+7");
     if (isValid) {
-      errorText.style.display = "none";
       submitButton.disabled = false;
       submitButton.classList.add("popup__submit-button_active")
     } else {
@@ -108,19 +156,19 @@ function validatePhone() {
     validatePhone();
   });
   
-  // Отправка формы
-  document.getElementById("phoneForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (submitButton.disabled) {
-      errorText.textContent = "Не верный формат номера";
-      errorText.style.display = "block";
-      submitButton.classList.add("error");
-      setTimeout(() => submitButton.classList.remove("error"), 500);
-    } else {
-      closePopup(); // Закрыть текущий попап
-  
-    }
-  });
+// Отправка формы
+document.getElementById("phoneForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (submitButton.disabled) {
+    errorText.textContent = "Не верный формат номера";
+    errorText.style.display = "block";
+    submitButton.classList.add("error");
+    setTimeout(() => submitButton.classList.remove("error"), 500);
+  } else {
+    // Отправка данных через AJAX
+    sendDataToTelegram();
+  }
+});
   
   phoneInput.addEventListener("input", () => {
     if (!phoneInput.value.startsWith("+7")) {
@@ -131,6 +179,51 @@ function validatePhone() {
     const isValid = phoneInput.value.length === 12 && phoneInput.value.startsWith("+7");
     submitButton.disabled = !isValid;
     submitButton.style.backgroundColor = isValid ? "#f8530f" : "#cccccc";
-    errorText.style.display = isValid ? "none" : "block";
   });
+  
+
+  // Функция отправки данных в Telegram через AJAX
+  function sendDataToTelegram() {
+    const form = document.getElementById("phoneForm");
+    
+    // Получаем данные из скрытых полей формы
+    const userLocation = JSON.parse(localStorage.getItem("userLocation"));
+    const tariffValue = document.getElementById('tarif').value;
+    
+    // Проверяем, есть ли данные о тарифе
+    if (!tariffValue) {
+      alert("Ошибка: нет данных о тарифе.");
+      return;
+    }
+  
+    const tariff = JSON.parse(tariffValue); // Десериализация данных о тарифе
+    const phone = phoneInput.value; // Получаем номер телефона
+  
+    // Отправляем данные через AJAX
+    fetch('send_to_telegram.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        userLocation: JSON.stringify(userLocation),
+        tariff: JSON.stringify(tariff),
+        phone: phone
+      })
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log(data); // Ответ от сервера
+      if (data.includes("Заявка успешно отправлена")) {
+        closePopup(); // Закрыть текущий попап
+        openPopup(popup4); // Открыть попап подтверждения
+      } else {
+        alert("Ошибка при отправке заявки.");
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("Ошибка при отправке заявки.");
+    });
+  }
   

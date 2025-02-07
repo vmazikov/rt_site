@@ -176,6 +176,20 @@ function loadTechnicalData(jsonUrl) {
   });
 }
 
+function resolveCityName(data) {
+  if (data.settlement) {
+    var candidate = data.settlement.trim().toLowerCase();
+    // Ищем в localCities (уже загруженных из cities.json) город с таким именем, игнорируя поле visible
+    var found = localCities.some(function(city) {
+      return city.name.trim().toLowerCase() === candidate;
+    });
+    if (found) {
+      return data.settlement;
+    }
+  }
+  return data.city || data.city_with_type || "";
+}
+
 // Сохраняет данные о местоположении пользователя
 function saveUserLocation({ city, address = "", techResult = null, fullAddress = "", cityFias = "" }) {
   userLocation = { city, address, techResult, fullAddress, cityFias };
@@ -305,19 +319,7 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       const techResult = checkTechnicalPossibility(formattedAddress);
       console.log(suggestion);
 
-      function resolveCityName(data) {
-        if (data.settlement) {
-          var candidate = data.settlement.trim().toLowerCase();
-          // Ищем в localCities (уже загруженных из cities.json) город с таким именем, игнорируя поле visible
-          var found = localCities.some(function(city) {
-            return city.name.trim().toLowerCase() === candidate;
-          });
-          if (found) {
-            return data.settlement;
-          }
-        }
-        return data.city || data.city_with_type || "";
-      }
+
 
 
       // Используем resolveCityName для корректного города

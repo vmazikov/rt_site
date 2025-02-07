@@ -1,7 +1,6 @@
 const dadataToken = '549f6e44bb6269eed79da8d09d37e0ff7042035f'; // Токен DaData
 const regionFiasId = '393aeccb-89ef-4a7e-ae42-08d5cebc2e30';       // FIAS ID области
 let technicalData = []; // Технические данные, загружаемые из JSON
-
 let localCities = [];
 
 // Загружаем список городов из файла cities.json
@@ -22,40 +21,48 @@ let userLocation = {
   fullAddress: "",  // Полное представление адреса для отображения (например: "г Кемерово, пр-кт ленина, д 115")
 };
 
-// Функция нормализации типа улицы. Если обнаруживается "микрорайон" или его сокращения, возвращает "микрорайон"
-function determineFullStreetType(streetWithType) {
-    if (!streetWithType) return '';
-    const lower = streetWithType.toLowerCase();
-    if (lower.includes('микрорайон') || lower.includes(' мкр') || lower.includes('мкр.')) {
-        return 'микрорайон';
-    }
-    if (lower.includes('ул.') || lower.includes('ул ') || lower.includes('улица')) {
-        return 'улица';
-    }
-    if (lower.includes('пр-кт') || lower.includes('проспект')) {
-        return 'проспект';
-    }
-    if (lower.includes('пер.') || lower.includes('переулок')) {
-        return 'переулок';
-    }
-    if (lower.includes('ш.') || lower.includes('шоссе')) {
-        return 'шоссе';
-    }
-    if (lower.includes('б-р') || lower.includes('бульвар')) {
-        return 'бульвар';
-    }
-    return streetWithType;
+// Нормализуем типы улиц (улица, проспект и т.д.)
+function normalizeStreetType(streetWithType) {
+  if (!streetWithType) return '';
+  const lower = streetWithType.toLowerCase();
+  if (lower.includes('микрорайон') || lower.includes('мкр') || lower.includes('мкр.')) {
+    return 'микрорайон';
+  }
+  if (lower.includes('ул.') || lower.includes('ул ') || lower.includes('улица')) {
+    return 'улица';
+  }
+  if (lower.includes('пр-кт') || lower.includes('проспект')) {
+    return 'проспект';
+  }
+  if (lower.includes('пер.') || lower.includes('переулок')) {
+    return 'переулок';
+  }
+  if (lower.includes('ш.') || lower.includes('шоссе')) {
+    return 'шоссе';
+  }
+  if (lower.includes('б-р') || lower.includes('бульвар')) {
+    return 'бульвар';
+  }
+  if (lower.includes('кв-л')) {
+    return 'квартал';
+  }
+  if (lower.includes('территория') || lower.includes('проезд')) {
+    return 'территория';
+  }
+  return streetWithType;
 }
-  
+
+// Функция для проверки и корректного добавления корпуса к дому
+function normalizeHouse(building, block, blockType) {
+  if (block && blockType) {
+    // Если есть и корпус, и тип корпуса, то комбинируем
+    return `${building} ${block}`.trim(); // Убираем "к", сохраняем только корпус
+  }
+  return building || ""; // Если корпуса нет, возвращаем только дом
+}
+
 // Формирует отформатированную строку адреса для проверки технической возможности.
-// Пример: если поля DaData таковы:
-//   data.city_with_type = "г Кемерово"
-//   data.street = "Свободы"
-//   data.street_with_type = "улица"
-//   data.house = "7"
-// то функция вернёт: "г Кемерово Свободы улица 7"
 function getFormattedAddressString(data) {
-  // Проверка на наличие settlement в файле cities.json
   let city = data.city_with_type || data.settlement_with_type || data.city || "";
 
   // Если есть settlement, проверим его в файле localCities (игнорируя поле visible)
@@ -72,13 +79,16 @@ function getFormattedAddressString(data) {
 
   let street = "";
   if (data.street) {
-    const streetType = determineFullStreetType(data.street_with_type || "");
+    const streetType = normalizeStreetType(data.street_with_type || "");
     street = data.street + ' ' + streetType;
   }
-  const building = data.house || "";
+
+  // Используем функцию для нормализации поля house, добавляем корпус если нужно
+  const building = normalizeHouse(data.house, data.block, data.block_type);
 
   return `${city.trim()} ${street.trim()} ${building.trim()}`.replace(/\s+/g, " ").trim();
 }
+
 /**
  * Форматирует адрес на основе объекта, полученного от DaData.
  * @param {Object} data - объект адреса из DaData.
@@ -87,125 +97,115 @@ function getFormattedAddressString(data) {
 function formatAddressFromDaData(data) {
   const settlementWithType = (data.settlement_with_type || data.city_with_type || '').toLowerCase();
   const streetName = (data.street || '').toLowerCase();
-  const streetType = determineFullStreetType(data.street_with_type || '');
+  const streetType = normalizeStreetType(data.street_with_type || '');
   const building = (data.house || '').toLowerCase();
-  return `${settlementWithType} ${streetName} ${streetType} ${building}`.replace(/\s+/g, ' ').trim();
+  const block = (data.block || '').toLowerCase();
+  return `${settlementWithType} ${streetName} ${streetType} ${building} ${block}`.replace(/\s+/g, ' ').trim();
 }
-
 
 // Формирует полное представление адреса для отображения (с разделителями и сокращениями).
-// Если поле street_with_type уже содержит название улицы, то используется оно без дублирования.
-// Пример 1:
-//   data.city_with_type = "г Кемерово"
-//   data.street = "Ленина"
-//   data.street_with_type = "пр-кт ленина"
-//   data.house = "115"
-// Вернёт: "г Кемерово, пр-кт ленина, д 115"
-// Пример 2:
-//   data.city_with_type = "г Кемерово"
-//   data.street = "Свободы"
-//   data.street_with_type = "улица"
-//   data.house = "7"
-// Вернёт: "г Кемерово, ул Свободы, д 7"
 function getFullAddressString(data) {
-    const city = data.settlement_with_type || data.city_with_type || data.city || "";
-    const building = data.house || "";
-    const street = data.street || "";
-    const street_with_type = data.street_with_type || "";
-    
-    const streetNormalized = street.trim().toLowerCase();
-    const streetWithTypeNormalized = street_with_type.trim().toLowerCase();
-    
-    // Если street_with_type уже содержит street, то используем его как есть
-    if (streetNormalized && streetWithTypeNormalized.includes(streetNormalized)) {
-        return `${city.trim()}, ${street_with_type.trim()}, д ${building.trim()}`.replace(/\s+/g, " ").trim();
-    } else {
-        // Иначе, определяем сокращённое обозначение типа улицы
-        let streetAbbr = "";
-        let streetTypeFull = street_with_type.toLowerCase();
-        if (streetTypeFull.includes("улица")) {
-            streetAbbr = "ул";
-        } else if (streetTypeFull.includes("проспект")) {
-            streetAbbr = "пр-кт";
-        } else if (streetTypeFull.includes("переулок")) {
-            streetAbbr = "пер";
-        } else if (streetTypeFull.includes("шоссе")) {
-            streetAbbr = "ш.";
-        } else if (streetTypeFull.includes("бульвар")) {
-            streetAbbr = "бул";
-        } else if (streetTypeFull.includes("микрорайон") || streetTypeFull.includes(" мкр") || streetTypeFull.includes("мкр.")) {
-            streetAbbr = "мкр";
-        } else {
-            streetAbbr = street_with_type;
-        }
-        return `${city.trim()}, ${streetAbbr} ${street.trim()}, д ${building.trim()}`.replace(/\s+/g, " ").trim();
-    }
-}
+  const city = data.settlement_with_type || data.city_with_type || data.city || "";
+  const building = data.house || "";
+  const street = data.street || "";
+  const street_with_type = data.street_with_type || "";
+  const blockType = data.block_type
+  const block = data.block
   
+  const streetNormalized = street.trim().toLowerCase();
+  const streetWithTypeNormalized = street_with_type.trim().toLowerCase();
+  
+  // Если street_with_type уже содержит street, то используем его как есть
+  if (streetNormalized && streetWithTypeNormalized.includes(streetNormalized)) {
+    return `${city.trim()}, ${street_with_type.trim()}, д ${building.trim()} ${(blockType && block) ? ` ${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
+  } else {
+    // Иначе, определяем сокращённое обозначение типа улицы
+    let streetAbbr = "";
+    let streetTypeFull = street_with_type.toLowerCase();
+    if (streetTypeFull.includes("улица")) {
+      streetAbbr = "ул";
+    } else if (streetTypeFull.includes("проспект")) {
+      streetAbbr = "пр-кт";
+    } else if (streetTypeFull.includes("переулок")) {
+      streetAbbr = "пер";
+    } else if (streetTypeFull.includes("шоссе")) {
+      streetAbbr = "ш.";
+    } else if (streetTypeFull.includes("бульвар")) {
+      streetAbbr = "бул";
+    } else if (streetTypeFull.includes("микрорайон") || streetTypeFull.includes(" мкр") || streetTypeFull.includes("мкр.")) {
+      streetAbbr = "мкр";
+    } else if (streetTypeFull.includes("квартал")) {
+      streetAbbr = "кв";
+    } else if (streetTypeFull.includes("территория") || streetTypeFull.includes("проезд")) {
+      streetAbbr = "тер.";
+    } else {
+      streetAbbr = street_with_type;
+    }
+    return `${city.trim()}, ${streetAbbr} ${street.trim()}, д ${building.trim()} ${(blockType && block) ? ` ${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
+  }
+}
+
 // Проверяет техническую возможность, сравнивая нормализованный отформатированный адрес с техническими данными
 function checkTechnicalPossibility(formattedAddress) {
-    console.log('Проверяем техническую возможность для:', formattedAddress);
-    const normalizedAddress = formattedAddress.toLowerCase().replace(/\s+/g, ' ').trim();
-    const match = technicalData.find(item => {
-      const itemAddress = `${item.city} ${item.street} ${item.building}`.toLowerCase().replace(/\s+/g, ' ').trim();
-      return itemAddress === normalizedAddress;
-    });
-    if (match) {
-      console.log(`Техвозможность ${match.txb}`);
-      return { isPossible: true, txb: match.txb };
-    } else {
-      console.log('Техвозможность не найдена');
-      return { isPossible: false };
-    }
+  console.log('Проверяем техническую возможность для:', formattedAddress);
+  const normalizedAddress = formattedAddress.toLowerCase().replace(/\s+/g, ' ').trim();
+  const match = technicalData.find(item => {
+    const itemAddress = `${item.city} ${item.street} ${item.building} ${item.block || ''}`.toLowerCase().replace(/\s+/g, ' ').trim();
+    return itemAddress === normalizedAddress;
+  });
+  if (match) {
+    console.log(`Техвозможность ${match.txb}`);
+    return { isPossible: true, txb: match.txb };
+  } else {
+    console.log('Техвозможность не найдена');
+    return { isPossible: false };
+  }
 }
-  
+
 // Загружает технические данные из JSON-файла и нормализует их (приводит все строки к нижнему регистру)
 function loadTechnicalData(jsonUrl) {
-    $.getJSON(jsonUrl, function(data) {
-      technicalData = data.map(item => ({
-        city: item.city.toLowerCase(),
-        street: item.street.toLowerCase(),
-        building: item.building.toLowerCase(),
-        txb: item.txb
-      }));
-      console.log('Technical data loaded and normalized:', technicalData);
-    });
+  $.getJSON(jsonUrl, function(data) {
+    technicalData = data.map(item => ({
+      city: item.city.toLowerCase(),
+      street: item.street.toLowerCase(),
+      building: item.building.toLowerCase(),
+      block: item.block.toLowerCase(),  // Добавили block в технические данные
+      txb: item.txb
+    }));
+    console.log('Technical data loaded and normalized:', technicalData);
+  });
 }
-  
+
 // Сохраняет данные о местоположении пользователя
-// city – название города,
-// address – отформатированный адрес (например, "г Кемерово Свободы улица 7"),
-// fullAddress – полное представление адреса (например, "г Кемерово, пр-кт ленина, д 115"),
-// techResult – результат проверки технической возможности.
 function saveUserLocation({ city, address = "", techResult = null, fullAddress = "", cityFias = "" }) {
-    userLocation = { city, address, techResult, fullAddress, cityFias };
-    localStorage.setItem("userLocation", JSON.stringify(userLocation));
-    console.log("[LOG] userLocation сохранён:", userLocation);
-    window.dispatchEvent(new Event("userLocationChanged"));
-    updateCityInElements(city);
-    // При необходимости можно вызвать updateTariffs()
+  userLocation = { city, address, techResult, fullAddress, cityFias };
+  localStorage.setItem("userLocation", JSON.stringify(userLocation));
+  console.log("[LOG] userLocation сохранён:", userLocation);
+  window.dispatchEvent(new Event("userLocationChanged"));
+  updateCityInElements(city);
+  // При необходимости можно вызвать updateTariffs()
 }
-  
+
 // Удаляет дубликаты подсказок, сравнивая отформатированные адреса (приводим к нижнему регистру)
 function deduplicateSuggestions(suggestions) {
-    const seen = {};
-    return suggestions.filter(item => {
-      const formatted = getFormattedAddressString(item.data);
-      if (seen[formatted.toLowerCase()]) return false;
-      seen[formatted.toLowerCase()] = true;
-      return true;
-    });
+  const seen = {};
+  return suggestions.filter(item => {
+    const formatted = getFormattedAddressString(item.data);
+    if (seen[formatted.toLowerCase()]) return false;
+    seen[formatted.toLowerCase()] = true;
+    return true;
+  });
 }
-  
+
 // Обновляет элементы на странице, где отображается название города
 function updateCityInElements(city) {
-    const locationCityElements = document.querySelectorAll(".location__city-name");
-    locationCityElements.forEach(element => {
-      element.textContent = city;
-    });
-    console.log(`[LOG] Город обновлён в элементах: ${city}`);
+  const locationCityElements = document.querySelectorAll(".location__city-name");
+  locationCityElements.forEach(element => {
+    element.textContent = city;
+  });
+  console.log(`[LOG] Город обновлён в элементах: ${city}`);
 }
-  
+
 // Инициализирует подсказки DaData для инпута адреса
 function initManualAddressInput(inputSelector, regionFiasId = '') {
   let localCities = [];
@@ -220,34 +220,10 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
     console.error("Ошибка загрузки cities.json:", textStatus, error);
   });
 
-  /**
-   * Определяет, какое название населённого пункта использовать.
-   * Если в ответе DaData есть поле settlement и оно совпадает с полем name у одного из городов из cities.json,
-   * то возвращается settlement. Если совпадения нет, возвращается значение поля city (или city_with_type).
-   *
-   * @param {Object} data - объект с данными, полученными от DaData.
-   * @returns {string} - выбранное название населённого пункта.
-   */
-  function resolveCityName(data) {
-    if (data.settlement) {
-      var candidate = data.settlement.trim().toLowerCase();
-      // Если среди локальных городов есть объект, у которого поле name совпадает с candidate, возвращаем settlement
-      var found = localCities.some(function(city) {
-        return city.name.trim().toLowerCase() === candidate;
-      });
-      if (found) {
-        return data.settlement;
-      }
-    }
-    return data.city || data.city_with_type || "";
-  }
-
   $(inputSelector).on('input', function() {
     const inputVal = $(this).val();
-    // Разбиваем введённый текст по запятым, убираем лишние пробелы и пустые элементы
     const parts = inputVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
 
-    // Определяем режим ввода:
     let stage = 'free';
     let requestData = {
       query: inputVal.trim(),
@@ -329,6 +305,21 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       const techResult = checkTechnicalPossibility(formattedAddress);
       console.log(suggestion);
 
+      function resolveCityName(data) {
+        if (data.settlement) {
+          var candidate = data.settlement.trim().toLowerCase();
+          // Ищем в localCities (уже загруженных из cities.json) город с таким именем, игнорируя поле visible
+          var found = localCities.some(function(city) {
+            return city.name.trim().toLowerCase() === candidate;
+          });
+          if (found) {
+            return data.settlement;
+          }
+        }
+        return data.city || data.city_with_type || "";
+      }
+
+
       // Используем resolveCityName для корректного города
       const cityName = resolveCityName(suggestion.data) || suggestion.data.settlement || suggestion.data.city || suggestion.data.city_with_type || "";
 
@@ -354,7 +345,6 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       }
     }
   });
-
 
 
 
@@ -416,19 +406,7 @@ function initCityPopup(popupSelector) {
    * @param {Object} data - объект с данными, полученными от DaData.
    * @returns {string} - выбранное название населённого пункта.
    */
-  function resolveCityName(data) {
-    if (data.settlement) {
-      var candidate = data.settlement.trim().toLowerCase();
-      // Ищем в localCities (уже загруженных из cities.json) город с таким именем, игнорируя поле visible
-      var found = localCities.some(function(city) {
-        return city.name.trim().toLowerCase() === candidate;
-      });
-      if (found) {
-        return data.settlement;
-      }
-    }
-    return data.city || data.city_with_type || "";
-  }
+
 
   // Функция отображения локальных городов из файла cities.json (выводим только видимые города)
   function showLocalCities() {

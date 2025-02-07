@@ -35,7 +35,7 @@ cityButtons.forEach((button) => {
 connectButtons.forEach((button) => {
   button.addEventListener("click", function(e) {
     e.preventDefault(); // Отключаем стандартное поведение ссылки
-    console.log("Клик по кнопке 'Подключить', передаем кнопку:", this);
+    // console.log("Клик по кнопке 'Подключить', передаем кнопку:", this);
     openFirstPopup(this); // Передаем саму кнопку, на которую был совершен клик
   });
 });
@@ -79,7 +79,7 @@ function openFirstPopup(button) {
   const tariffValue = card.getAttribute("data-tariff");
 
   // Логируем, что мы получаем из атрибута
-  console.log("Данные о тарифе из data-tariff:", tariffValue);
+  // console.log("Данные о тарифе из data-tariff:", tariffValue);
 
   // Проверка, что значение существует
   if (!tariffValue) {
@@ -89,11 +89,11 @@ function openFirstPopup(button) {
   }
 
   const tariff = JSON.parse(tariffValue); // Преобразуем строку JSON в объект
-  console.log("Тариф после парсинга:", tariff);
+  // console.log("Тариф после парсинга:", tariff);
 
   // Получаем данные пользователя из localStorage
   const userLocation = JSON.parse(localStorage.getItem("userLocation"));
-  console.log("Данные о местоположении пользователя:", userLocation);
+  // console.log("Данные о местоположении пользователя:", userLocation);
 
   // Открываем первый попап (popup1)
   openPopup(popup1);
@@ -104,7 +104,7 @@ function openFirstPopup(button) {
     openPopup(popup2);
 
     // Логируем перед передачей данных
-    console.log("Передаем данные в popup2:", tariff, userLocation);
+    // console.log("Передаем данные в popup2:", tariff, userLocation);
 
     // Заполняем скрытые поля в форме (формируем popup2)
     document.getElementById('tarif').value = JSON.stringify(tariff); // Передаем данные о тарифе в скрытое поле
@@ -112,7 +112,7 @@ function openFirstPopup(button) {
     document.getElementById('address').value = userLocation.fullAddress; // Передаем адрес
 
     // Логируем, что скрытые поля формы заполнены
-    console.log("Заполнили скрытые поля: ", document.getElementById('tarif').value);
+    // console.log("Заполнили скрытые поля: ", document.getElementById('tarif').value);
   });
 
   // Когда пользователь выберет "Уже подключен", открываем popup3

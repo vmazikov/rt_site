@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             this.classList.add('active');
             currentCategory = this.innerText;
             localStorage.setItem("selectedCategory", currentCategory);
-            console.log(localStorage.userLocation)
+            // console.log(localStorage.userLocation)
             updateUI();
             updateTariffs();
         });

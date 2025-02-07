@@ -147,17 +147,17 @@ function getFullAddressString(data) {
 
 // Проверяет техническую возможность, сравнивая нормализованный отформатированный адрес с техническими данными
 function checkTechnicalPossibility(formattedAddress) {
-  console.log('Проверяем техническую возможность для:', formattedAddress);
+  // console.log('Проверяем техническую возможность для:', formattedAddress);
   const normalizedAddress = formattedAddress.toLowerCase().replace(/\s+/g, ' ').trim();
   const match = technicalData.find(item => {
     const itemAddress = `${item.city} ${item.street} ${item.building} ${item.block || ''}`.toLowerCase().replace(/\s+/g, ' ').trim();
     return itemAddress === normalizedAddress;
   });
   if (match) {
-    console.log(`Техвозможность ${match.txb}`);
+    // console.log(`Техвозможность ${match.txb}`);
     return { isPossible: true, txb: match.txb };
   } else {
-    console.log('Техвозможность не найдена');
+    // console.log('Техвозможность не найдена');
     return { isPossible: false };
   }
 }
@@ -172,7 +172,7 @@ function loadTechnicalData(jsonUrl) {
       block: item.block.toLowerCase(),  // Добавили block в технические данные
       txb: item.txb
     }));
-    console.log('Technical data loaded and normalized:', technicalData);
+    // console.log('Technical data loaded and normalized:', technicalData);
   });
 }
 
@@ -194,7 +194,7 @@ function resolveCityName(data) {
 function saveUserLocation({ city, address = "", techResult = null, fullAddress = "", cityFias = "" }) {
   userLocation = { city, address, techResult, fullAddress, cityFias };
   localStorage.setItem("userLocation", JSON.stringify(userLocation));
-  console.log("[LOG] userLocation сохранён:", userLocation);
+  // console.log("[LOG] userLocation сохранён:", userLocation);
   window.dispatchEvent(new Event("userLocationChanged"));
   updateCityInElements(city);
   // При необходимости можно вызвать updateTariffs()
@@ -217,7 +217,7 @@ function updateCityInElements(city) {
   locationCityElements.forEach(element => {
     element.textContent = city;
   });
-  console.log(`[LOG] Город обновлён в элементах: ${city}`);
+  // console.log(`[LOG] Город обновлён в элементах: ${city}`);
 }
 
 // Инициализирует подсказки DaData для инпута адреса
@@ -270,7 +270,7 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       data: JSON.stringify(requestData),
       success: function(data) {
         let suggestions = data.suggestions || [];
-        console.log(suggestions);
+        // console.log(suggestions);
         // Удаляем дубликаты подсказок
         suggestions = deduplicateSuggestions(suggestions);
         const suggestionsDiv = $('#suggestions');
@@ -317,7 +317,7 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
 
     if (isComplete) {
       const techResult = checkTechnicalPossibility(formattedAddress);
-      console.log(suggestion);
+      // console.log(suggestion);
 
 
 
@@ -340,11 +340,11 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       updateCityInElements(cityName);
       closePopup();
 
-      if (techResult.isPossible) {
-        alert(`Техническая возможность: ${techResult.txb}`);
-      } else {
-        alert('Технической возможности нет');
-      }
+      // if (techResult.isPossible) {
+      //   alert(`Техническая возможность: ${techResult.txb}`);
+      // } else {
+      //   alert('Технической возможности нет');
+      // }
     }
   });
 
@@ -606,7 +606,7 @@ function updateCityInElements(city) {
   locationCityElements.forEach(element => {
     element.textContent = city;
   });
-  console.log(`[LOG] Город обновлён в элементах: ${city}`);
+  // console.log(`[LOG] Город обновлён в элементах: ${city}`);
 }
 
 // ================================

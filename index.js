@@ -15,10 +15,6 @@ const connectButtons = document.querySelectorAll(".connect-btn");
 const callButton = document.querySelector(".location__call-button");
 const cityPopup = document.querySelector(".popup-city-change")
 const cityButtons = document.querySelectorAll(".location__city-name")
-const popupCallBack = document.querySelector(".popup-callback")
-const callBackButton = document.getElementById("newConnectionCallBack")
-const popupCallBackForm = document.querySelector(".popup-callback-form")
-
 
 // Назначаем обработчик событий для всех кнопок открытия попапа с городом
 cityButtons.forEach((button) => {
@@ -29,16 +25,10 @@ cityButtons.forEach((button) => {
 });
 
 
-
-callBackButton.addEventListener("click", (e) =>{
-  e.preventDefault();
-  openPopup(popupCallBackForm)
-})
-
-callButton.addEventListener("click", (e) =>{
-    e.preventDefault(); // Отключаем стандартное поведение ссылки
-    openPopup(popupCallBack)
-});
+// callButton.addEventListener("click", (e) =>{
+//     e.preventDefault(); // Отключаем стандартное поведение ссылки
+//     openFirstPopup();
+// });
 
 
 // Назначаем обработчик событий для всех кнопок
@@ -101,6 +91,7 @@ function validatePhone() {
     const phoneValue = phoneInput.value.trim();
     const isValid = phoneValue.length === 12 && phoneValue.startsWith("+7");
     if (isValid) {
+      errorText.style.display = "none";
       submitButton.disabled = false;
       submitButton.classList.add("popup__submit-button_active")
     } else {
@@ -140,5 +131,6 @@ function validatePhone() {
     const isValid = phoneInput.value.length === 12 && phoneInput.value.startsWith("+7");
     submitButton.disabled = !isValid;
     submitButton.style.backgroundColor = isValid ? "#f8530f" : "#cccccc";
+    errorText.style.display = isValid ? "none" : "block";
   });
   

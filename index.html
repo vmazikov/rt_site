@@ -55,13 +55,13 @@
               <img class="location__search-button__img" src="./images/seacrh-icon.png">
             </div>
           </div>
-          <div class="location__call-section">
+          <!-- <div class="location__call-section">
             <div class="location__call-text">Или закажите обратный звонок, и мы перезвоним в течение 10 минут</div>
             <button class="location__call-button">
                 <div class="location__call-icon"></div>
                 <span>Заказать звонок</span>
             </button>
-          </div>
+          </div> -->
         </div>
         <h1 class="banner__subtitle">Почему стоит выбрать Ростелеком</h1>
         <div class="banner__icons-wrap">
@@ -243,7 +243,7 @@
     <p class="footer__text">© 2025 Сайт не является средством массовой информации и действует на основании агентского договора с Ростелеком.</p>
   </footer>
   <div id="overlay" class="overlay"></div>
-
+<!-- 
   <div id="popupCallBack" class="popup popup-check-client popup-callback">
     <button class="popup__close-button">&times;</button>
     <h3 class="popup__title popup-check-client__title">Вас интересует новое подключение?</h3>
@@ -251,14 +251,14 @@
       <button id="newConnectionCallBack" class="popup__submit-button popup__submit-button_active">Новое подключение</button>
       <button id="existingConnection" class="popup__submit-button popup-check-client__client-button">Уже подключен к Ростелеком</button>
     </div>
-  </div>
+  </div> -->
 
-  <div id="popupCallBackForm" class="popup popup-form popup-callback-form">
+  <!-- <div id="popupCallBackForm" class="popup popup-form popup-callback-form">
     <button class="popup__close-button">&times;</button>
     <h3 class="popup__title popup-form__title">Заказать звонок</h3>
     <p class="popup__text popup-form__text"></p>
     <div class="form-card">
-      <form id="phoneForm" method="POST" action="send_to_telegram.php">
+      <form id="phoneForm" method="POST" action="callBack_to_telegram.php">
         <div class="popup-form__group">
           <label for="phone" class="popup-form__group-label">Введите телефон</label>
           <input class="popup-form__group-input" type="text" id="phone" name="phone" placeholder="+7 (___) ___-__-__" maxlength="12" value="+7" required />
@@ -270,7 +270,7 @@
         <button type="submit" id="submitButton" class="popup__submit-button" disabled>Отправить заявку</button>
       </form>
     </div>
-  </div>
+  </div> -->
 
   <!-- Попап 1 -->
   <div id="popup1" class="popup popup-check-client">
@@ -312,7 +312,7 @@
   </div>
   
   <!-- Попап 4 -->
-  <div id="popup4" class="popup popup-submit">
+  <div id="popup4" class="popup popup-submit popup_active">
     <button class="popup__close-button">&times;</button>
     <h3 class="popup__title">Спасибо за выбор нашей компании!</h3>
     <p class="popup__text">В течение 15 минут специалист Вам перезвонит.</p>

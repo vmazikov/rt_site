@@ -1,11 +1,6 @@
-
 <?php
 // Получаем данные из POST
 $phone = $_POST['phone']; // Телефон из формы
-$tarif = $_POST['tarif']; // Данные о тарифе
-$location = $_POST['location']; // Данные о городе
-$address = $_POST['address']; // Данные об адресе
-$techResult = $_POST['techResult']; // Результат проверки технологий
 
 // Ваш Telegram bot token
 $token = "8188979928:AAGalzT5UfkcM9CQfD986b73Z5W_GII7SaI";
@@ -15,14 +10,7 @@ $chat_id = "612840423";
 
 // Формируем сообщение для отправки в Telegram
 $message = "
-Город: $location
-Адрес: $address
-Технология: $techResult
-Тариф: $tarif[name]
-Скорость: $tarif[speed]
-Услуги: $tarif[services]
-Стоимость: $tarif[price_promo]
-После акции: $tarif[price_after_promo]
+Заявка на обратный звонок 
 Телефон: $phone
 ";
 
@@ -32,4 +20,3 @@ $api_url = "https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&text
 // Отправляем запрос
 file_get_contents($api_url);
 ?>
-

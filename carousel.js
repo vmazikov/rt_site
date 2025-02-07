@@ -13,6 +13,7 @@ const setActiveCategory = (category) => {
   const items = document.querySelectorAll(".equipment-section__carousel__item");
   items.forEach(item => {
     if (item.dataset.category === category) {
+      console.log()
       item.style.display = "block";
     } else {
       item.style.display = "none";

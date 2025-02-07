@@ -496,3 +496,26 @@
   }
 }
 
+.equipment-section__carousel__item-text_model {
+ font-size: 22px;
+}
+
+.equipment-section__carousel__item-text_price {
+  font-size: 22px;
+}
+
+.equipment-section__carousel__item-img-section {
+  align-items: center;
+  background: rgb(239, 238, 243);
+  border: 1px solid rgb(229, 229, 237);
+  border-radius: 15px;
+  display: flex;
+  height: 150px;
+  justify-content: center;
+  margin-bottom: 16px;
+  margin: 0 15px;
+}
+
+.equipment-section__carousel__items-text {
+
+}

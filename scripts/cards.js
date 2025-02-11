@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function loadData() {
         const [tariffsResponse, citiesResponse] = await Promise.all([
-            fetch("./tariffs.json"),
-            fetch("./cities.json")
+            fetch("./json/tariffs.json"),
+            fetch("./json/cities.json")
         ]);
         allTariffs = await tariffsResponse.json();
         const citiesData = await citiesResponse.json();

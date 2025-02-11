@@ -94,7 +94,7 @@ function updateCityInElements(city) {
 async function loadCities() {
   try {
     // console.log("[LOG] Загружаем список городов из cities.json...");
-    const response = await fetch("./cities.json");
+    const response = await fetch("./json/cities.json");
     const data = await response.json();
     citiesData = data.cities.filter((city) => city.popup_visible === "yes");
     const defaultCityData = data.cities.find((city) => city.default_city === "yes");

@@ -4,7 +4,7 @@ let technicalData = []; // Технические данные, загружае
 let localCities = [];
 
 // Загружаем список городов из файла cities.json
-$.getJSON('cities.json', function(data) {
+$.getJSON('./json/cities.json', function(data) {
   if (data && data.cities) {
     // Игнорируем поле visible при проверке наличия города
     localCities = data.cities; // Все города, без фильтрации по visible
@@ -225,7 +225,7 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
   let localCities = [];
 
   // Загружаем список городов из файла cities.json
-  $.getJSON('cities.json', function(data) {
+  $.getJSON('./json/cities.json', function(data) {
     if (data && data.cities) {
       // Игнорируем поле visible при проверке наличия города
       localCities = data.cities; // Все города, без фильтрации по visible
@@ -427,7 +427,7 @@ function initCityPopup(popupSelector) {
   }
 
   // Загружаем список городов из файла cities.json
-  $.getJSON('cities.json', function(data) {
+  $.getJSON('./json/cities.json', function(data) {
     if (data && data.cities) {
       // Игнорируем поле visible при проверке наличия города
       localCities = data.cities; // Все города, без фильтрации по visible
@@ -613,7 +613,7 @@ function updateCityInElements(city) {
 // ИНИЦИАЛИЗАЦИЯ
 // ================================
 $(document).ready(function() {
-  loadTechnicalData('./adress.json'); // Загружаем технические данные из JSON
+  loadTechnicalData('./json/address.json'); // Загружаем технические данные из JSON
   initManualAddressInput('.popup-address__input', regionFiasId); // Инициализируем автоподсказки для поля адреса
   initCityPopup('.popup-city-change', regionFiasId); // Инициализируем попап выбора города/адреса
   // Инициализируем попап только если в localStorage нет сохранённого userLocation с непустым городом

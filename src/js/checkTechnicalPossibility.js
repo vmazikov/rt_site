@@ -589,7 +589,7 @@ export function updateCityInElements(city) {
   locationCityElements.forEach(element => {
     element.textContent = city;
   });
-  console.log(`[LOG] Город обновлён в элементах: ${city}`);
+  // console.log(`[LOG] Город обновлён в элементах: ${city}`);
 }
 
 

@@ -1,6 +1,7 @@
 /* Активное состояние */
 .popup_active {
     bottom: 0;
+    position: fixed;
   }
 
   @media (min-width: 650px) {

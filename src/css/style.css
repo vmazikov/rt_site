@@ -351,8 +351,8 @@
   background-color: #c9c9c9;
 }
 
-.input_active {
-  font-size: 20px;
+.local-city-input_active {
+  font-weight: bold;
 }
 
 /* Общий стиль для баннера */

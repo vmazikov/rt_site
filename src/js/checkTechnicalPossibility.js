@@ -554,8 +554,8 @@ function initCityPopup(popupSelector) {
       console.error("Ошибка парсинга данных локального города", e);
       return;
     }
-    $(popupSelector).find('#local-cities .local-city').removeClass('input_active');
-    $(this).addClass('input_active');
+    $(popupSelector).find('#local-cities .local-city').removeClass('local-city-input_active');
+    $(this).addClass('local-city-input_active');
     // Очищаем инпут после выбора
     $(popupSelector).find('.popup-address__input').val('');
     saveUserLocation({ city: cityObj.name, fullAddress: "", cityFias: cityObj.cityFiasId });

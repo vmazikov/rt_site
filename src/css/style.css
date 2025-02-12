@@ -1,5 +1,5 @@
-@import url(./vendor/normalize.css);
-@import url(./vendor/fonts/fonts.css);
+@import url(../assets/vendor/normalize.css);
+@import url(../assets/vendor/fonts/fonts.css);
 @import url(./blocks/banner/banner.css);
 @import url(./blocks/banner/__title/banner__title.css);
 @import url(./blocks/banner/__title-wrap/banner__title-wrap.css);
@@ -388,7 +388,7 @@
 }
 
 .tech-result-banner__icon_check {
-  background: url('./images/check_techResult.png') no-repeat center center;
+  background: url('../assets/images/check_techResult.png') no-repeat center center;
   background-size: contain;
 }
 
@@ -408,7 +408,7 @@
 .tech-result-banner__edit-icon {
   width: 14px;
   height: 14px;
-  background: url('./images/edit-icon.png') no-repeat center center;
+  background: url('../assets/images/edit-icon.png') no-repeat center center;
   background-size: contain;
   margin-left: 5px;
 }
@@ -421,7 +421,7 @@
 }
 
 .tech-result-banner__icon_stop {
-  background: url('./images/stop-icon.png') no-repeat center center;
+  background: url('../assets/images/stop-icon.png') no-repeat center center;
   background-size: contain;
 }
 

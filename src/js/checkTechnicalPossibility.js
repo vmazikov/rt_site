@@ -1,4 +1,9 @@
-const dadataToken = '549f6e44bb6269eed79da8d09d37e0ff7042035f'; // Токен DaData
+import $ from 'jquery';
+import {closePopup} from './index.js'
+import {userLocation} from "./popup.js"
+import {saveUserLocation} from './popup.js'
+
+export const dadataToken = '549f6e44bb6269eed79da8d09d37e0ff7042035f'; // Токен DaData
 const regionFiasId = '393aeccb-89ef-4a7e-ae42-08d5cebc2e30';       // FIAS ID области
 let technicalData = []; // Технические данные, загружаемые из JSON
 let localCities = [];
@@ -13,13 +18,6 @@ $.getJSON('./json/cities.json', function(data) {
   console.error("Ошибка загрузки cities.json:", textStatus, error);
 });
 
-// Глобальный объект для хранения данных о местоположении пользователя
-let userLocation = {
-  city: "",
-  address: "",      // Отформатированный адрес для проверки технической возможности (например: "г Кемерово Свободы улица 7")
-  techResult: null,
-  fullAddress: "",  // Полное представление адреса для отображения (например: "г Кемерово, пр-кт ленина, д 115")
-};
 
 // Нормализуем типы улиц (улица, проспект и т.д.)
 function normalizeStreetType(streetWithType) {
@@ -190,15 +188,7 @@ function resolveCityName(data) {
   return data.city || data.city_with_type || "";
 }
 
-// Сохраняет данные о местоположении пользователя
-function saveUserLocation({ city, address = "", techResult = null, fullAddress = "", cityFias = "" }) {
-  userLocation = { city, address, techResult, fullAddress, cityFias };
-  localStorage.setItem("userLocation", JSON.stringify(userLocation));
-  // console.log("[LOG] userLocation сохранён:", userLocation);
-  window.dispatchEvent(new Event("userLocationChanged"));
-  updateCityInElements(city);
-  // При необходимости можно вызвать updateTariffs()
-}
+
 
 // Удаляет дубликаты подсказок, сравнивая отформатированные адреса (приводим к нижнему регистру)
 function deduplicateSuggestions(suggestions) {
@@ -211,14 +201,7 @@ function deduplicateSuggestions(suggestions) {
   });
 }
 
-// Обновляет элементы на странице, где отображается название города
-function updateCityInElements(city) {
-  const locationCityElements = document.querySelectorAll(".location__city-name");
-  locationCityElements.forEach(element => {
-    element.textContent = city;
-  });
-  // console.log(`[LOG] Город обновлён в элементах: ${city}`);
-}
+
 
 // Инициализирует подсказки DaData для инпута адреса
 function initManualAddressInput(inputSelector, regionFiasId = '') {
@@ -601,13 +584,14 @@ function initCityPopup(popupSelector) {
  * Обновляет все элементы на странице, где отображается город.
  * Например, элементы с классом ".location__city-name".
  */
-function updateCityInElements(city) {
+export function updateCityInElements(city) {
   const locationCityElements = document.querySelectorAll(".location__city-name");
   locationCityElements.forEach(element => {
     element.textContent = city;
   });
-  // console.log(`[LOG] Город обновлён в элементах: ${city}`);
+  console.log(`[LOG] Город обновлён в элементах: ${city}`);
 }
+
 
 // ================================
 // ИНИЦИАЛИЗАЦИЯ

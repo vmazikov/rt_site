@@ -1,5 +1,8 @@
+import {openPopup} from "./index.js"
+
 const searchBar = document.querySelector(".location__search-bar");
 const popupAddress = document.querySelector(".popup-address");
+window.popupAddress = popupAddress;
 const navLink = document.querySelector(".nav-section__link");
 
 navLink.addEventListener("click", (e) => {

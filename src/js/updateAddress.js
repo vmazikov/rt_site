@@ -1,3 +1,5 @@
+import {openPopup} from './index.js'
+
 function updateUIBasedOnTechResult() {
     // Извлекаем userLocation из localStorage
     const userLocation = JSON.parse(localStorage.getItem('userLocation'));

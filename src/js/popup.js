@@ -1,3 +1,8 @@
+import { updateCityInElements } from './checkTechnicalPossibility.js';
+import {dadataToken} from "./checkTechnicalPossibility.js"
+import {openPopup} from './index.js'
+
+
 // ================================
 // ЭЛЕМЕНТЫ
 // ================================
@@ -16,6 +21,24 @@ const locationCityElements = document.querySelectorAll(".location__city-name");
 let citiesData = [];
 let defaultCity = "";
 let popupShown = false; // Флаг отображения попапа
+// Глобальный объект для хранения данных о местоположении пользователя
+export let userLocation = {
+  city: "",
+  address: "",      // Отформатированный адрес для проверки технической возможности (например: "г Кемерово Свободы улица 7")
+  techResult: null,
+  fullAddress: "",  // Полное представление адреса для отображения (например: "г Кемерово, пр-кт ленина, д 115")
+};
+
+// Сохраняет данные о местоположении пользователя
+export function saveUserLocation({ city, address = "", techResult = null, fullAddress = "", cityFias = "" }) {
+  userLocation = { city, address, techResult, fullAddress, cityFias };
+  localStorage.setItem("userLocation", JSON.stringify(userLocation));
+  console.log("[LOG] userLocation сохранён:", userLocation);
+  window.dispatchEvent(new Event("userLocationChanged"));
+  updateCityInElements(city);
+  // При необходимости можно вызвать updateTariffs()
+}
+
 
 // Глобальный объект для хранения данных о местоположении пользователя
 
@@ -40,7 +63,7 @@ function updateUI() {
   locationCityElements.forEach((el) => {
     el.textContent = userLocation.city;
   });
-  // console.log("[LOG] UI обновлён с данными:", userLocation);
+  console.log("[LOG] UI обновлён с данными:", userLocation);
 }
 
 // Слушатель кастомного события, чтобы обновлять UI при изменении userLocation
@@ -76,16 +99,6 @@ function positionPopup() {
 //   window.dispatchEvent(new CustomEvent("userLocationChanged", { detail: userLocation }));
 // }
 
-/**
- * Обновляет текст во всех элементах, где отображается город.
- * (Дополнительно, updateUI() уже это делает.)
- */
-function updateCityInElements(city) {
-  locationCityElements.forEach((element) => {
-    element.textContent = city;
-  });
-  // console.log(`[LOG] Город обновлён в элементах: ${city}`);
-}
 
 /**
  * Загружает список городов из файла cities.json и отбирает записи с popup_visible: "yes".
@@ -93,14 +106,14 @@ function updateCityInElements(city) {
  */
 async function loadCities() {
   try {
-    // console.log("[LOG] Загружаем список городов из cities.json...");
+    console.log("[LOG] Загружаем список городов из cities.json...");
     const response = await fetch("./json/cities.json");
     const data = await response.json();
     citiesData = data.cities.filter((city) => city.popup_visible === "yes");
     const defaultCityData = data.cities.find((city) => city.default_city === "yes");
     defaultCity = defaultCityData ? defaultCityData.name : "Кемерово";
-    // console.log("[LOG] Загружены города:", citiesData);
-    // console.log(`[LOG] Город по умолчанию: ${defaultCity}`);
+    console.log("[LOG] Загружены города:", citiesData);
+    console.log(`[LOG] Город по умолчанию: ${defaultCity}`);
     renderCityList();
     return defaultCity;
   } catch (error) {
@@ -130,7 +143,7 @@ function renderCityList() {
       popupShown = true;
     });
   });
-  // console.log("[LOG] Города успешно добавлены в список.");
+  console.log("[LOG] Города успешно добавлены в список.");
 }
 
 /**
@@ -139,18 +152,18 @@ function renderCityList() {
 function getClientCoordinates() {
   return new Promise((resolve) => {
     if (navigator.geolocation) {
-      // console.log("[LOG] Запрашиваем координаты пользователя...");
+      console.log("[LOG] Запрашиваем координаты пользователя...");
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const coordinates = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           };
-          // console.log("[LOG] Получены координаты:", coordinates);
+          console.log("[LOG] Получены координаты:", coordinates);
           resolve(coordinates);
         },
         (error) => {
-          // console.warn("[WARNING] Геолокация недоступна:", error);
+          console.warn("[WARNING] Геолокация недоступна:", error);
           resolve(null);
         }
       );
@@ -172,7 +185,7 @@ async function detectCityByCoordinates() {
       return null;
     }
     const { latitude, longitude } = coordinates;
-    // console.log(`[LOG] Отправляем запрос в DaData с координатами: lat=${latitude}, lon=${longitude}`);
+    console.log(`[LOG] Отправляем запрос в DaData с координатами: lat=${latitude}, lon=${longitude}`);
     const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address";
     const requestData = { lat: latitude, lon: longitude, count: 1 };
     const response = await fetch(url, {
@@ -187,17 +200,17 @@ async function detectCityByCoordinates() {
       throw new Error(`Ошибка API DaData: ${response.statusText}`);
     }
     const data = await response.json();
-    // console.log("[LOG] Ответ от DaData:", data);
+    console.log("[LOG] Ответ от DaData:", data);
     if (data && data.suggestions && data.suggestions.length > 0) {
       const suggestion = data.suggestions[0].data;
-      // console.log(`[LOG] Определён город: ${suggestion.city_with_type}`);
+      console.log(`[LOG] Определён город: ${suggestion.city_with_type}`);
       return { cityWithType: suggestion.city_with_type, cityName: suggestion.city };
     } else {
-      // console.warn("[WARNING] Ответ от DaData не содержит информации о городе.");
+      console.warn("[WARNING] Ответ от DaData не содержит информации о городе.");
       return null;
     }
   } catch (error) {
-    // console.error("[ERROR] Ошибка определения города:", error);
+    console.error("[ERROR] Ошибка определения города:", error);
     return null;
   }
 }
@@ -208,7 +221,7 @@ async function detectCityByCoordinates() {
  * Иначе загружается список городов и определяется город по координатам.
  */
 async function initPopup() {
-  // console.log("[LOG] Инициализация попапа...");
+  console.log("[LOG] Инициализация попапа...");
 
   // Если в localStorage уже сохранён userLocation с заданным городом, используем его.
   const storedData = localStorage.getItem("userLocation");
@@ -230,7 +243,7 @@ async function initPopup() {
 
   // Если сохранённых данных нет, загружаем список городов и устанавливаем дефолтный город
   const defaultCityName = await loadCities();
-  // console.log("[LOG] Устанавливаем дефолтный город...");
+  console.log("[LOG] Устанавливаем дефолтный город...");
   currentCity.textContent = `г. ${defaultCityName}`;
   setTimeout(() => {
     locationPopup.classList.remove("hidden");
@@ -241,7 +254,7 @@ async function initPopup() {
   // Пытаемся определить город по координатам, только если сохранённых данных нет
   const detectedCity = await detectCityByCoordinates();
   if (detectedCity && detectedCity.cityName && detectedCity.cityName !== defaultCityName) {
-    // console.log(`[LOG] Определён город по координатам: ${detectedCity.cityName}`);
+    console.log(`[LOG] Определён город по координатам: ${detectedCity.cityName}`);
     currentCity.textContent = detectedCity.cityWithType;
   } else {
     console.warn("[WARNING] Город не удалось определить или он совпадает с дефолтным.");
@@ -256,7 +269,7 @@ confirmCityButton.addEventListener("click", () => {
 });
 
 changeCityButton.addEventListener("click", () => {
-  // console.log("[LOG] Открытие попапа для смены города...");
+  console.log("[LOG] Открытие попапа для смены города...");
   locationPopup.classList.add("hidden");
   openPopup(cityPopup)
   // locationPopup.classList.remove("hidden");

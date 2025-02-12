@@ -1,3 +1,11 @@
+import {attachEventListeners} from "./index.js"
+import internetIcon from "../assets/images/internet_icon.png";
+import routerIcon from "../assets/images/router_icon.png";
+import tvCardIcon from "../assets/images/tv-card_icon.png";
+import winkIcon from "../assets/images/wink_icon.png";
+import smartphoneIcon from "../assets/images/smartphone_icon.png";
+import checkIcon from "../assets/images/check_icon.png";
+
 document.addEventListener("DOMContentLoaded", async function () {
     const tariffsContainer = document.querySelector('.card-wrapper');
     const showMoreButton = document.querySelector(".card-wrapper__show-more-button");
@@ -95,7 +103,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             <div class="card__subtitle-list">
             ${tariff.speed ? `
             <div class="card__subtitle">
-                <img class="card__subtitle-img" src="./images/internet_icon.png" alt="">
+                <img class="card__subtitle-img" src="${internetIcon}" alt="Интернет">
                 <div class="card__subtitle__items">
                 <span class="card__subtitle__span">Интернет</span>
                 <h4 class="card__subtitle__item">${tariff.speed} Мбит/с</h4>
@@ -103,7 +111,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             </div>` : ''}
             ${tariff.channels ? `
             <div class="card__subtitle">
-                <img class="card__subtitle-img" src="./images/tv-card_icon.png" alt="">
+                <img class="card__subtitle-img" src="${tvCardIcon}" alt="Тв-Каналы">
                 <div class="card__subtitle__items">
                 <span class="card__subtitle__span">Телевидение</span>
                 <h4 class="card__subtitle__item">${tariff.channels} Каналов</h4>
@@ -111,7 +119,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             </div>` : ''}
             ${tariff.sim_details ? `
             <div class="card__subtitle">
-                <img class="card__subtitle-img" src="./images/smartphone_icon.png" alt="">
+                <img class="card__subtitle-img" src="${smartphoneIcon}" alt="Моб. Связь">
                 <div class="card__subtitle__items">
                 <span class="card__subtitle__span">Моб. Связь</span>
                 <h4 class="card__subtitle__item">${tariff.sim_details}</h4>
@@ -119,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             </div>` : ''}
             ${tariff.subscription ? `
             <div class="card__subtitle">
-                <img class="card__subtitle-img" src="./images/wink_icon.png" alt="">
+                <img class="card__subtitle-img" src="${winkIcon}" alt="Wink">
                 <div class="card__subtitle__items">
                 <span class="card__subtitle__span">Wink</span>
                 <h4 class="card__subtitle__item">${tariff.subscription}</h4>
@@ -127,7 +135,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             </div>` : ''}
             ${tariff.router_price ? `
             <div class="card__subtitle">
-                <img class="card__subtitle-img" src="./images/router_icon.png" alt="">
+                <img class="card__subtitle-img" src="${routerIcon}" alt="Роутер">
                 <div class="card__subtitle__items">
                 <span class="card__subtitle__span">Wi-Fi роутер</span>
                 <h4 class="card__subtitle__item card__subtitle__item_router">${tariff.router_price}</h4>
@@ -138,7 +146,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             <div class="card__additional-info">
             ${tariff.additional_info.map(info => `
             <p class="card__additional-info-text">
-                <img class="card__additional-info-img" src="./images/check_icon.png"> ${info}
+                <img class="card__additional-info-img" src="${checkIcon}"> ${info}
             </p>`).join('')}
             </div>` : ''}
         </div>

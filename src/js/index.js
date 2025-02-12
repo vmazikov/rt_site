@@ -1,3 +1,23 @@
+import '../css/style.css'; // Импорт стилей
+import './carousel.js'; 
+import './checkTechnicalPossibility.js'; 
+import './swiper.js'; 
+import './createDynamicPlaceholder.js'; 
+import './cards.js'; 
+import './popup.js'; 
+import './updateAddress.js'; 
+import Swiper from 'swiper';
+import 'swiper/css'; // Подключаем стили Swiper
+
+const swiper = new Swiper('.swiper-container', {
+  slidesPerView: 1,
+  spaceBetween: 10,
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+});
+
 // Элементы
 const overlay = document.getElementById("overlay");
 const popups = document.querySelectorAll(".popup");
@@ -16,6 +36,7 @@ const callButton = document.querySelector(".location__call-button");
 const cityPopup = document.querySelector(".popup-city-change")
 const cityButtons = document.querySelectorAll(".location__city-name")
 
+window.openPopup = openPopup;
 // Назначаем обработчик событий для всех кнопок открытия попапа с городом
 cityButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
@@ -41,14 +62,16 @@ connectButtons.forEach((button) => {
 });
 
 // Функция открытия попапа
-function openPopup(popup) {
+export function openPopup(popup) {
     overlay.classList.add("overlay_active");
     popup.classList.add("popup_active");
     document.body.style.overflow = "hidden"; // Блокировка прокрутки
     }
+
+
   
   // Функция закрытия попапа
-function closePopup() {
+export function closePopup() {
     overlay.classList.remove("overlay_active");
     popups.forEach((popup) => popup.classList.remove("popup_active"));
     document.body.style.overflow = ""; // Блокировка прокрутки
@@ -63,7 +86,7 @@ function closePopup() {
   });
   
 // Открытие первого попапа
-function attachEventListeners() {
+export function attachEventListeners() {
 // Заменяем обработчики событий для кнопок на делегирование событий
 document.querySelector('.card-wrapper').addEventListener("click", function(e) {
   // Проверяем, был ли клик именно по кнопке "Подключить"

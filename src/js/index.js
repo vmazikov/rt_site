@@ -215,7 +215,7 @@ document.getElementById("phoneForm").addEventListener("submit", (e) => {
     
     // Проверяем, есть ли данные о тарифе
     if (!tariffValue) {
-      alert("Ошибка: нет данных о тарифе.");
+      console.log("Ошибка: нет данных о тарифе.");
       return;
     }
   

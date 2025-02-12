@@ -1,3 +1,9 @@
 .header__location-img {
     width: 20px;
   }
+
+  @media (min-width: 650px) {
+  .header__location-img {
+      width: 30px;
+    }
+  }

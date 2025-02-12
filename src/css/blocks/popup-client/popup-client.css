@@ -5,7 +5,6 @@
 
   @supports (-webkit-touch-callout: none) {
     .popup-client {
-        height: 100dvh; /* динамическая высота экрана */
         max-height: 100vh;
         overflow: auto;
     }

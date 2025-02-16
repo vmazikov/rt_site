@@ -279,24 +279,41 @@
   </div>
   
 <!-- Popup2 -->
-<div id="popup2" class="popup popup-form">
-  <button class="popup__close-button">&times;</button>
-  <h3 class="popup__title popup-form__title">Заявка на подключение</h3>
-  <p class="popup__text popup-form__text">Перезвоним для уточнения деталей и согласования времени</p>
-  <div class="form-card">
-    <form id="phoneForm" method="POST" action="send_to_telegram.php">
-      <div class="popup-form__group">
-        <label for="phone" class="popup-form__group-label">Введите телефон</label>
-        <input class="popup-form__group-input" type="text" id="phone" name="phone" placeholder="+7 (___) ___-__-__" maxlength="12" value="+7" required />
-      </div>
-      <input type="hidden" id="tarif" name="tarif" />
-      <input type="hidden" id="location" name="location" />
-      <input type="hidden" id="address" name="address" />
-      <p class="popup-form__hint">Перезвоним в течение 15 минут</p>
-      <button type="submit" id="submitButton" class="popup__submit-button" disabled>Отправить заявку</button>
-    </form>
+  <div id="popup2" class="popup popup-form">
+    <button class="popup__close-button">&times;</button>
+    <h3 class="popup__title popup-form__title">Заявка на подключение</h3>
+    <p class="popup__text popup-form__text">Перезвоним для уточнения деталей и согласования времени</p>
+    
+    <div class="form-card">
+      <form id="phoneForm" method="POST" action="send_to_telegram.php">
+        <div class="popup-form__group">
+          <label for="phone" class="popup-form__group-label">Введите телефон</label>
+          
+          <div class="phone-input-wrapper" id="phoneInputWrapper">
+            <span class="phone-prefix">+7</span>
+            <input 
+              class="popup-form__group-input" 
+              type="text" 
+              id="phone" 
+              name="phone" 
+              required
+            />
+          </div>
+          
+          <span id="errorText">Неверный формат номера</span>
+        </div>
+        
+        <input type="hidden" id="tarif" name="tarif" />
+        <input type="hidden" id="location" name="location" />
+        <input type="hidden" id="address" name="address" />
+        
+        <p class="popup-form__hint">Перезвоним в течение 15 минут</p>
+        <button type="submit" id="submitButton" class="popup__submit-button">
+          Отправить заявку
+        </button>
+      </form>
+    </div>
   </div>
-</div>
   <!-- Попап 3 -->
   <div id="popup3" class="popup popup-client">
     <button class="popup__close-button">&times;</button>

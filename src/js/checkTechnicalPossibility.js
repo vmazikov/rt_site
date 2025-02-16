@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import {closePopup} from './index.js'
-import {userLocation} from "./popup.js"
 import {saveUserLocation} from './popup.js'
 
 export const dadataToken = '549f6e44bb6269eed79da8d09d37e0ff7042035f'; // Токен DaData
@@ -205,17 +204,6 @@ function deduplicateSuggestions(suggestions) {
 
 // Инициализирует подсказки DaData для инпута адреса
 function initManualAddressInput(inputSelector, regionFiasId = '') {
-  let localCities = [];
-
-  // Загружаем список городов из файла cities.json
-  $.getJSON('./json/cities.json', function(data) {
-    if (data && data.cities) {
-      // Игнорируем поле visible при проверке наличия города
-      localCities = data.cities; // Все города, без фильтрации по visible
-    }
-  }).fail(function(jqxhr, textStatus, error) {
-    console.error("Ошибка загрузки cities.json:", textStatus, error);
-  });
 
   $(inputSelector).on('input', function() {
     const inputVal = $(this).val();
@@ -330,39 +318,6 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       // }
     }
   });
-
-
-
-  // Обработка нажатия клавиши Enter – для подтверждения адреса, введённого вручную.
-//   $(inputSelector).on('keydown', function(e) {
-//     if (e.key === 'Enter') {
-//       e.preventDefault();
-//       const currentAddress = $(this).val().trim();
-//       $('#suggestions').empty();
-//       if (currentAddress.indexOf(',') !== -1) {
-//         const parts = currentAddress.split(',');
-//         const tempData = {
-//           city: parts[0] || '',
-//           street: parts[1] || '',
-//           house: parts[2] || ''
-//         };
-//         const formatted = formatAddressFromDaData(tempData);
-//         const techResult = checkTechnicalPossibility(formatted);
-//         if (!techResult.isPossible) {
-//           alert('Технической возможности нет');
-//           // Можно вызвать функцию очистки карточек, если требуется: clearTariffs();
-//         } else {
-//           alert(`Техническая возможность: ${techResult.txb}`);
-//         }
-//         const cityName = parts[0].trim();
-//         updateCityInElements(cityName);
-//         // Сохраняем данные о местоположении с полным адресом и результатом проверки
-//         saveUserLocation({ city: cityName, address: currentAddress, techResult: techResult });
-//       } else {
-//         saveUserLocation({ city: currentAddress });
-//       }
-//     }
-//   });
 }
 
 // ================================
@@ -592,7 +547,6 @@ export function updateCityInElements(city) {
   // console.log(`[LOG] Город обновлён в элементах: ${city}`);
 }
 
-
 // ================================
 // ИНИЦИАЛИЗАЦИЯ
 // ================================
@@ -600,44 +554,4 @@ $(document).ready(function() {
   loadTechnicalData('./json/address.json'); // Загружаем технические данные из JSON
   initManualAddressInput('.popup-address__input', regionFiasId); // Инициализируем автоподсказки для поля адреса
   initCityPopup('.popup-city-change', regionFiasId); // Инициализируем попап выбора города/адреса
-  // Инициализируем попап только если в localStorage нет сохранённого userLocation с непустым городом
-//   (async function initPopup() {
-//     console.log("[LOG] Инициализация попапа...");
-//     const storedData = localStorage.getItem("userLocation");
-//     if (storedData) {
-//       try {
-//         const storedLocation = JSON.parse(storedData);
-//         if (storedLocation.city && storedLocation.city.trim() !== "") {
-//           console.log("[LOG] Данные найдены в localStorage:", storedLocation);
-//           userLocation = storedLocation;
-//           currentCity.textContent = `г. ${storedLocation.city}`;
-//           updateCityInElements(storedLocation.city);
-//           return; // Не перезаписываем сохранённый город
-//         }
-//       } catch (e) {
-//         console.error("[ERROR] Ошибка парсинга userLocation из localStorage:", e);
-//       }
-//     }
-    // // Если данных нет – загружаем список городов и устанавливаем дефолтный город
-    // const defaultCityName = await loadCities();
-    // console.log("[LOG] Устанавливаем дефолтный город...");
-    // currentCity.textContent = `г. ${defaultCityName}`;
-    // locationPopup.classList.remove("hidden");
-    // // Позиционируем попап
-    // const bannerCityElement = document.querySelector(".banner .location__city");
-    // if (bannerCityElement) {
-    //   const bounds = bannerCityElement.getBoundingClientRect();
-    //   locationPopup.style.top = `${bounds.bottom + window.scrollY + 10}px`;
-    //   locationPopup.style.left = `${bounds.left + window.scrollX}px`;
-    // }
-//     // Пытаемся определить город по координатам
-//     const detectedCity = await detectCityByCoordinates();
-//     if (detectedCity && detectedCity.cityName) {
-//       console.log(`[LOG] Определён город по координатам: ${detectedCity.cityName}`);
-//       currentCity.textContent = detectedCity.cityName;
-//       saveUserLocation({ city: detectedCity.cityName });
-//     } else {
-//       console.warn("[WARNING] Город не удалось определить, остаётся дефолтный город.");
-//     }
-//   })();
 });

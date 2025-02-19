@@ -6,8 +6,6 @@ import './createDynamicPlaceholder.js';
 import './cards.js'; 
 import './popup.js'; 
 import './updateAddress.js'; 
-import './phoneValidator.js'
-import './sendDataToTelegram.js'
 import Swiper from 'swiper';
 import 'swiper/css'; // Подключаем стили Swiper
 
@@ -27,6 +25,7 @@ const popup1 = document.getElementById("popup1");
 const popup2 = document.getElementById("popup2");
 const popup3 = document.getElementById("popup3");
 const popup4 = document.getElementById("popup4");
+const phoneInput = document.getElementById("phone");
 const submitButton = document.getElementById("submitButton");
 const errorText = document.getElementById("errorText");
 const closeButtons = document.querySelectorAll(".popup__close-button");
@@ -159,6 +158,95 @@ function openFirstPopup(button) {
 //   openPopup(popup2);
 // });
 
-
+// Функция для валидации телефона
+function validatePhone() {
+    const phoneValue = phoneInput.value.trim();
+    const isValid = phoneValue.length === 12 && phoneValue.startsWith("+7");
+    if (isValid) {
+      submitButton.disabled = false;
+      submitButton.classList.add("popup__submit-button_active")
+    } else {
+      submitButton.disabled = true;
+      submitButton.classList.remove("popup__submit-button_active")
+    }
+  }
   
+  // Обработка ввода телефона
+  phoneInput.addEventListener("input", () => {
+    if (!phoneInput.value.startsWith("+7")) {
+      phoneInput.value = "+7";
+    }
+    validatePhone();
+  });
+  
+// Отправка формы
+document.getElementById("phoneForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (submitButton.disabled) {
+    errorText.textContent = "Не верный формат номера";
+    errorText.style.display = "block";
+    submitButton.classList.add("error");
+    setTimeout(() => submitButton.classList.remove("error"), 500);
+  } else {
+    // Отправка данных через AJAX
+    sendDataToTelegram();
+  }
+});
+  
+  phoneInput.addEventListener("input", () => {
+    if (!phoneInput.value.startsWith("+7")) {
+      phoneInput.value = "+7";
+    }
+  
+    // Валидация
+    const isValid = phoneInput.value.length === 12 && phoneInput.value.startsWith("+7");
+    submitButton.disabled = !isValid;
+    submitButton.style.backgroundColor = isValid ? "#f8530f" : "#cccccc";
+  });
+  
+
+  // Функция отправки данных в Telegram через AJAX
+  function sendDataToTelegram() {
+    const form = document.getElementById("phoneForm");
+    
+    // Получаем данные из скрытых полей формы
+    const userLocation = JSON.parse(localStorage.getItem("userLocation"));
+    const tariffValue = document.getElementById('tarif').value;
+    
+    // Проверяем, есть ли данные о тарифе
+    if (!tariffValue) {
+      console.log("Ошибка: нет данных о тарифе.");
+      return;
+    }
+  
+    const tariff = JSON.parse(tariffValue); // Десериализация данных о тарифе
+    const phone = phoneInput.value; // Получаем номер телефона
+  
+    // Отправляем данные через AJAX
+    fetch('send_to_telegram.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        userLocation: JSON.stringify(userLocation),
+        tariff: JSON.stringify(tariff),
+        phone: phone
+      })
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log(data); // Ответ от сервера
+      if (data.includes("Заявка успешно отправлена")) {
+        closePopup(); // Закрыть текущий попап
+        openPopup(popup4); // Открыть попап подтверждения
+      } else {
+        alert("Ошибка при отправке заявки.");
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("Ошибка при отправке заявки.");
+    });
+  }
   

@@ -84,8 +84,15 @@ window.addEventListener("storage", (event) => {
  */
 function positionPopup() {
   const bounds = bannerCityElement.getBoundingClientRect();
-  locationPopup.style.top = `${bounds.bottom + window.scrollY + 10}px`;
-  locationPopup.style.left = `${bounds.left + window.scrollX - 227}px`;
+  if (window.scrollY === 0) {
+    locationPopup.style.position = "absolute";
+    locationPopup.style.top = `${bounds.bottom + window.scrollY + 10}px`;
+    locationPopup.style.left = `${bounds.left + window.scrollX - 227}px`;
+  } else {
+    locationPopup.style.position = "fixed";
+    locationPopup.style.top = "8px";
+    locationPopup.style.left = `${bounds.left - 227}px`;
+  }
 }
 
 /**

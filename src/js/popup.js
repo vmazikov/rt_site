@@ -1,6 +1,6 @@
 import { updateCityInElements } from './checkTechnicalPossibility.js';
 import {dadataToken} from "./checkTechnicalPossibility.js"
-import {openPopup} from './index.js'
+import {openPopup} from './index.js'  
 
 
 // ================================
@@ -14,6 +14,7 @@ const changeCityButton = document.getElementById("changeCity");
 const closePopupButton = document.getElementById("closePopupButton");
 const bannerCityElement = document.querySelector(".popup-city-location");
 const locationCityElements = document.querySelectorAll(".location__city-name");
+const cityPopup = document.querySelector(".popup-city-change")
 
 // ================================
 // ПЕРЕМЕННЫЕ

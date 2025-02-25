@@ -24,18 +24,19 @@ let popupShown = false; // Флаг отображения попапа
 // Глобальный объект для хранения данных о местоположении пользователя
 export let userLocation = {
   city: "",
+  cityWitchType: "",
   address: "",      // Отформатированный адрес для проверки технической возможности (например: "г Кемерово Свободы улица 7")
   techResult: null,
   fullAddress: "",  // Полное представление адреса для отображения (например: "г Кемерово, пр-кт ленина, д 115")
 };
 
 // Сохраняет данные о местоположении пользователя
-export function saveUserLocation({ city, address = "", techResult = null, fullAddress = "", cityFias = "" }) {
-  userLocation = { city, address, techResult, fullAddress, cityFias };
+export function saveUserLocation({ city, cityWitchType, address = "", techResult = null, fullAddress = "", cityFias = "" }) {
+  userLocation = { city, cityWitchType, address, techResult, fullAddress, cityFias };
   localStorage.setItem("userLocation", JSON.stringify(userLocation));
-  // console.log("[LOG] userLocation сохранён:", userLocation);
+  console.log("[LOG] userLocation сохранён:", userLocation);
   window.dispatchEvent(new Event("userLocationChanged"));
-  updateCityInElements(city);
+  updateCityInElements(city, cityWitchType);
   // При необходимости можно вызвать updateTariffs()
 }
 
@@ -59,7 +60,7 @@ function updateUI() {
       return;
     }
   }
-  currentCity.textContent = `г. ${userLocation.city}`;
+  currentCity.textContent = `${userLocation.city}`;
   locationCityElements.forEach((el) => {
     el.textContent = userLocation.city;
   });
@@ -139,13 +140,16 @@ function renderCityList() {
     return;
   }
   cityList.innerHTML = citiesData
-    .map((city) => `<li data-city="${city.name}">${city.type ? city.type + " " : ""}${city.name}</li>`)
+    .map((city) => `<li data-city="${city.name}" data-type="${city.type}">${city.type ? city.type + " " : ""}${city.name}</li>`)
     .join("");
   cityList.querySelectorAll("li").forEach((li) => {
     li.addEventListener("click", (event) => {
+      console.log(event.target.dataset)
       const selectedCity = event.target.dataset.city;
-      saveUserLocation({ city: selectedCity });
+      const cityWitchType = `${event.target.dataset.type} ${event.target.dataset.city}`
+      saveUserLocation({ city: selectedCity, cityWitchType:cityWitchType });
       currentCity.textContent = li.textContent;
+      currentCity.dataset.cityWitchType = cityWitchType
       locationPopup.classList.add("hidden");
       popupShown = true;
     });
@@ -238,9 +242,10 @@ async function initPopup() {
       if (storedLocation.city && storedLocation.city.trim() !== "") {
         // console.log("[LOG] Данные найдены в localStorage:", storedLocation);
         userLocation = storedLocation;
-        currentCity.textContent = `г. ${storedLocation.city}`;
-        updateCityInElements(storedLocation.city);
+        currentCity.textContent = `${storedLocation.city}`;
+        updateCityInElements(storedLocation.city, storedLocation.cityWitchType);
         popupShown = true;
+        console.log(currentCity)
         return;
       }
     } catch (e) {
@@ -251,10 +256,10 @@ async function initPopup() {
   // Если сохранённых данных нет, загружаем список городов и устанавливаем дефолтный город
   const defaultCityName = await loadCities();
   // console.log("[LOG] Устанавливаем дефолтный город...");
-  currentCity.textContent = `г. ${defaultCityName}`;
+  currentCity.textContent = `${defaultCityName}`;
   setTimeout(() => {
     locationPopup.classList.remove("hidden");
-}, 3000);
+}, 500);
   positionPopup();
   popupShown = true;
 
@@ -270,8 +275,9 @@ async function initPopup() {
 
 // Обработчики кнопок попапа
 confirmCityButton.addEventListener("click", () => {
+  console.log(currentCity)
   const city = currentCity.textContent.replace(/г\.|пгт\.|село /g, "").trim();
-  saveUserLocation({ city });
+  saveUserLocation({ city, cityWitchType: currentCity.dataset.cityWitchType });
   locationPopup.classList.add("hidden");
 });
 

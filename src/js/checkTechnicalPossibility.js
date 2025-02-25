@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import {closePopup} from './index.js'
-import {saveUserLocation} from './popup.js'
+import {saveUserLocation, userLocation} from './popup.js'
 
 export const dadataToken = '549f6e44bb6269eed79da8d09d37e0ff7042035f'; // Токен DaData
 const regionFiasId = '393aeccb-89ef-4a7e-ae42-08d5cebc2e30';       // FIAS ID области
@@ -300,16 +300,19 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       // Формируем правильный адрес (город + улица + дом)
       const formattedAddressWithCity = `${cityName} ${suggestion.data.street_with_type || ''} ${suggestion.data.house || ''}`.trim();
 
+      const cityWitchType = `${suggestion.data.city_type} ${cityName}`
+
       // Сохраняем данные
       saveUserLocation({
         city: cityName,
+        cityWitchType: cityWitchType,
         address: formattedAddressWithCity, // Сохраняем отформатированный адрес
         techResult: techResult,
         fullAddress: fullAddressFormatted, // Неотформатированный адрес
         cityFias: suggestion.data.city_fias_id
       });
 
-      updateCityInElements(cityName);
+      updateCityInElements(cityName, cityWitchType);
       closePopup();
 
       // if (techResult.isPossible) {
@@ -491,13 +494,14 @@ function initCityPopup(popupSelector) {
     // Используем resolveCityName: если settlement присутствует и входит в localCities, возвращается settlement;
     // иначе – используется city (или city_with_type).
     const cityName = resolveCityName(data) || raw;
+    const cityWitchType = `${data.city_type} ${cityName}`
     // Очищаем инпут после выбора подсказки
     $(popupSelector).find('.popup-address__input').val('');
     $(popupSelector).find('#suggestions').empty().hide();
     $(popupSelector).find('.dadata-suggestion').removeClass('input_active');
     $(this).addClass('input_active');
-    saveUserLocation({ city: cityName, fullAddress: "", cityFias: data.city_fias_id || "" });
-    updateCityInElements(cityName);
+    saveUserLocation({ city: cityName, cityWitchType: cityWitchType, fullAddress: "", cityFias: data.city_fias_id || "" });
+    updateCityInElements(cityName, cityWitchType);
     closePopup();
   });
 
@@ -510,27 +514,14 @@ function initCityPopup(popupSelector) {
       console.error("Ошибка парсинга данных локального города", e);
       return;
     }
+    const cityWitchType = `${cityObj.type} ${cityObj.name}`
     $(popupSelector).find('#local-cities .local-city').removeClass('local-city-input_active');
     $(this).addClass('local-city-input_active');
     // Очищаем инпут после выбора
     $(popupSelector).find('.popup-address__input').val('');
-    saveUserLocation({ city: cityObj.name, fullAddress: "", cityFias: cityObj.cityFiasId });
-    updateCityInElements(cityObj.name);
+    saveUserLocation({ city: cityObj.name, cityWitchType: cityWitchType, fullAddress: "", cityFias: cityObj.cityFiasId });
+    updateCityInElements(cityObj.name, cityWitchType);
     closePopup();
-  });
-
-  // Обработка нажатия клавиши Enter – сохраняем введённый город и очищаем инпут
-  $(popupSelector).find('.popup-address__input').on('keydown', function(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const inputVal = $(this).val().trim();
-      $(popupSelector).find('#suggestions').empty().hide();
-      // Очищаем инпут
-      $(popupSelector).find('.popup-address__input').val('');
-      saveUserLocation({ city: inputVal, fullAddress: "" });
-      updateCityInElements(inputVal);
-      closePopup();
-    }
   });
 }
 // ================================
@@ -540,11 +531,14 @@ function initCityPopup(popupSelector) {
  * Обновляет все элементы на странице, где отображается город.
  * Например, элементы с классом ".location__city-name".
  */
-export function updateCityInElements(city) {
+export function updateCityInElements(city, cityWitchType) {
   const locationCityElements = document.querySelectorAll(".location__city-name");
   locationCityElements.forEach(element => {
     element.textContent = city;
   });
+  if(cityWitchType){
+  document.querySelector(".nav-section__title_city").textContent = `в ${cityWitchType}`
+  }
   // console.log(`[LOG] Город обновлён в элементах: ${city}`);
 }
 
@@ -555,4 +549,5 @@ $(document).ready(function() {
   loadTechnicalData('./json/address.json'); // Загружаем технические данные из JSON
   initManualAddressInput('.popup-address__input', regionFiasId); // Инициализируем автоподсказки для поля адреса
   initCityPopup('.popup-city-change', regionFiasId); // Инициализируем попап выбора города/адреса
+  console.log(userLocation)
 });

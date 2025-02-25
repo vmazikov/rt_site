@@ -1,10 +1,10 @@
 import '../css/style.css'; // Импорт стилей
 import './carousel.js'; 
+import './popup.js'; 
 import './checkTechnicalPossibility.js'; 
 import './swiper.js'; 
 import './createDynamicPlaceholder.js'; 
 import './cards.js'; 
-import './popup.js'; 
 import './updateAddress.js'; 
 import Swiper from 'swiper';
 import 'swiper/css'; // Подключаем стили Swiper

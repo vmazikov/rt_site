@@ -163,9 +163,9 @@ function checkTechnicalPossibility(formattedAddress) {
 function loadTechnicalData(jsonUrl) {
   $.getJSON(jsonUrl, function(data) {
     technicalData = data.map(item => ({
-      city: item.city.toLowerCase(),
+      city: item.city_witch_type.toLowerCase(),
       street: item.street.toLowerCase(),
-      building: item.building.toLowerCase(),
+      building: item.house.toLowerCase(),
       block: item.block.toLowerCase(),  // Добавили block в технические данные
       txb: item.txb
     }));
@@ -271,6 +271,7 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
     if (typeof suggestion === 'string') {
       try {
         suggestion = JSON.parse(suggestion);
+        // console.log(suggestion)
       } catch (e) {
         console.error('Ошибка парсинга данных подсказки', e);
         return;

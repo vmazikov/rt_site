@@ -139,6 +139,12 @@
   color: #141819;
 }
 
+.card__subtitle__item_none {
+  font-size: 10px;
+  font-weight: lighter;
+  color: #666666;
+}
+
 .card__subtitle__item_router {
   font-size: 15px;
 }

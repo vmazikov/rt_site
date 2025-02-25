@@ -104,19 +104,26 @@ document.addEventListener("DOMContentLoaded", async function () {
             ${tariff.speed ? `
             <div class="card__subtitle">
                 <img class="card__subtitle-img" src="${internetIcon}" alt="Интернет">
-                <div class="card__subtitle__items">
-                <span class="card__subtitle__span">Интернет</span>
-                <h4 class="card__subtitle__item">${tariff.speed} Мбит/с</h4>
+                    <div class="card__subtitle__items">
+                    <span class="card__subtitle__span">Интернет</span>
+                    <h4 class="card__subtitle__item">${tariff.speed} Мбит/с</h4>
+                    </div>
+                </div>` : ''}
+                ${tariff.channels ? `
+                <div class="card__subtitle">
+                    <img class="card__subtitle-img" src="${tvCardIcon}" alt="Тв-Каналы">
+                    <div class="card__subtitle__items">
+                    <span class="card__subtitle__span">Телевидение</span>
+                    <h4 class="card__subtitle__item">${tariff.channels} Каналов</h4>
+                    </div>
+                </div>` : `
+                <div class="card__subtitle">
+                    <img class="card__subtitle-img" src="${tvCardIcon}" alt="Тв-Каналы">
+                    <div class="card__subtitle__items">
+                    <span class="card__subtitle__span">Телевидение</span>
+                <h4 class="card__subtitle__item card__subtitle__item_none">Не включено</h4>
                 </div>
-            </div>` : ''}
-            ${tariff.channels ? `
-            <div class="card__subtitle">
-                <img class="card__subtitle-img" src="${tvCardIcon}" alt="Тв-Каналы">
-                <div class="card__subtitle__items">
-                <span class="card__subtitle__span">Телевидение</span>
-                <h4 class="card__subtitle__item">${tariff.channels} Каналов</h4>
-                </div>
-            </div>` : ''}
+            </div>`}
             ${tariff.sim_details ? `
             <div class="card__subtitle">
                 <img class="card__subtitle-img" src="${smartphoneIcon}" alt="Моб. Связь">
@@ -124,7 +131,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <span class="card__subtitle__span">Моб. Связь</span>
                 <h4 class="card__subtitle__item">${tariff.sim_details}</h4>
                 </div>
-            </div>` : ''}
+            </div>` : `
+            <div class="card__subtitle">
+                <img class="card__subtitle-img" src="${smartphoneIcon}" alt="Моб. Связь">
+                <div class="card__subtitle__items">
+                <span class="card__subtitle__span">Моб. Связь</span>
+                <h4 class="card__subtitle__item card__subtitle__item_none">Не включено</h4>
+                </div>
+            </div>`}
             ${tariff.subscription ? `
             <div class="card__subtitle">
                 <img class="card__subtitle-img" src="${winkIcon}" alt="Wink">
@@ -132,7 +146,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <span class="card__subtitle__span">Wink</span>
                 <h4 class="card__subtitle__item">${tariff.subscription}</h4>
                 </div>
-            </div>` : ''}
+            </div>` : `
+            <div class="card__subtitle">
+                <img class="card__subtitle-img" src="${winkIcon}" alt="Wink">
+                <div class="card__subtitle__items">
+                <span class="card__subtitle__span">Wink</span>
+                <h4 class="card__subtitle__item card__subtitle__item_none">Не включено</h4>
+                </div>
+            </div>`}
             ${tariff.router_price ? `
             <div class="card__subtitle">
                 <img class="card__subtitle-img" src="${routerIcon}" alt="Роутер">

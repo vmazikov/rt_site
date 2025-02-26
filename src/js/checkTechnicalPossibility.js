@@ -102,59 +102,101 @@ function formatAddressFromDaData(data) {
 
 // Формирует полное представление адреса для отображения (с разделителями и сокращениями).
 function getFullAddressString(data) {
-  const city = data.settlement_with_type || data.city_with_type || data.city || "";
+  const city = data.city_with_type || data.city || "";
+  const settlement = data.settlement_with_type || "";
   const building = data.house || "";
   const street = data.street || "";
   const street_with_type = data.street_with_type || "";
-  const blockType = data.block_type
-  const block = data.block
-  
+  const blockType = data.block_type;
+  const block = data.block;
+
+  // Если улица существует, нормализуем её для сравнения
   const streetNormalized = street.trim().toLowerCase();
   const streetWithTypeNormalized = street_with_type.trim().toLowerCase();
-  
-  // Если street_with_type уже содержит street, то используем его как есть
-  if (streetNormalized && streetWithTypeNormalized.includes(streetNormalized)) {
-    return `${city.trim()}, ${street_with_type.trim()}, д ${building.trim()} ${(blockType && block) ? ` ${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
-  } else {
-    // Иначе, определяем сокращённое обозначение типа улицы
-    let streetAbbr = "";
-    let streetTypeFull = street_with_type.toLowerCase();
-    if (streetTypeFull.includes("улица")) {
-      streetAbbr = "ул";
-    } else if (streetTypeFull.includes("проспект")) {
-      streetAbbr = "пр-кт";
-    } else if (streetTypeFull.includes("переулок")) {
-      streetAbbr = "пер";
-    } else if (streetTypeFull.includes("шоссе")) {
-      streetAbbr = "ш.";
-    } else if (streetTypeFull.includes("бульвар")) {
-      streetAbbr = "бул";
-    } else if (streetTypeFull.includes("микрорайон") || streetTypeFull.includes(" мкр") || streetTypeFull.includes("мкр.")) {
-      streetAbbr = "мкр";
-    } else if (streetTypeFull.includes("квартал")) {
-      streetAbbr = "кв";
-    } else if (streetTypeFull.includes("территория") || streetTypeFull.includes("проезд")) {
-      streetAbbr = "тер.";
-    } else {
-      streetAbbr = street_with_type;
-    }
-    return `${city.trim()}, ${streetAbbr} ${street.trim()}, д ${building.trim()} ${(blockType && block) ? ` ${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
+
+  // Если есть и город, и населенный пункт (settlement), но нет улицы
+  if (city && settlement && !street) {
+    return `${city.trim()}, ${settlement.trim()}, д ${building.trim()} ${(blockType && block) ? `${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
   }
+
+  // Если есть и город, и населенный пункт, и улица
+  if (city && settlement) {
+    // Если street_with_type уже содержит street, используем его как есть
+    if (streetNormalized && streetWithTypeNormalized.includes(streetNormalized)) {
+      return `${city.trim()}, ${settlement.trim()}, ${street_with_type.trim()}, д ${building.trim()} ${(blockType && block) ? `${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
+    } else {
+      // Определяем сокращённое обозначение типа улицы
+      let streetAbbr = "";
+      let streetTypeFull = street_with_type.toLowerCase();
+      if (streetTypeFull.includes("улица")) {
+        streetAbbr = "ул";
+      } else if (streetTypeFull.includes("проспект")) {
+        streetAbbr = "пр-кт";
+      } else if (streetTypeFull.includes("переулок")) {
+        streetAbbr = "пер";
+      } else if (streetTypeFull.includes("шоссе")) {
+        streetAbbr = "ш.";
+      } else if (streetTypeFull.includes("бульвар")) {
+        streetAbbr = "бул";
+      } else if (streetTypeFull.includes("микрорайон") || streetTypeFull.includes(" мкр") || streetTypeFull.includes("мкр.")) {
+        streetAbbr = "мкр";
+      } else if (streetTypeFull.includes("квартал")) {
+        streetAbbr = "кв";
+      } else if (streetTypeFull.includes("территория") || streetTypeFull.includes("проезд")) {
+        streetAbbr = "тер.";
+      } else {
+        streetAbbr = street_with_type;
+      }
+      return `${city.trim()}, ${settlement.trim()}, ${streetAbbr} ${street.trim()}, д ${building.trim()} ${(blockType && block) ? `${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
+    }
+  }
+
+  // Если есть только город и улица
+  if (city && !settlement) {
+    return `${city.trim()}, ${street.trim()}, д ${building.trim()} ${(blockType && block) ? `${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
+  }
+
+  // Если только settlement (без города), но есть улица и дом
+  if (!city && settlement && street && building) {
+    return `${settlement.trim()}, ${street.trim()}, д ${building.trim()} ${(blockType && block) ? `${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
+  }
+
+  // Если только settlement без улицы (смотрим на другие данные)
+  if (!city && settlement) {
+    return `${settlement.trim()}, д ${building.trim()} ${(blockType && block) ? `${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
+  }
+
+  // Если только settlement без улицы и дома
+  if (!city && !settlement) {
+    return `${street.trim()}, д ${building.trim()} ${(blockType && block) ? `${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
+  }
+
+  // Если нет ни города, ни settlement, то просто улица и дом
+  return `${street.trim()}, д ${building.trim()} ${(blockType && block) ? `${blockType} ${block}` : ''}`.replace(/\s+/g, " ").trim();
 }
 
-// Проверяет техническую возможность, сравнивая нормализованный отформатированный адрес с техническими данными
-function checkTechnicalPossibility(formattedAddress) {
-  // console.log('Проверяем техническую возможность для:', formattedAddress);
+
+// Проверяет техническую возможность, сначала по fias, а затем по нормализованному адресу
+function checkTechnicalPossibility(formattedAddress, fias) {
+  // Сначала проверяем по fias
+  const matchByFias = technicalData.find(item => item.fias === fias);
+  
+  if (matchByFias) {
+    console.log(`По фиас`)
+    return { isPossible: true, txb: matchByFias.txb };
+  }
+
+  // Если по fias не нашли, то проверяем по нормализованному адресу
   const normalizedAddress = formattedAddress.toLowerCase().replace(/\s+/g, ' ').trim();
-  const match = technicalData.find(item => {
+  const matchByAddress = technicalData.find(item => {
     const itemAddress = `${item.city} ${item.street} ${item.building} ${item.block || ''}`.toLowerCase().replace(/\s+/g, ' ').trim();
     return itemAddress === normalizedAddress;
   });
-  if (match) {
-    // console.log(`Техвозможность ${match.txb}`);
-    return { isPossible: true, txb: match.txb };
+
+  if (matchByAddress) {
+    console.log(`По адресу`)
+    return { isPossible: true, txb: matchByAddress.txb };
   } else {
-    // console.log('Техвозможность не найдена');
     return { isPossible: false };
   }
 }
@@ -167,7 +209,8 @@ function loadTechnicalData(jsonUrl) {
       street: item.street.toLowerCase(),
       building: item.house.toLowerCase(),
       block: item.block.toLowerCase(),  // Добавили block в технические данные
-      txb: item.txb
+      txb: item.txb, 
+      fias: item.fias
     }));
     // console.log('Technical data loaded and normalized:', technicalData);
   });
@@ -201,10 +244,8 @@ function deduplicateSuggestions(suggestions) {
 }
 
 
-
 // Инициализирует подсказки DaData для инпута адреса
 function initManualAddressInput(inputSelector, regionFiasId = '') {
-
   $(inputSelector).on('input', function() {
     const inputVal = $(this).val();
     const parts = inputVal.split(',').map(s => s.trim()).filter(s => s.length > 0);
@@ -216,18 +257,27 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       locations: regionFiasId ? [{ region_fias_id: regionFiasId }] : []
     };
 
+    // Если город из userLocation существует, добавляем его в запрос
+    if (userLocation.cityFias) {
+      requestData.locations.push({ region_fias_id: userLocation.cityFias });
+    }
+
+    // Обработка ввода
     if (parts.length === 2) {
       stage = 'street';
       requestData.from_bound = { value: "street" };
       requestData.to_bound = { value: "street" };
       requestData.query = (parts[0] ? parts[0] + ' ' : '') + parts[1];
+      requestData.from_level = '7'; // Уровень для улиц
     } else if (parts.length >= 3) {
       stage = 'house';
       requestData.from_bound = { value: "house" };
       requestData.to_bound = { value: "house" };
       requestData.query = ((parts[0] ? parts[0] + ' ' : '') + (parts[1] ? parts[1] + ' ' : '')) + parts[2];
+      requestData.from_level = '8'; // Уровень для домов
     }
 
+    // Если длина запроса меньше 3 символов, не делаем запрос
     if (requestData.query.trim().length < 3) {
       $('#suggestions').empty();
       return;
@@ -241,27 +291,66 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       data: JSON.stringify(requestData),
       success: function(data) {
         let suggestions = data.suggestions || [];
-        // console.log(suggestions);
+        // Сортируем подсказки, чтобы те, что соответствуют фиас городу пользователя, шли первыми
+        suggestions = suggestions.sort((a, b) => {
+          const isCityA = a.data.city_fias_id === userLocation.cityFias;
+          const isCityB = b.data.city_fias_id === userLocation.cityFias;
+          return isCityB - isCityA; // Сортируем, чтобы вначале шли подсказки с фиас города пользователя
+        });
+
         // Удаляем дубликаты подсказок
         suggestions = deduplicateSuggestions(suggestions);
         const suggestionsDiv = $('#suggestions');
         suggestionsDiv.empty();
+       
 
         suggestions.forEach(item => {
-          // Для отображения используем неотформатированный адрес, полученный от DaData (item.value)
+          console.log(item)
+          // Формируем строку адреса
           const rawAddress = item.value;
-          // Если режим "house", проверяем, что адрес полный (fias_level === "8" и поле house присутствует)
-          if (stage === 'house') {
-            if (item.data.fias_level !== '8' || !item.data.house) return;
+          const cityName = resolveCityName(item.data) || item.data.settlement || item.data.city || item.data.city_with_type || "";
+          const street = item.data.street_with_type || '';
+          const house = item.data.house || '';
+          const regionText = `${item.data.region_with_type} ${item.data.city_with_type || ''} ${item.data.settlement_with_type || ''}`.trim() || '';
+
+          // Проверяем, есть ли улица
+          let address = '';
+          let region = '';
+
+          if (street) {
+            // Если есть улица, используем текущую логику
+            address = `${street} ${house}`.trim();
+            region = `${item.data.region_with_type|| ''} ${item.data.city_with_type || ''} ${item.data.settlement_with_type || ''}`.trim() || '';
+          } else {
+            // Если улицы нет, показываем city_with_type и settlement_with_type
+            address = `${item.data.city_with_type || ''} ${item.data.settlement_with_type || ''} ${house || ''}`.trim();
+            region = item.data.region_with_type || '';
           }
+
+          // Пропускаем подсказки с уровнем фиас ниже 4
+          if (item.data.fias_level < 4) {
+            return; // Пропускаем добавление подсказки, если уровень фиас меньше 4
+          }
+
+          // Убираем подсказки, которые содержат "тер" (например, "территория" или "проезд")
+          if (/тер/i.test(rawAddress)) {
+            return; // Пропускаем добавление подсказки, если она содержит "тер"
+          }
+
+          // Добавляем подсказку
           suggestionsDiv.append(
-            `<div data-suggestion='${JSON.stringify(item)}'>${rawAddress}</div>`
+            `<div class="suggetion-container" data-suggestion='${JSON.stringify(item)}'>
+              <div class="suggetion-address" data-suggestion='${JSON.stringify(item)}'>${address}</div>
+              <div class="suggetion-city" data-suggestion='${JSON.stringify(item)}'>${region}</div>
+            </div>`
           );
         });
       },
+      
       error: function(err) {
         console.error('Ошибка DaData:', err);
       }
+      
     });
   });
 
@@ -271,28 +360,26 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
     if (typeof suggestion === 'string') {
       try {
         suggestion = JSON.parse(suggestion);
-        // console.log(suggestion)
+        console.log(suggestion)
       } catch (e) {
         console.error('Ошибка парсинга данных подсказки', e);
         return;
       }
     }
 
-    // Формируем отформатированную строку адреса (без запятых) для проверки технической возможности
+    // Формируем отформатированную строку адреса
     const formattedAddress = getFormattedAddressString(suggestion.data);
     // Формируем полное представление адреса (с разделителями и сокращениями)
     const fullAddressFormatted = getFullAddressString(suggestion.data);
     const isComplete = suggestion.data.house && suggestion.data.house.trim() !== '';
-    // Обновляем инпут неотформатированным адресом, полученным от DaData
-    $(inputSelector).val(suggestion.value);
+    const fiasAddress = suggestion.data.house_fias_id.trim()
+    // Обновляем инпут неотформатированным адресом
+    $(inputSelector).val("");
     $('#suggestions').empty();
 
     if (isComplete) {
-      const techResult = checkTechnicalPossibility(formattedAddress);
-      // console.log(suggestion);
-
-
-
+      console.log(fiasAddress)
+      const techResult = checkTechnicalPossibility(formattedAddress, fiasAddress);
 
       // Используем resolveCityName для корректного города
       const cityName = resolveCityName(suggestion.data) || suggestion.data.settlement || suggestion.data.city || suggestion.data.city_with_type || "";
@@ -300,7 +387,8 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       // Формируем правильный адрес (город + улица + дом)
       const formattedAddressWithCity = `${cityName} ${suggestion.data.street_with_type || ''} ${suggestion.data.house || ''}`.trim();
 
-      const cityWitchType = `${suggestion.data.city_type} ${cityName}`
+      const cityWitchType = `${suggestion.data.city_type} ${cityName}`;
+      
 
       // Сохраняем данные
       saveUserLocation({
@@ -309,17 +397,11 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
         address: formattedAddressWithCity, // Сохраняем отформатированный адрес
         techResult: techResult,
         fullAddress: fullAddressFormatted, // Неотформатированный адрес
-        cityFias: suggestion.data.city_fias_id
+        cityFias: suggestion.data.city_fias_id,
       });
 
       updateCityInElements(cityName, cityWitchType);
       closePopup();
-
-      // if (techResult.isPossible) {
-      //   alert(`Техническая возможность: ${techResult.txb}`);
-      // } else {
-      //   alert('Технической возможности нет');
-      // }
     }
   });
 }
@@ -423,11 +505,14 @@ function initCityPopup(popupSelector) {
       data: JSON.stringify(requestData),
       success: function(response) {
         let suggestions = response.suggestions || [];
+        
+        suggestions = deduplicateSuggestions(suggestions);
         // Преобразуем ответ – сохраняем сырой адрес (item.value) и объект с данными (item.data)
         suggestions = suggestions.map(item => ({
           data: item.data,
           raw: item.value
         }));
+
 
         // Фильтруем подсказки:
         suggestions = suggestions.filter(item => {
@@ -443,14 +528,14 @@ function initCityPopup(popupSelector) {
           return true;
         });
 
-        suggestions = deduplicateSuggestions(suggestions);
+
 
         const $suggestionsDiv = $(popupSelector).find('#suggestions');
         $suggestionsDiv.empty();
         if (suggestions.length > 0) {
           suggestions.forEach(function(suggestion) {
             $suggestionsDiv.append(
-              `<div class="dadata-suggestion" data-suggestion='${JSON.stringify(suggestion)}'>
+              `<div class="suggetion-container" class="dadata-suggestion" data-suggestion='${JSON.stringify(suggestion)}'>
                  ${suggestion.raw}
                </div>`
             );

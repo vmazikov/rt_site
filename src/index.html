@@ -241,7 +241,7 @@
   <div id="overlay" class="overlay"></div>
 <!-- 
   <div id="popupCallBack" class="popup popup-check-client popup-callback">
-    <button class="popup__close-button">&times;</button>
+    <button class="popup__close-button"></button>
     <h3 class="popup__title popup-check-client__title">Вас интересует новое подключение?</h3>
     <div class="popup-check-client__buttons">
       <button id="newConnectionCallBack" class="popup__submit-button popup__submit-button_active">Новое подключение</button>
@@ -250,7 +250,7 @@
   </div> -->
 
   <!-- <div id="popupCallBackForm" class="popup popup-form popup-callback-form">
-    <button class="popup__close-button">&times;</button>
+    <button class="popup__close-button"></button>
     <h3 class="popup__title popup-form__title">Заказать звонок</h3>
     <p class="popup__text popup-form__text"></p>
     <div class="form-card">
@@ -270,7 +270,7 @@
 
   <!-- Попап 1 -->
   <div id="popup1" class="popup popup-check-client">
-    <button class="popup__close-button">&times;</button>
+    <button class="popup__close-button"></button>
     <h3 class="popup__title popup-check-client__title">Хотите новое подключение или уже подключены к Ростелеком?</h3>
     <div class="popup-check-client__buttons">
       <button id="newConnection" class="popup__submit-button popup__submit-button_active">Новое подключение</button>
@@ -280,7 +280,7 @@
   
   <!-- Popup2 -->
   <div id="popup2" class="popup popup-form">
-    <button class="popup__close-button">&times;</button>
+    <button class="popup__close-button"></button>
     <h3 class="popup__title popup-form__title">Заявка на подключение</h3>
     <p class="popup__text popup-form__text">Перезвоним для уточнения деталей и согласования времени</p>
     <div class="form-card">
@@ -299,7 +299,7 @@
   </div>
   <!-- Попап 3 -->
   <div id="popup3" class="popup popup-client">
-    <button class="popup__close-button">&times;</button>
+    <button class="popup__close-button"></button>
     <h3 class="popup__title popup-client__title">Вы являетесь действующим абонентом Ростелеком</h3>
     <p class="popup__text">Мы не сможем ответить на вопросы по действующему подключению или сменить ваш текущий тариф.</p>
     <p class="popup__text">Для смены тарифа необходимо позвонить по номеру</p>
@@ -309,7 +309,7 @@
   
   <!-- Попап 4 -->
   <div id="popup4" class="popup popup-submit">
-    <button class="popup__close-button">&times;</button>
+    <button class="popup__close-button"></button>
     <h3 class="popup__title">Спасибо за выбор нашей компании!</h3>
     <p class="popup__text">В течение 15 минут специалист Вам перезвонит.</p>
   </div>
@@ -320,7 +320,7 @@
         <div class="location__city-icon"></div>
         <span class="location__city-name">Кемерово</span>
       </div>
-      <button class="popup__close-button">&times;</button>
+      <button class="popup__close-button"></button>
     </div>
     <div class="popup-address__input-wrapper">
       <input class="popup-address__input" type="text" id="addressInput" autocomplete="off" placeholder="Введите улицу и дом" />
@@ -331,10 +331,10 @@
   <!-- Попап для выбора города -->
   <div class="popup popup-address popup-city-change">
     <div class="popup-adress__buttons">
-      <button class="popup__close-button">&times;</button>
+      <button class="popup__close-button"></button>
     </div>
     <div class="popup-address__input-wrapper">
-      <input class="popup-address__input" id="cityInput" type="text" autocomplete="off" placeholder="Введите город" />
+      <input class="popup-address__input" id="cityInput" type="text" autocomplete="off" placeholder="Введите город" hidden/>
       <div id="suggestions" style="display: none;"></div>
     </div>
     <!-- Изначально блок с локальными городами показывается -->
@@ -342,7 +342,7 @@
   </div>
 
   <div id="locationPopup" class="popup-cities hidden">
-    <button id="closePopupButton" class="popup-close">&times;</button>
+    <button id="closePopupButton" class="popup__close-button"></button>
     <div class="popup-header">
       <p><span class="popup-icon"></span> Хочу подключить услуги в </p>
       <span id="currentCity" class="popup-selected-city">...</span>

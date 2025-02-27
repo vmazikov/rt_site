@@ -1,9 +1,14 @@
 .popup__close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px; /* Укажи размер кнопки по размеру иконки */
+  height: 24px;
+  background: url('../../../../assets/images/close_btn.png') no-repeat center;
+  background-size: contain; /* Чтобы иконка полностью вмещалась */
+  border: none;
+  cursor: pointer;
+  text-indent: -9999px; /* Скрываем текст */
+  overflow: hidden;
+  padding: 0;
+}

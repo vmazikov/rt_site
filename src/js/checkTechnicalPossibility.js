@@ -387,7 +387,7 @@ function initManualAddressInput(inputSelector, regionFiasId = '') {
       // Формируем правильный адрес (город + улица + дом)
       const formattedAddressWithCity = `${cityName} ${suggestion.data.street_with_type || ''} ${suggestion.data.house || ''}`.trim();
 
-      const cityWitchType = `${suggestion.data.city_type} ${cityName}`;
+      const cityWitchType = `${suggestion.data.city_type || suggestion.data.settlement_type || ''} ${cityName}`;
       
 
       // Сохраняем данные
@@ -579,7 +579,8 @@ function initCityPopup(popupSelector) {
     // Используем resolveCityName: если settlement присутствует и входит в localCities, возвращается settlement;
     // иначе – используется city (или city_with_type).
     const cityName = resolveCityName(data) || raw;
-    const cityWitchType = `${data.city_type} ${cityName}`
+    const cityWitchType = `${data.city_type || data.settlement_type  || ""} ${cityName || ""}`
+    console.log(cityWitchType)
     // Очищаем инпут после выбора подсказки
     $(popupSelector).find('.popup-address__input').val('');
     $(popupSelector).find('#suggestions').empty().hide();

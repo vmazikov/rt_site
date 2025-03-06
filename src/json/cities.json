@@ -2,7 +2,7 @@
   "cities": [
     {"name": "Анжеро-Судженск", "type": "г", "visible": "yes", "cluster": "5", "cityFiasId": "8a5314a4-903e-475c-a4db-8f03db3b793f", "popup_visible": "yes"},
     {"name": "Белово", "type": "г", "visible": "yes", "cluster": "5", "cityFiasId": "1346744e-8a64-4712-8939-bb84a1692874", "popup_visible": "yes"},
-    {"name": "Березовский", "type": "г", "visible": "yes", "cluster": "5", "cityFiasId": "", "popup_visible": "yes"},
+    {"name": "Березовский", "type": "г", "visible": "yes", "cluster": "5", "cityFiasId": "ef6bac92-b712-42ba-942b-515b36b9a32c", "popup_visible": "yes"},
     {"name": "Гурьевск", "type": "г", "visible": "yes", "cluster": "5", "cityFiasId": "9924881d-bc20-4e72-8c2e-e4cf415c93c1", "popup_visible": "no"},
     {"name": "Калтан", "type": "г", "visible": "yes", "cluster": "5", "cityFiasId": "5000e677-7d3c-4eec-b01d-f3f192abbd41", "popup_visible": "no"},
     {"name": "Кемерово", "type": "г", "visible": "yes", "cluster": "5", "cityFiasId": "94bb19a3-c1fa-410b-8651-ac1bf7c050cd", "popup_visible": "yes", "default_city": "yes"},

@@ -21,22 +21,45 @@ document.addEventListener("DOMContentLoaded", async function () {
     let currentPage = 0;
 
     async function loadData() {
-        const [tariffsResponse, citiesResponse] = await Promise.all([
+        // Сначала показываем скелетоны, пока идёт загрузка
+        showLoadingSkeletons(3);
+      
+        try {
+          const [tariffsResponse, citiesResponse] = await Promise.all([
             fetch("./json/tariffs.json"),
             fetch("./json/cities.json")
-        ]);
-        allTariffs = await tariffsResponse.json();
-        const citiesData = await citiesResponse.json();
-
-        // Создаем маппинг {город: кластер}
-        cityClusters = citiesData.cities.reduce((acc, city) => {
+          ]);
+      
+          if (!tariffsResponse.ok || !citiesResponse.ok) {
+            // Если статус ответа не 2xx, выбрасываем ошибку
+            throw new Error(`HTTP error! tariffs: ${tariffsResponse.status}, cities: ${citiesResponse.status}`);
+          }
+      
+          // Парсим JSON
+          allTariffs = await tariffsResponse.json();
+          const citiesData = await citiesResponse.json();
+      
+          // Создаем маппинг {город: кластер}
+          cityClusters = citiesData.cities.reduce((acc, city) => {
             acc[city.name] = city.cluster;
             return acc;
-        }, {});
-
-        updateUI(); // Устанавливаем активные кнопки фильтрации и сортировки
-        updateTariffs();
-    }
+          }, {});
+      
+          // Данные успешно пришли, можно убрать скелетоны
+          hideLoadingSkeletons();
+          hideErrorCard();
+      
+          // Теперь обновляем UI настоящими картами
+          updateUI();
+          updateTariffs();
+      
+        } catch (error) {
+          // Ловим любые ошибки (сеть, парсинг и т.д.) и показываем карточку-ошибку
+          console.error("[ERROR] При загрузке тарифов:", error);
+          hideLoadingSkeletons();
+          showErrorCard(error.message || 'Ошибка сети');
+        }
+      }
 
     function updateUI() {
         // Устанавливаем активный стиль для кнопок фильтрации тарифов
@@ -139,12 +162,12 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <h4 class="card__subtitle__item card__subtitle__item_none">Не включено</h4>
                 </div>
             </div>`}
-            ${tariff.subscription ? `
+            ${tariff.wink_description ? `
             <div class="card__subtitle">
                 <img class="card__subtitle-img" src="${winkIcon}" alt="Wink">
                 <div class="card__subtitle__items">
                 <span class="card__subtitle__span">Wink</span>
-                <h4 class="card__subtitle__item">${tariff.subscription}</h4>
+                <h4 class="card__subtitle__item">${tariff.wink_description}</h4>
                 </div>
             </div>` : `
             <div class="card__subtitle">
@@ -178,16 +201,21 @@ document.addEventListener("DOMContentLoaded", async function () {
         </div>
         <div class="card__buttons">
             <a href="#" class="card__connect-btn card__connect-btn${tariff.button} connect-btn">Подключить</a>
-            <div class="card__info-btn hidden"></div>
+            <div class="card__info-btn"></div>
         </div>
         </div>`;
     }
-
     function renderTariffs() {
         tariffsContainer.innerHTML = displayedTariffs.map(createTariffCard).join("");
         attachEventListeners();
-        showMoreButton.style.display = displayedTariffs.length >= filteredTariffs.length ? "none" : "block";
-    }
+      
+        // Показываем контейнер "Показать ещё", только если есть ещё тарифы для показа
+        if (displayedTariffs.length >= filteredTariffs.length) {
+            showMoreButton?.classList.add("hidden");
+        } else {
+            showMoreButton?.classList.remove("hidden");
+        }
+      }
 
     // Исправленный updateTariffs: теперь данные читаются напрямую из localStorage.
     function updateTariffs() {
@@ -252,6 +280,55 @@ document.addEventListener("DOMContentLoaded", async function () {
             updateTariffs();
         }
     });
+
+    function showLoadingSkeletons(count = 3) {
+        const skeletonsHTML = Array(count).fill('').map(() => {
+          return `
+            <div class="skeleton-card">
+              <div class="skeleton-line lg"></div>
+              <div class="skeleton-line md"></div>
+              <div class="skeleton-line sm"></div>
+              <div class="skeleton-line lg"></div>
+              <div class="skeleton-line md"></div>
+            </div>
+          `;
+        }).join('');
+      
+        // Прячем "Показать ещё"
+        if (showMoreButton) {
+            showMoreButton.classList.add("hidden");
+        }
+      
+        // Вставляем скелетоны в .card-wrapper
+        const tariffsContainer = document.querySelector('.card-wrapper');
+        tariffsContainer.innerHTML = skeletonsHTML;
+      }
+      
+      function hideLoadingSkeletons() {
+        // Удаляем всё, что относится к скелетону
+        const tariffsContainer = document.querySelector('.card-wrapper');
+        tariffsContainer.innerHTML = '';
+      }
+      
+      function showErrorCard(errorCode = '000') {
+        const tariffsContainer = document.querySelector('.card-wrapper');
+        tariffsContainer.innerHTML = `
+          <div class="error-card">
+            <div class="error-card__title">Не удалось загрузить тарифы</div>
+            <div class="error-card__text">Попробуйте обновить страницу.</div>
+            <a class="error-card__refresh-btn" onclick="window.location.reload()">Обновить</a>
+          </div>
+        `;
+        // Прячем "Показать ещё"
+        if (showMoreButton) {
+          showMoreButton.classList.add("hidden");
+        }
+      }
+      
+      function hideErrorCard() {
+        const tariffsContainer = document.querySelector('.card-wrapper');
+        tariffsContainer.innerHTML = '';
+      }
 
     loadData();
 });

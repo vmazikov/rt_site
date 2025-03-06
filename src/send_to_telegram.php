@@ -5,15 +5,34 @@ $token = '8188979928:AAGalzT5UfkcM9CQfD986b73Z5W_GII7SaI'; // Замените �
 $chat_id = '612840423'; // Замените на ваш ID чата
 
 // Получаем данные из POST-запроса
+$name = $_POST['name'];
+$address = $_POST['address'];
+$phone = $_POST['phone'];
 $userLocation = json_decode($_POST['userLocation'], true);
 $tariff = json_decode($_POST['tariff'], true);
-$phone = $_POST['phone'];
 
 // Формируем текст сообщения
 $message = "Новая заявка на подключение:\n\n";
-$message .= "Город: " . $userLocation['city'] . "\n";
-$message .= "Адрес: " . $userLocation['fullAddress'] . "\n";
-$message .= "Техвозможность: " . $userLocation['techResult']['txb'] . "\n";
+$message .= "Имя: " . $name . "\n";
+
+// Если данные о локации существуют, выводим город и адрес из них, если адрес из формы пустой
+if ($userLocation) {
+    if (!empty($userLocation['city'])) {
+        $message .= "Город: " . $userLocation['city'] . "\n";
+    }
+    if (empty($address) && !empty($userLocation['fullAddress'])) {
+        $message .= "Адрес: " . $userLocation['fullAddress'] . "\n";
+    } else {
+        $message .= "Адрес: " . $address . "\n";
+    }
+    if (!empty($userLocation['techResult']['txb'])) {
+        $message .= "Техвозможность: " . $userLocation['techResult']['txb'] . "\n";
+    }
+} else {
+    // Если данных о локации нет, используем адрес из формы
+    $message .= "Адрес: " . $address . "\n";
+}
+
 $message .= "Тариф: " . $tariff['name'] . "\n";
 $message .= "Услуги: " . $tariff['services'] . "\n";
 $message .= "Скорость: " . $tariff['speed'] . " Мбит/с\n";

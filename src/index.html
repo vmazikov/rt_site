@@ -31,7 +31,7 @@
       <div class="location__city-icon"></div>
       <span class="location__city-name">Кемерово</span>
     </div>
-  </header>
+  </header> 
   <section>
     <div class="banner">
       <div class="banner__title-wrap">
@@ -52,13 +52,13 @@
               <img class="location__search-button__img" src="./assets/images/seacrh-icon.png">
             </div>
           </div>
-          <!-- <div class="location__call-section">
+          <div class="location__call-section hidden">
             <div class="location__call-text">Или закажите обратный звонок, и мы перезвоним в течение 10 минут</div>
             <button class="location__call-button">
                 <div class="location__call-icon"></div>
                 <span>Заказать звонок</span>
             </button>
-          </div> -->
+          </div>
         </div>
         <h1 class="banner__subtitle">Почему стоит выбрать Ростелеком</h1>
         <div class="banner__icons-wrap">
@@ -124,6 +124,7 @@
     </div>
     <div class="card-wrapper__snow-more-button-container">
       <button class="card-wrapper__show-more-button">Показать еще</button>
+    </div>
   </section>
  <section class="equipment-section card">
   <h2 class="equipment-section__title">Оборудование</h2>
@@ -238,109 +239,138 @@
   <footer class="footer">
     <p class="footer__text">© 2025 Сайт не является средством массовой информации и действует на основании агентского договора с Ростелеком.</p>
   </footer>
-  <div id="overlay" class="overlay"></div>
-<!-- 
-  <div id="popupCallBack" class="popup popup-check-client popup-callback">
-    <button class="popup__close-button"></button>
-    <h3 class="popup__title popup-check-client__title">Вас интересует новое подключение?</h3>
-    <div class="popup-check-client__buttons">
-      <button id="newConnectionCallBack" class="popup__submit-button popup__submit-button_active">Новое подключение</button>
-      <button id="existingConnection" class="popup__submit-button popup-check-client__client-button">Уже подключен к Ростелеком</button>
-    </div>
-  </div> -->
-
-  <!-- <div id="popupCallBackForm" class="popup popup-form popup-callback-form">
-    <button class="popup__close-button"></button>
-    <h3 class="popup__title popup-form__title">Заказать звонок</h3>
-    <p class="popup__text popup-form__text"></p>
-    <div class="form-card">
-      <form id="phoneForm" method="POST" action="callBack_to_telegram.php">
-        <div class="popup-form__group">
-          <label for="phone" class="popup-form__group-label">Введите телефон</label>
-          <input class="popup-form__group-input" type="text" id="phone" name="phone" placeholder="+7 (___) ___-__-__" maxlength="12" value="+7" required />
-        </div>
-        <input type="hidden" id="tarif" name="tarif" />
-        <input type="hidden" id="location" name="location" />
-        <input type="hidden" id="address" name="address" />
-        <p class="popup-form__hint">Перезвоним в течение 15 минут</p>
-        <button type="submit" id="submitButton" class="popup__submit-button" disabled>Отправить заявку</button>
-      </form>
-    </div>
-  </div> -->
-
-  <!-- Попап 1 -->
   <div id="popup1" class="popup popup-check-client">
-    <button class="popup__close-button"></button>
-    <h3 class="popup__title popup-check-client__title">Хотите новое подключение или уже подключены к Ростелеком?</h3>
-    <div class="popup-check-client__buttons">
-      <button id="newConnection" class="popup__submit-button popup__submit-button_active">Новое подключение</button>
-      <button id="existingConnection" class="popup__submit-button popup-check-client__client-button">Уже подключен к Ростелеком</button>
+    <div class="popup__overlay"></div>
+    <div class="popup__container popup__container_value_check-client">
+      <button class="popup__close-button"></button>
+      <h3 class="popup__title popup-check-client__title">Хотите новое подключение или уже подключены к Ростелеком?</h3>
+      <div class="popup-check-client__buttons">
+        <button id="newConnection" class="popup__submit-button popup__submit-button_active">Новое подключение</button>
+        <button id="existingConnection" class="popup__submit-button popup-check-client__client-button">Уже подключен к Ростелеком</button>
+      </div>
     </div>
   </div>
-  
-  <!-- Popup2 -->
   <div id="popup2" class="popup popup-form">
-    <button class="popup__close-button"></button>
-    <h3 class="popup__title popup-form__title">Заявка на подключение</h3>
-    <p class="popup__text popup-form__text">Перезвоним для уточнения деталей и согласования времени</p>
-    <div class="form-card">
-      <form id="phoneForm" method="POST" action="send_to_telegram.php">
-        <div class="popup-form__group">
-          <label for="phone" class="popup-form__group-label">Введите телефон</label>
-          <input class="popup-form__group-input" type="text" id="phone" name="phone" placeholder="+7 (___) ___-__-__" maxlength="12" value="+7" required />
-        </div>
-        <input type="hidden" id="tarif" name="tarif" />
-        <input type="hidden" id="location" name="location" />
-        <input type="hidden" id="address" name="address" />
-        <p class="popup-form__hint">Перезвоним в течение 15 минут</p>
-        <button type="submit" id="submitButton" class="popup__submit-button" disabled>Отправить заявку</button>
-      </form>
+    <div class="popup__overlay"></div>
+    <div class="popup__container popup__container_value_submit-client">
+      <button class="popup__close-button"></button>
+      <h3 class="popup__title popup-form__title">Заявка на подключение</h3>
+      <p class="popup__text popup-form__text">Перезвоним для уточнения деталей и согласования времени</p>
+      <div class="form-card">
+        <form id="phoneForm" method="POST" action="send_to_telegram.php" autocomplete="on">
+          <div class="popup-form__group">
+            <label for="name" class="popup-form__group-label">Имя</label>
+            <input class="popup-form__group-input" type="text" autocomplete="name" id="name" name="name" placeholder="Введите имя" required />
+          </div>
+          <div class="popup-form__group">
+            <label for="address" class="popup-form__group-label">Адрес</label>
+            <input class="popup-form__group-input" type="text" id="address" autocomplete="street-address" name="address" placeholder="Введите адрес" required />
+          </div>
+          <div class="popup-form__group">
+            <label for="phone" class="popup-form__group-label">Введите телефон</label>
+            <input class="popup-form__group-input" type="text" id="phone" autocomplete="tel" name="phone" placeholder="+7 (___) ___-__-__" maxlength="12" value="+7" required />
+          </div>
+          <input type="hidden" id="tarif" name="tarif" />
+          <input type="hidden" id="location" name="location" />
+          <p id="errorText" style="display:none;color:red;"></p>
+          <p class="popup-form__hint">Перезвоним в течение 15 минут</p>
+          <button type="submit" id="submitButton" class="popup__submit-button" disabled>Отправить заявку</button>
+          <span class="form__privacy">
+            Нажимая кнопку, вы соглашаетесь с <a href="/pages/privacy.html" class="form__privacy-link">обработкой персональных данных</a>
+          </span>
+        </form>
+      </div>
     </div>
   </div>
-  <!-- Попап 3 -->
   <div id="popup3" class="popup popup-client">
-    <button class="popup__close-button"></button>
-    <h3 class="popup__title popup-client__title">Вы являетесь действующим абонентом Ростелеком</h3>
-    <p class="popup__text">Мы не сможем ответить на вопросы по действующему подключению или сменить ваш текущий тариф.</p>
-    <p class="popup__text">Для смены тарифа необходимо позвонить по номеру</p>
-    <a class="popup-client__phone-number" href="tel:+88001000800">8 800 100-08-00</a>
-    <p class="popup__text">Или узнать информацию в <a class="popup-client__link" href="https://lk.rt.ru" target="_blank">личном кабинете</a></p>
+    <div class="popup__overlay"></div>
+    <div class="popup__container popup__container_value_client">
+      <button class="popup__close-button"></button>
+      <h3 class="popup__title popup-client__title">Вы являетесь действующим абонентом Ростелеком</h3>
+      <p class="popup__text">Мы не сможем ответить на вопросы по действующему подключению или сменить ваш текущий тариф.</p>
+      <p class="popup__text">Для смены тарифа необходимо позвонить по номеру</p>
+      <a class="popup-client__phone-number" href="tel:+88001000800">8 800 100-08-00</a>
+      <p class="popup__text">Или узнать информацию в <a class="popup-client__link" href="https://lk.rt.ru" target="_blank">личном кабинете</a></p>
+    </div>
   </div>
-  
-  <!-- Попап 4 -->
   <div id="popup4" class="popup popup-submit">
-    <button class="popup__close-button"></button>
-    <h3 class="popup__title">Спасибо за выбор нашей компании!</h3>
-    <p class="popup__text">В течение 15 минут специалист Вам перезвонит.</p>
+    <div class="popup__overlay"></div>
+    <div class="popup__container popup__container_value_submit">
+      <button class="popup__close-button"></button>
+      <h3 class="popup__title">Спасибо за выбор нашей компании!</h3>
+      <p class="popup__text">В течение 15 минут специалист Вам перезвонит.</p>
+    </div>
   </div>
-<!-- попап для выбора адреса -->
   <div class="popup popup-address">
-    <div class="popup-adress__buttons">
-      <div class="location__city">
-        <div class="location__city-icon"></div>
-        <span class="location__city-name">Кемерово</span>
+    <div class="popup__overlay"></div>
+    <div class="popup__container popup__container_value_address">
+      <div class="popup-adress__buttons">
+        <div class="location__city">
+          <div class="location__city-icon"></div>
+          <span class="location__city-name">Кемерово</span>
+        </div>
+        <button class="popup__close-button"></button>
       </div>
-      <button class="popup__close-button"></button>
-    </div>
-    <div class="popup-address__input-wrapper">
-      <input class="popup-address__input" type="text" id="addressInput" autocomplete="off" placeholder="Введите улицу и дом" />
-      <div id="suggestions">
+      <div class="popup-address__input-wrapper">
+        <input class="popup-address__input" autocomplete="street-address" type="text" id="addressInput" autocomplete="off" placeholder="Введите улицу и дом" />
+        <div id="suggestions">
+        </div>
       </div>
     </div>
   </div>
-  <!-- Попап для выбора города -->
   <div class="popup popup-address popup-city-change">
-    <div class="popup-adress__buttons">
+    <div class="popup__overlay"></div>
+    <div class="popup__container popup__container_value_city-change">
       <button class="popup__close-button"></button>
+      <div class="popup-address__input-wrapper">
+        <input class="popup-address__input" autocomplete="address-level2" id="cityInput" type="text" autocomplete="off" placeholder="Введите город" hidden/>
+        <div id="suggestions" style="display: none;"></div>
+      </div>
+      <!-- Изначально блок с локальными городами показывается -->
+      <div id="local-cities"></div>
     </div>
-    <div class="popup-address__input-wrapper">
-      <input class="popup-address__input" id="cityInput" type="text" autocomplete="off" placeholder="Введите город" hidden/>
-      <div id="suggestions" style="display: none;"></div>
-    </div>
-    <!-- Изначально блок с локальными городами показывается -->
-    <div id="local-cities"></div>
   </div>
-
+  <div class="popup popup-card">
+    <div class="popup__overlay"></div>
+    <div class="popup__container popup__container_value_card-info">
+      <button class="popup__close-button"></button>
+      <div class="popup-card__content">
+        <div class="popup-card__content__tariffs popup-card__section">
+          <div class="popup-card__header">
+            <span class="popup-card__title-span">Тариф</span>
+            <h2 class="popup-card__title"></h2>
+            <p class="popup-card__description"></p>
+            <div class="popup-card__status">
+  
+            </div>
+          </div>
+          <div class="popup-card__items">
+  
+          </div>
+        </div>
+        <div class="popup-card__content__submit">
+          <div class="popup-card__pricing popup-card__section">
+            <p class="popup-card__pricing-title popup-card__title">Стоимость тарифа</p>
+            <div class="popup-card__pricing-detail">
+              <span class="popup-card__pricing-price"></span>
+              <span class="popup-card__pricing-discount"></span>
+              <span class="popup-card__pricing-price_after"><span class="popup-card__pricing-price_after_bold"></span></span>
+            </div>
+            <div class="popup-card__pricing-detail-equipment">
+  
+            </div>
+            <a href="#" class="popup-card__connect-btn">Подключить</a>
+          </div>
+          <div class="popup-card__contact popup-card__section hidden">
+            <p class="popup-card__contact-text">Удобнее подобрать тариф со специалистом?</p>
+            <p class="popup-card__contact-description">Честно и понятно ответим на все вопросы по тарифам, оборудованию и оплате</p>
+            <a href="tel:+79505908454" class="popup__contact-phone">8 800 505-88-56</a>
+            <button class="popup-card__btn-consult">Получить консультацию</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="locationPopup" class="popup-cities hidden">
     <button id="closePopupButton" class="popup__close-button"></button>
     <div class="popup-header">

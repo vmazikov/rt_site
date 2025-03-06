@@ -98,11 +98,18 @@
 @import url(./blocks/nav-section/__link/nav-section__link.css);
 @import url(./blocks/nav-section/__buttons/nav-section__buttons.css);
 @import url(./blocks/nav-section/__buttons-container/nav-section__buttons-container.css);
-@import url(./blocks/overlay/overlay.css);
-@import url(./blocks/overlay/_active/overlay_active.css);
 @import url(./blocks/page/page.css);
 @import url(./blocks/popup/popup.css);
 @import url(./blocks/popup/_active/popup_active.css);
+@import url(./blocks/popup/__overlay/popup__overlay.css);
+@import url(./blocks/popup/__container/popup__container.css);
+@import url(./blocks/popup/__container/_value_check-client/popup__container_value_check-client.css);
+@import url(./blocks/popup/__container/_value_client/popup__container_value_client.css);
+@import url(./blocks/popup/__container/_value_submit-client/popup__container_value_submit-client.css);
+@import url(./blocks/popup/__container/_value_submit/popup__container_value_submit.css);
+@import url(./blocks/popup/__container/_value_card-info/popup__container_value_card-info.css);
+@import url(./blocks/popup/__container/_value_address/popup__container_value_address.css);
+@import url(./blocks/popup/__container/_value_city-change/popup__container_value_city-change.css);
 @import url(./blocks/popup/__title/popup__title.css);
 @import url(./blocks/popup/__text/popup__text.css);
 @import url(./blocks/popup/__submit-button/popup__submit-button.css);
@@ -155,11 +162,7 @@
   color: #555;
 }
 
-.popup-card {
-  width: 980px;
-  height: 820px;
-  border-radius: 16px;
-}
+
 
 
 * {
@@ -169,19 +172,7 @@
     
   }
 
-  .popup-address {
-    height: 100%;
-    border-radius: 0;
-  }
 
-
-  @media (min-width: 650px) {
-    .popup-address {
-      width: 630px;
-      height: 530px;
-      border-radius: 16px;
-    }
-  }
 
 .popup-address__input {
   background: #efeef3;
@@ -224,6 +215,7 @@
   display: flex;
   flex-direction: column;
   align-items: left;
+  overflow-y: auto;
 }
 
 .suggetion-container:hover {
@@ -385,9 +377,6 @@
   margin-top: 20px;
 }
 
-.hidden {
-  display: none;
-}
 
 .tech-result-banner__content {
   display: flex;
@@ -541,4 +530,561 @@
 
 .suggetion-img {
   height: 15px;
+}
+
+
+
+.popup-card__section {
+  background-color: #fff;
+  margin-bottom: 8px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+@media (min-width: 650px) {
+  .popup-card__section {
+    padding: 24px;
+  }
+}
+
+
+.popup-card__content {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 8px;
+}
+
+@media (min-width: 650px) {
+  .popup-card__content {
+    padding: 8px 12px;
+  }
+}
+
+.popup-card__content {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 780px) {
+  .popup-card__content {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.popup-card__items {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-card__content__tariffs {
+  width: 100%;
+
+}
+
+@media (min-width: 650px) {
+  .popup-card__content__tariffs {
+    width: 100%;
+    margin-right: 8px;
+
+  }
+}
+
+.popup-card__content__submit {
+  width: 100%;
+}
+
+@media (min-width: 780px) {
+  .popup-card__content__submit {
+    width: 55%;
+  }
+}
+
+.popup-card__title-span {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.popup-card__title {
+  font-size: 24px;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.popup-card__description {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.popup-card__item {
+  width: 100%;
+  border-bottom: 1px solid #e5e5ed;
+  margin-bottom: 10px;
+}
+
+.popup-card__item:last-child {
+  border-bottom: 0;
+}
+
+.popup-card__item-section {
+  display: flex;
+}
+
+.popup-card__status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 0.5px solid #ccc;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.popup-card__status-img {
+  width: 24px;
+  height: 24px;
+}
+
+.popup-card__status-img_checked {
+  background: url('../assets/images/check_techResult.png') no-repeat center center;
+  background-size: contain;
+}
+
+.popup-card__status-img_location {
+  background: url('../assets/images/location-icon2.png') no-repeat center center;
+  background-size: contain;
+}
+
+.popup-card__status-img_none {
+  background: url('../assets/images/stop-icon.png') no-repeat center center;
+  background-size: contain;
+}
+
+
+.popup-card__pricing {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-card__pricing-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-card__item-button-arrow {
+  position: absolute;
+  right: 0px;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+.popup-card__item-button-arrow_active {
+  transform: rotate(180deg);
+}
+
+.popup-card__item-container {
+  align-items: center;
+  padding: 19px 32px 16px;
+  position: relative;
+  width: 100%;
+}
+
+.popup-card__item-title-span {
+  color: #555;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.popup-card__item-title {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+}
+
+.popup-card__item-img {
+  position: absolute;
+  left: 0px;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+
+.popup-card__item-label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
+}
+
+
+
+
+/* Скрытый чекбокс и кастомный тогл */
+.popup__toggle {
+  display: none;
+}
+
+.popup__toggle-wrapper {
+  position: relative;
+  margin-right: 10px; /* Отступ между тоглом и кнопкой-стрелкой */
+}
+
+.popup__toggle-label {
+  width: 50px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block; /* Чтобы ширина и высота точно применялись */
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.popup__toggle-label::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s ease;
+}
+
+.popup__toggle:checked + .popup__toggle-label {
+  background-color: #f96d00;
+}
+
+.popup__toggle:checked + .popup__toggle-label::after {
+  transform: translateX(26px);
+}
+
+.popup-card__item-content {
+  width: 100%;  /* Обеспечиваем, что контент будет растягиваться на всю ширину контейнера */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  margin-top: 5px;
+}
+
+/* Активное состояние: блок раскрыт */
+.popup-card__item-content_active {
+  width: 100%;
+  max-height: 500px; /* или используйте auto, если хотите, чтобы высота была автоматически */
+}
+
+.popup-card__item-content-additional {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.popup-card__item-content-additional:last-child {
+  margin-bottom: 0;
+}
+
+.popup-card__item-content-additional-item {
+  color: #555;
+  font-size: 14px;
+}
+
+.popup-card__equipment {
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+.popup-card__equipment__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-card__equipment__left {
+  display: flex;
+  align-items: center;
+}
+
+.popup-card__equipment__icon {
+  width: 80px;
+  margin-right: 16px;
+}
+
+.popup-card__equipment__text {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.popup-card__equipment__title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+@media (min-width: 650px) {
+  .popup-card__equipment__title {
+    font-size: 16px;
+  }
+}
+
+
+.popup-card__equipment__sub-title {
+  font-size: 14px;
+  color: #555;
+}
+
+.popup-card__equipment__right {
+  text-align: right;
+}
+
+.popup-card__equipment__price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.popup-card__equipment__duration {
+  font-size: 12px;
+  color: #777;
+}
+
+.popup-card__pricing-price {
+  font-size: 28px;
+  font-weight: bold;
+  color: #f76c22;
+  margin-bottom: 8px;
+}
+
+.popup-card__pricing-discount {
+  font-size: 16px;
+  color: #7100f4;
+  margin-bottom: 8px;
+}
+
+.popup-card__pricing-price_after {
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.popup-card__pricing-price_after_bold {
+  font-weight: bold;
+}
+
+.popup-card__pricing-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+.popup-card__pricing-value {
+  font-size: 16px;
+  color: #000;
+  margin-top: 4px;
+}
+
+.popup-card__pricing-value:last-child {
+  margin-bottom: 5px;
+}
+
+.popup-card__pricing-detail-equipment {
+  border-top: 1px solid #e5e5ed;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Стили для скелетона */
+.skeleton-card {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #fff;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Сам «бегущий» градиент для эффекта переливания */
+.skeleton-card::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    left: -150px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Внутренние "полоски", имитирующие контент */
+.skeleton-line {
+  background-color: #e2e2e2;
+  border-radius: 4px;
+  height: 16px;
+  margin-bottom: 10px;
+}
+
+/* Можно добавить разные варианты высоты */
+.skeleton-line.sm {
+  width: 40%;
+  height: 14px;
+}
+.skeleton-line.md {
+  width: 60%;
+}
+.skeleton-line.lg {
+  width: 80%;
+  height: 18px;
+}
+
+/* Стили карточки-ошибки */
+.error-card {
+  margin-bottom: 20px;
+  padding: 20px 15px;
+  background-color: #fff5f5;
+  border-radius: 10px;
+  border: 1px solid #fca3a3;
+  color: #c00;
+}
+
+.error-card__title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.error-card__text {
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.error-card__refresh-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f54545;
+  border-radius: 4px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+.error-card__refresh-btn:hover {
+  background-color: #d33;
+}
+
+/* Обёртка для скелетона одной подсказки */
+.suggestion-skeleton {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  overflow: hidden;
+}
+
+/* «серые полосы», имитирующие текст */
+.suggestion-skeleton-line {
+  background-color: #e2e2e2;
+  border-radius: 4px;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+/* Можно сделать разные ширины (для «адреса» и «города») */
+.suggestion-skeleton-line.line-address {
+  width: 70%;
+  height: 16px;
+}
+.suggestion-skeleton-line.line-city {
+  width: 40%;
+}
+
+/* Для эффекта «бегающего» света */
+.suggestion-skeleton::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 100px;
+  background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    left: -150px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+
+.popup-card__connect-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 15px;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  background: #ff4f12;
+}
+
+.popup-card__adrress-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.popup-check-client {
+  z-index: 999;
+}
+
+.popup-card {
+  z-index: 2;
+}
+
+.popup-address {
+  z-index: 100;
+}
+
+.form__privacy {
+  font-size: 10px;
+  color: #666;
+}
+
+.form__privacy-link {
+  text-decoration: underline;
+  color: #ff4f13;
 }

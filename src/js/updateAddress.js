@@ -80,7 +80,7 @@ function updateUIBasedOnTechResult() {
         // Скрываем location__wrapper, nav-section и card-wrapper
         hideElements('.banner-wrap, .nav-section, .card-wrapper, .card-wrapper__show-more-button, .equipment-section, .equipment-section__carousel, .connect-section');
         // Показываем ранее скрытые элементы, если они были скрыты при true
-        showElements('.nav-section__subtitile, ');
+        showElements('.nav-section__subtitile ');
     }
 }
 

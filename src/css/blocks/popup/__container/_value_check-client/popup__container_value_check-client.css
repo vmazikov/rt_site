@@ -1,0 +1,57 @@
+.popup__container_value_check-client {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  z-index: 100;
+}
+
+/* Мобильная версия (до 650px): попап внизу, выезжает снизу */
+@media (max-width: 650px) {
+  .popup__container_value_check-client {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    /* Полная ширина, округление верхних углов для красивого эффекта */
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    
+    /* Начальное положение ниже экрана */
+    transform: translateY(100%);
+    animation: slideUp 0.4s ease-out forwards;
+  }
+}
+
+/* Десктопная версия (от 650px и выше): попап в центре, плавное появление */
+@media (min-width: 650px) {
+  .popup__container_value_check-client {
+    position: relative;
+    margin: 0 auto;
+    width: 630px;
+    /* Анимация плавного появления */
+    animation: fadeInCenter 0.4s ease-out forwards;
+  }
+}
+
+/* Анимация выезда снизу вверх (мобильная) */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Анимация плавного появления (десктоп) */
+@keyframes fadeInCenter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

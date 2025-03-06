@@ -36,7 +36,7 @@ export let userLocation = {
 export function saveUserLocation({ city, cityWitchType, address = "", techResult = null, fullAddress = "", cityFias = "" }) {
   userLocation = { city, cityWitchType, address, techResult, fullAddress, cityFias };
   localStorage.setItem("userLocation", JSON.stringify(userLocation));
-  console.log("[LOG] userLocation сохранён:", userLocation);
+  // console.log("[LOG] userLocation сохранён:", userLocation);
   window.dispatchEvent(new Event("userLocationChanged"));
   updateCityInElements(city, cityWitchType);
   // При необходимости можно вызвать updateTariffs()
@@ -146,7 +146,7 @@ function renderCityList() {
     .join("");
   cityList.querySelectorAll("li").forEach((li) => {
     li.addEventListener("click", (event) => {
-      console.log(event.target.dataset)
+      // console.log(event.target.dataset)
       const selectedCity = event.target.dataset.city;
       const cityWitchType = `${event.target.dataset.type} ${event.target.dataset.city}`
       saveUserLocation({ city: selectedCity, cityWitchType:cityWitchType });
@@ -247,7 +247,7 @@ async function initPopup() {
         currentCity.textContent = `${storedLocation.city}`;
         updateCityInElements(storedLocation.city, storedLocation.cityWitchType);
         popupShown = true;
-        console.log(currentCity)
+        // console.log(currentCity)
         return;
       }
     } catch (e) {
@@ -277,7 +277,7 @@ async function initPopup() {
 
 // Обработчики кнопок попапа
 confirmCityButton.addEventListener("click", () => {
-  console.log(currentCity)
+  // console.log(currentCity)
   const city = currentCity.textContent.replace(/г\.|пгт\.|село /g, "").trim();
   saveUserLocation({ city, cityWitchType: currentCity.dataset.cityWitchType });
   locationPopup.classList.add("hidden");

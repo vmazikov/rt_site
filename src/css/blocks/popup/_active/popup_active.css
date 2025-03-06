@@ -1,12 +1,3 @@
-/* Активное состояние */
 .popup_active {
-    bottom: 0;
-    position: fixed;
-  }
-
-  @media (min-width: 650px) {
-    .popup_active {
-      opacity: 1;
-      pointer-events: auto;
-  }
-  }
+  display: flex;
+}

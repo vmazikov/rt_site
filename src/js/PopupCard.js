@@ -15,27 +15,17 @@ import { openConnectFlow } from "./index.js";
 const cardsContainer = document.querySelector('.card-wrapper');
 
 cardsContainer.addEventListener('click', function(e) {
-  // Если клик по кнопке с классом .card__info-btn, обрабатываем отдельно
-  const infoBtn = e.target.closest('.card__info-btn');
-  if (infoBtn) {
-    e.stopPropagation(); // чтобы событие не всплывало до карточки
-    const card = infoBtn.closest('.card');
-    if (!card) return;
-    const tariffData = JSON.parse(card.getAttribute('data-tariff'));
-    updatePopupContent(tariffData);
-    const popup = document.querySelector('.popup-card');
-    openPopup(popup);
-    return;
-  }
+  // Если клик по кнопке "Подключить" – ничего не делаем
+  if (e.target.closest('.card__connect-btn')) return;
 
-  // Если клик произошёл именно по пустой области карточки (т.е. клик по элементу с классом "card")
-  if (e.target.classList.contains('card')) {
-    const card = e.target;
-    const tariffData = JSON.parse(card.getAttribute('data-tariff'));
-    updatePopupContent(tariffData);
-    const popup = document.querySelector('.popup-card');
-    openPopup(popup);
-  }
+  // Находим карточку, в которую попал клик (если клик произошёл внутри нее)
+  const card = e.target.closest('.card');
+  if (!card) return;
+
+  const tariffData = JSON.parse(card.getAttribute('data-tariff'));
+  updatePopupContent(tariffData);
+  const popup = document.querySelector('.popup-card');
+  openPopup(popup);
 });
 
 // Закрытие попапа по кнопке закрытия

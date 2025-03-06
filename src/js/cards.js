@@ -3,6 +3,7 @@ import internetIcon from "../assets/images/internet_icon.png";
 import routerIcon from "../assets/images/router_icon.png";
 import tvCardIcon from "../assets/images/tv-card_icon.png";
 import winkIcon from "../assets/images/wink_icon.png";
+import videoIcon from "../assets/images/video-camera-icon.png";
 import smartphoneIcon from "../assets/images/smartphone_icon.png";
 import checkIcon from "../assets/images/check_icon.png";
 
@@ -177,6 +178,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <h4 class="card__subtitle__item card__subtitle__item_none">Не включено</h4>
                 </div>
             </div>`}
+            ${tariff.video ? `
+                <div class="card__subtitle">
+                    <img class="card__subtitle-img" src="${videoIcon}" alt="Wink">
+                    <div class="card__subtitle__items">
+                    <span class="card__subtitle__span">Видеонаблюдение</span>
+                    <h4 class="card__subtitle__item">${tariff.video} камера</h4>
+                    </div>
+                </div>` : ''}
             ${tariff.router_price ? `
             <div class="card__subtitle">
                 <img class="card__subtitle-img" src="${routerIcon}" alt="Роутер">

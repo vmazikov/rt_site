@@ -1,0 +1,9 @@
+.popup-card__contents_value_submit {
+  width: 100%;
+}
+
+@media (min-width: 780px) {
+  .popup-card__contents_value_submit {
+    width: 55%;
+  }
+}

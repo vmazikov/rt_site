@@ -1,0 +1,6 @@
+.popup-card__item__label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
+}

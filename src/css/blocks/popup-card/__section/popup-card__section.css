@@ -1,0 +1,13 @@
+
+.popup-card__section {
+  background-color: #fff;
+  margin-bottom: 8px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+@media (min-width: 650px) {
+  .popup-card__section {
+    padding: 24px;
+  }
+}

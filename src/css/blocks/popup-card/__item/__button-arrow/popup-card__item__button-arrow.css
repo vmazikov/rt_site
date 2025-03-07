@@ -1,0 +1,8 @@
+.popup-card__item__button-arrow {
+  position: absolute;
+  right: 0px;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}

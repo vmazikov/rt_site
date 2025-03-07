@@ -1,0 +1,4 @@
+.popup-card__toggle__wrapper {
+  position: relative;
+  margin-right: 10px; /* Отступ между тоглом и кнопкой-стрелкой */
+}

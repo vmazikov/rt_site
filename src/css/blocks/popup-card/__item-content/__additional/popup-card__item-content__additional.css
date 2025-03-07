@@ -1,0 +1,10 @@
+.popup-card__item-content__additional {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.popup-card__item-content__additional:last-child {
+  margin-bottom: 0;
+}

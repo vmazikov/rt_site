@@ -1,0 +1,21 @@
+
+
+.popup-card__content {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 8px;
+}
+
+@media (min-width: 650px) {
+  .popup-card__content {
+    padding: 8px 12px;
+  }
+}
+
+
+@media (min-width: 780px) {
+  .popup-card__content {
+    display: flex;
+    flex-direction: row;
+  }
+}

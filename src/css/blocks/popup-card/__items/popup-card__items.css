@@ -1,0 +1,5 @@
+.popup-card__items {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}

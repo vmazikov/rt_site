@@ -1,0 +1,4 @@
+.popup-card__pricing-detail {
+  display: flex;
+  flex-direction: column;
+}

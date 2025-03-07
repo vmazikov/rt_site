@@ -1,0 +1,4 @@
+/* Скрытый чекбокс и кастомный тогл */
+.popup-card__toggle {
+  display: none;
+}

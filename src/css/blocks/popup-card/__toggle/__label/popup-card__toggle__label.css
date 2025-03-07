@@ -1,0 +1,32 @@
+.popup-card__toggle__label {
+  width: 50px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block; /* Чтобы ширина и высота точно применялись */
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.popup-card__toggle__label::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s ease;
+}
+
+.popup-card__toggle:checked + .popup-card__toggle__label {
+  background-color: #f96d00;
+}
+
+.popup-card__toggle:checked + .popup-card__toggle__label::after {
+  transform: translateX(26px);
+}

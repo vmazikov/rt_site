@@ -1,0 +1,9 @@
+.popup-card__pricing__value {
+  font-size: 16px;
+  color: #000;
+  margin-top: 4px;
+}
+
+.popup-card__pricing__value:last-child {
+  margin-bottom: 5px;
+}

@@ -1,0 +1,4 @@
+.popup-card__status-img_checked {
+  background: url('../../../../../assets/images/check_techResult.png') no-repeat center center;
+  background-size: contain;
+}

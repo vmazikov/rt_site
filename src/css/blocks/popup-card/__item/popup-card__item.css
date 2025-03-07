@@ -1,0 +1,9 @@
+.popup-card__item {
+  width: 100%;
+  border-bottom: 1px solid #e5e5ed;
+  margin-bottom: 10px;
+}
+
+.popup-card__item:last-child {
+  border-bottom: 0;
+}

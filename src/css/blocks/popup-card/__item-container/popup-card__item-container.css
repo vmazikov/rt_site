@@ -1,0 +1,6 @@
+.popup-card__item-container {
+  align-items: center;
+  padding: 19px 32px 16px;
+  position: relative;
+  width: 100%;
+}

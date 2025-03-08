@@ -9,6 +9,7 @@ import './updateAddress.js';
 import Swiper from 'swiper';
 import 'swiper/css'; // Подключаем стили Swiper
 import './PopupCard.js'
+import './utm-filter.js'
 
 const swiper = new Swiper('.swiper-container', {
   slidesPerView: 1,
@@ -155,118 +156,121 @@ export function openConnectFlow(sourceElement, tariffDataFromPopup = null) {
     openPopup(popup3);
   });
 }
-  // Получаем элементы формы
+// Получаем элементы формы
+const nameInput = document.getElementById("name");
+const addressInput = document.getElementById("address");
 
-  const nameInput = document.getElementById("name");
-  const addressInput = document.getElementById("address");
 
+// Функция валидации всей формы
+function validateForm() {
+  const nameValue = nameInput.value.trim();
+  const addressValue = addressInput.value.trim();
+  const phoneValue = phoneInput.value.trim();
+  const phoneValid = phoneValue.length === 12 && phoneValue.startsWith("+7");
 
-  // Функция валидации всей формы
-  function validateForm() {
-    const nameValue = nameInput.value.trim();
-    const addressValue = addressInput.value.trim();
-    const phoneValue = phoneInput.value.trim();
-    const phoneValid = phoneValue.length === 12 && phoneValue.startsWith("+7");
-
-    if (nameValue !== "" && addressValue !== "" && phoneValid) {
-      submitButton.disabled = false;
-      submitButton.classList.add("popup__submit-button_active");
-      submitButton.style.backgroundColor = "#f8530f";
-      errorText.style.display = "none";
-    } else {
-      submitButton.disabled = true;
-      submitButton.classList.remove("popup__submit-button_active");
-      submitButton.style.backgroundColor = "#cccccc";
-    }
+  if (nameValue !== "" && addressValue !== "" && phoneValid) {
+    submitButton.disabled = false;
+    submitButton.classList.add("popup__submit-button_active");
+    submitButton.style.backgroundColor = "#f8530f";
+    errorText.style.display = "none";
+  } else {
+    submitButton.disabled = true;
+    submitButton.classList.remove("popup__submit-button_active");
+    submitButton.style.backgroundColor = "#cccccc";
   }
+}
 
-  // Предзаполнение поля адреса из localStorage, если есть userLocation.fullAddress
-  function prefillAddress() {
-    const userLocation = JSON.parse(localStorage.getItem("userLocation"));
-    if (userLocation && userLocation.fullAddress) {
-      document.getElementById("address").value = userLocation.fullAddress;
-    }
+// Предзаполнение поля адреса из localStorage, если есть userLocation.fullAddress
+function prefillAddress() {
+  const userLocation = JSON.parse(localStorage.getItem("userLocation"));
+  if (userLocation && userLocation.fullAddress) {
+    document.getElementById("address").value = userLocation.fullAddress;
   }
+}
 
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.attributeName === "class" && popup2.classList.contains("popup_active")) {
-        prefillAddress();
-      }
-    });
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.attributeName === "class" && popup2.classList.contains("popup_active")) {
+      prefillAddress();
+    }
   });
+});
+
+observer.observe(popup2, { attributes: true });
+
+// Обработчик ввода для телефона: проверяем, чтобы значение начиналось с "+7"
+phoneInput.addEventListener("input", () => {
+  if (!phoneInput.value.startsWith("+7")) {
+    phoneInput.value = "+7";
+  }
+  validateForm();
+});
+
+// Обработчики ввода для имени и адреса
+nameInput.addEventListener("input", validateForm);
+addressInput.addEventListener("input", validateForm);
+
+// Отправка формы
+document.getElementById("phoneForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (submitButton.disabled) {
+    errorText.textContent = "Пожалуйста, заполните все поля корректно.";
+    errorText.style.display = "block";
+    submitButton.classList.add("error");
+    setTimeout(() => submitButton.classList.remove("error"), 500);
+  } else {
+    sendDataToTelegram();
+  }
+});
+
+
+// Функция отправки данных в Telegram через AJAX
+function sendDataToTelegram() {
+  const name = nameInput.value.trim();
+  const address = addressInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const tariffValue = document.getElementById("tarif").value;
+  const userLocation = JSON.parse(localStorage.getItem("userLocation"));
   
-  observer.observe(popup2, { attributes: true });
+  // Получаем id партнера из localStorage
+  const partnerId = localStorage.getItem("agent") || ''; 
 
-  // Обработчик ввода для телефона: проверяем, чтобы значение начиналось с "+7"
-  phoneInput.addEventListener("input", () => {
-    if (!phoneInput.value.startsWith("+7")) {
-      phoneInput.value = "+7";
-    }
-    validateForm();
-  });
-
-  // Обработчики ввода для имени и адреса
-  nameInput.addEventListener("input", validateForm);
-  addressInput.addEventListener("input", validateForm);
-
-  // Отправка формы
-  document.getElementById("phoneForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (submitButton.disabled) {
-      errorText.textContent = "Пожалуйста, заполните все поля корректно.";
-      errorText.style.display = "block";
-      submitButton.classList.add("error");
-      setTimeout(() => submitButton.classList.remove("error"), 500);
-    } else {
-      sendDataToTelegram();
-    }
-  });
-
-  // Функция отправки данных в Telegram через AJAX
-  function sendDataToTelegram() {
-    const name = nameInput.value.trim();
-    const address = addressInput.value.trim();
-    const phone = phoneInput.value.trim();
-    const tariffValue = document.getElementById("tarif").value;
-    const userLocation = JSON.parse(localStorage.getItem("userLocation"));
-
-    if (!tariffValue) {
+  if (!tariffValue) {
       console.log("Ошибка: нет данных о тарифе.");
       return;
-    }
-
-    const tariff = JSON.parse(tariffValue);
-
-    fetch("send_to_telegram.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: new URLSearchParams({
-        name: name,
-        address: address,
-        phone: phone,
-        tariff: JSON.stringify(tariff),
-        userLocation: JSON.stringify(userLocation)
-      })
-    })
-      .then(response => response.text())
-      .then(data => {
-        console.log(data);
-        if (data.includes("Заявка успешно отправлена")) {
-          // Закрываем попап с формой и открываем попап подтверждения
-          popups.forEach((popup) => {
-            closePopup(popup);
-          });
-          openPopup(popup4);
-        } else {
-          alert("Ошибка при отправке заявки.");
-        }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        alert("Ошибка при отправке заявки.");
-      });
   }
 
+  const tariff = JSON.parse(tariffValue);
+
+  fetch("send_to_telegram.php", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+          name: name,
+          address: address,
+          phone: phone,
+          tariff: JSON.stringify(tariff),
+          userLocation: JSON.stringify(userLocation),
+          partner_id: partnerId // Передаём id партнера
+      })
+  })
+  .then(response => response.text())
+  .then(data => {
+      console.log(data);
+      if (data.includes("Заявка успешно отправлена")) {
+          // Закрываем попап с формой и открываем попап подтверждения
+          popups.forEach((popup) => {
+              closePopup(popup);
+          });
+          openPopup(popup4);
+      } else {
+          alert("Ошибка при отправке заявки.");
+      }
+  })
+  .catch(error => {
+      console.error("Error:", error);
+      alert("Ошибка при отправке заявки.");
+  });
+}

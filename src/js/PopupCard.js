@@ -16,7 +16,7 @@ const cardsContainer = document.querySelector('.card-wrapper');
 
 cardsContainer.addEventListener('click', function(e) {
   // Если клик по кнопке "Подключить" – ничего не делаем
-  if (e.target.closest('.card__connect-btn')) return;
+  if (e.target.closest('.card__connect-btn') || e.target.closest('.card__compare-button')) return;
 
   // Находим карточку, в которую попал клик (если клик произошёл внутри нее)
   const card = e.target.closest('.card');

@@ -37,6 +37,7 @@
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
+    "nodemon": "^3.1.9",
     "swiper": "^11.2.2"
   }
 }

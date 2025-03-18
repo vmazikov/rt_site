@@ -1,4 +1,5 @@
 import {attachEventListeners} from "./index.js"
+import { initCompare } from './comparePopup.js';
 import internetIcon from "../assets/images/internet_icon.png";
 import routerIcon from "../assets/images/router_icon.png";
 import tvCardIcon from "../assets/images/tv-card_icon.png";
@@ -6,6 +7,7 @@ import winkIcon from "../assets/images/wink_icon.png";
 import videoIcon from "../assets/images/video-camera-icon.png";
 import smartphoneIcon from "../assets/images/smartphone_icon.png";
 import checkIcon from "../assets/images/check_icon.png";
+
 
 document.addEventListener("DOMContentLoaded", async function () {
     const tariffsContainer = document.querySelector('.card-wrapper');
@@ -203,6 +205,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             </p>`).join('')}
             </div>` : ''}
         </div>
+        <div class="card__compare-button">
+            <svg class="card__compare-button__img">
+                <path d="M4 6.25h16v1.5H4v-1.5zM15 11.25H4v1.5h11v-1.5zM11 16.25H4v1.5h7v-1.5zM19.75 20v-2.25H22v-1.5h-2.25V14h-1.5v2.25H16v1.5h2.25V20h1.5z"></path>
+            </svg>
+            <span class="card__compare-button__text">Добавить к сравнению</span>
+        </div>
         <div class="card__pricing">
             <div class="card__pricing_price">${tariff.price_promo} ₽/мес</div>
             ${tariff.discount_duration ? `<div class="card__pricing_discount">${tariff.discount} ${tariff.discount_duration}</div>` : ''}
@@ -237,6 +245,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const locationData = JSON.parse(storedLocationStr);
                 userCity = locationData.city || "";
                 techResult = locationData.techResult || null;
+
             } catch (e) {
                 console.error("[ERROR] Не удалось распарсить userLocation:", e);
             }
@@ -252,12 +261,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         currentPage = 0;
         displayedTariffs = filteredTariffs.slice(0, tariffsPerPage);
         renderTariffs();
+        initCompare();
     }
 
     showMoreButton.addEventListener("click", function () {
         currentPage++;
         displayedTariffs = filteredTariffs.slice(0, (currentPage + 1) * tariffsPerPage);
         renderTariffs();
+        initCompare();
     });
 
     document.querySelectorAll('.nav-section__button').forEach(button => {

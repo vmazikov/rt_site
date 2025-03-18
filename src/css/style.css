@@ -32,6 +32,7 @@
 @import url(./blocks/card/__additional-info-text/card__additional-info-text.css);
 @import url(./blocks/card/__additional-info-img/card__additional-info-img.css);
 @import url(./blocks/connect-section/connect-section.css);
+@import url(./blocks/connect-section/__container/connect-section__container.css);
 @import url(./blocks/connect-section/__title/connect-section__title.css);
 @import url(./blocks/connect-section/__text/connect-section__text.css);
 @import url(./blocks/connect-section/__subtitle/connect-section__subtitle.css);
@@ -48,6 +49,7 @@
 @import url(./blocks/contact-section/__social-button/_telegram/contact-section__social-button_telegram.css);
 @import url(./blocks/contact-section/__call-button/contact-section__call-button.css);
 @import url(./blocks/equipment-section/equipment-section.css);
+@import url(./blocks/equipment-section/__container/equipment-section__container.css);
 @import url(./blocks/equipment-section/__title/equipment-section__title.css);
 @import url(./blocks/equipment-section/__subtitle/equipment-section__subtitle.css);
 @import url(./blocks/equipment-section/__carousel/equipment-section__carousel.css);
@@ -84,6 +86,7 @@
 @import url(./blocks/location/__search-button/__icon/location__search-button__icon.css);
 @import url(./blocks/location/__search-bar/location__search-bar.css);
 @import url(./blocks/location/__city/location__city.css);
+@import url(./blocks/location/__city/_header/location__city_header.css);
 @import url(./blocks/location/__city-name/location__city-name.css);
 @import url(./blocks/location/__city-icon/location__city-icon.css);
 @import url(./blocks/location/__call-text/location__call-text.css);
@@ -109,6 +112,7 @@
 @import url(./blocks/popup/__container/_value_submit/popup__container_value_submit.css);
 @import url(./blocks/popup/__container/_value_card-info/popup__container_value_card-info.css);
 @import url(./blocks/popup/__container/_value_address/popup__container_value_address.css);
+@import url(./blocks/popup/__container/_value_compare-popup/popup__container_value_compare-popup.css);
 @import url(./blocks/popup/__container/_value_city-change/popup__container_value_city-change.css);
 @import url(./blocks/popup/__title/popup__title.css);
 @import url(./blocks/popup/__text/popup__text.css);
@@ -234,9 +238,6 @@
 }
 
 
-.flex {
-    display: flex;
-}
 
 .popup-confirm {
     height: 20%;
@@ -716,4 +717,712 @@
 .form__privacy-link {
   text-decoration: underline;
   color: #ff4f13;
+}
+
+.card__compare-button {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  margin: 10px 0;
+  border-top: 0.01px #cbcccf solid;
+  border-bottom: 0.01px #cbcccf solid;
+  gap: 8px;
+  cursor: pointer;
+  opacity: .85;
+  font-size: 12px;
+}
+
+.card__compare-button:hover {
+  opacity: 1;
+}
+
+.card__compare-button__img {
+  width: 24px;
+  height: 24px;
+}
+
+.card__compare-button__img_active {
+  fill: #ff4f12;
+}
+
+.card__compare-button__text {
+
+}
+
+
+.section {
+  margin: auto;
+  max-width: 1024px;
+  width: 100%;
+}
+
+.compare-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  z-index: 9999;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 650px) {
+  .compare-popup {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 9999;
+    transition: all 0.3s ease;
+  }
+}
+
+
+.compare-popup__header {
+  margin-bottom: 10px;
+}
+
+.compare-popup__title {
+  font-weight: 600;
+}
+
+.compare-popup__error {
+  margin-top: 8px;
+  padding: 4px 8px;
+  background-color: #fff5e6;
+  border: 1px solid #f5cc80;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.compare-popup__error-icon {
+  width: 16px;
+  height: 16px;
+  background-size: contain; /* Чтобы иконка полностью вмещалась */
+  background: url('../assets/images/error-icon.png') no-repeat center center; /* поставьте свою иконку */
+
+  margin-right: 6px;
+}
+
+.compare-popup__list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.compare-popup__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.compare-popup__item:last-child {
+  border-bottom: none;
+}
+
+.compare-popup__item-name {
+  flex: 1;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.compare-popup__item-delete {
+  width: 20px;
+  height: 20px;
+  background: url('../assets/images/trash-icon.png') no-repeat center center; /* ваша иконка корзины */
+  background-size: contain; /* Чтобы иконка полностью вмещалась */
+  cursor: pointer;
+}
+
+.compare-popup__buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.compare-popup__compare-btn {
+  background-color: #f8530f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.compare-popup__clear-btn {
+  background-color: #ccc;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.compare-popup-minimized {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  background-color: #fff;
+  padding: 16px;
+  box-shadow: 1px 1px 34px #00000040;
+  border-radius: 8px;
+}
+
+.compare-popup-minimized__badge {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transform: translate(50%, -50%);
+  transform: translate(50%, -50%);
+  background-color: #ff4f12;
+  border-radius: 100%;
+  padding: 4px 6px 2px;
+  color: #fff;
+  line-height: 1;
+  display: flex;
+  -ms-flex-pack: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+  
+
+/* Шапка попапа */
+.compare-modal__header {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.compare-modal__title {
+  font-size: 24px;
+  margin: 0;
+}
+.compare-modal__tabs {
+  display: flex;
+  gap: 8px;
+}
+.compare-modal__tab {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.compare-modal__tab_active {
+  background: #f8530f;
+  color: #fff;
+  border-color: #f8530f;
+}
+
+/* Контейнер для "дивной таблицы" */
+.compare-modal__table {
+  /* Горизонтальный скролл (свайп) */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* плавный свайп на iOS */
+  position: relative;
+  width: 100%;
+  /* Скрываем полосу прокрутки */
+}
+.compare-modal__table::-webkit-scrollbar {
+  display: none;
+}
+.compare-modal__table {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Внутренняя обёртка, которая будет шире контейнера при большом числе столбцов */
+.compare-modal__table-inner {
+  position: relative;
+  display: inline-block; /* чтобы растягивалось по контенту */
+  min-width: 700px; /* или 600px, чтобы был горизонтальный скролл на узких экранах */
+}
+
+/* Строка заголовка (верхняя) */
+.compare-modal__header-row {
+  display: flex;
+  position: sticky;
+  top: 0;
+  background: #f2f2f2;
+  z-index: 2;
+}
+
+/* Обычная строка */
+.compare-modal__row {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Ячейки заголовка (верхняя строка) */
+.compare-modal__header-cell {
+  flex: 0 0 200px; /* фиксированная ширина колонки, подберите под себя */
+  border-right: 1px solid #ddd;
+  padding: 12px;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: 600;
+}
+.compare-modal__header-cell:last-child {
+  border-right: none;
+}
+
+/* Ячейка с названием тарифа + иконка удаления */
+.compare-modal__tariff-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Крестик (иконка удаления тарифа) */
+.compare-modal__remove-col {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url('../assets/images/trash-icon.png') no-repeat center; /* замените на свою иконку */
+  background-size: contain;
+  cursor: pointer;
+}
+
+/* Обычные ячейки (внутренние строки) */
+.compare-modal__cell {
+  flex: 0 0 200px;
+  border-right: 1px solid #ddd;
+  padding: 12px;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.compare-modal__cell:last-child {
+  border-right: none;
+}
+
+/* Левая колонка – закрепленная (иконки и названия характеристик) */
+.compare-modal__cell-props {
+  background: #fff7f2;
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  text-align: left; /* или как вам нужно */
+  display: flex;
+  align-items: center;
+  gap: 6px; /* для иконки */
+}
+
+/* Для верхней левой ячейки (с текстом "Характеристика"), 
+   если хотите особый стиль corner */
+.compare-modal__header-cell-props {
+  background: #fff7f2;
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  text-align: left;
+}
+
+/* Режим "Разница характеристик" – затемняем строки, где все значения совпадают */
+.compare-modal__row-same {
+  opacity: 0.5;
+}
+
+/* Строка с кнопками "Подключить" */
+.compare-modal__row-cta {
+  background: #fafafa;
+}
+
+/* Кнопка "Подключить" */
+.compare-modal__connect-btn {
+  background: #f8530f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Немного адаптивности */
+@media (max-width: 650px) {
+  .compare-modal__header-cell,
+  .compare-modal__cell {
+    flex: 0 0 160px; /* ужимаем */
+  }
+  .compare-modal__title {
+    font-size: 20px;
+  }
+  .compare-modal__tab {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+
+/* Стили для карусельных контролов */
+.compare-modal__carousel-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.carousel-arrow {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+}
+
+.carousel-dot.active {
+  background: #f8530f;
+}
+
+/* Стили для карусельной обёртки тарифных колонок */
+.compare-modal__carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+/* Остальные стили оставляем без изменений */
+.compare-modal__header-row,
+.compare-modal__row,
+.compare-modal__cell,
+.compare-modal__header-cell {
+  /* как ранее – с фиксированной шириной 200px для тарифных колонок */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.popup-compare__container {
+  overflow: hidden;
+}
+
+.popup-compare__tile-row {
+  position: relative;
+  display: grid;  
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 8px;
+  justify-content: start; /* или просто убрать, по умолчанию будет "stretch" */
+  align-items: stretch;   /* тоже опционально */
+  text-align: left;       /* общий текст слева */
+}
+
+
+.popup-compare__tile-plug {
+  background: #f7f7f7;
+  /* border-bottom-color: #f6f7f7; */
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-compare__tile-row_head .popup-compare__tile-plug {
+  border-bottom-color: #eeeff0;
+}
+
+
+@media (max-width: 1024px) {
+  .popup-compare__tile-row {
+      grid-column-gap: 4px;
+  }
+}
+
+.popup-compare__tile-row_head {
+  border-radius: 8px 8px 0 0;
+}
+
+.popup-compare__tile-col {
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+
+  text-align: center;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+  border-bottom-color: #eeeff0;
+  padding: 4px;
+}
+
+.popup-compare__tile-col_white {
+  flex-grow: 1;
+  height: 100%;
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+} 
+
+.popup-compare__title-container {
+  display: flex;
+}
+
+.popup-compare__tile-col-property {
+  background-color: #f7f7f7;;
+  padding: 24px 8px;
+  text-align: left;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  z-index: 10;
+}
+
+.popup-compare__tile-col-property::before {
+  content: "";
+  position: absolute;
+  background: #eeeff0;
+  width: 4px;
+  height: calc(100% + 4px);
+  left: 100%;
+  right: 100%;
+  top: 0;
+  z-index: 10;
+}
+
+
+
+.popup-compare__tile-col_offer-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 16px; /* Укажи размер кнопки по размеру иконки */
+  height: 16px;
+  background: url('../assets/images/close_btn.png') no-repeat center;
+  background-size: contain; /* Чтобы иконка полностью вмещалась */
+  border: none;
+  cursor: pointer;
+  text-indent: -9999px; /* Скрываем текст */
+  overflow: hidden;
+  padding: 0;
+}
+
+.popup-compare__tile-col_offer {
+  color: #ff4f12;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+  outline: none;
+  padding: 0;
+  position: relative;
+}
+
+.popup-compare__property-title {
+  font-size: 18px;
+  padding-left: 4px;
+}
+
+@media (max-width: 1024px) {
+  .popup-compare__property-title {
+    padding-left: 0;
+  }
+}
+
+.popup-compare__property-icon {
+  width: 24px;
+  height: 24px;
+}
+
+
+@media (max-width: 1024px) {
+  .popup-compare__property-icon {
+    display: none;
+  }
+}
+
+.arrow {
+  width: 24px;
+  height: 24px;
+}
+
+
+.popup-compare__property-subtitle {
+  color: #868b95;
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 4px;
+}
+
+.popup-compare__nav-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  justify-content: flex-end;
+}
+
+.popup-compare__dots {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.popup-compare__dot {
+  margin-right: 8px;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #1018284d;
+  border-radius: 50%;
+} 
+
+.popup-compare__dot_active {
+  background: #101828b3;
+}
+
+.popup-compare__header-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.popup-compare__header-button {
+  font-size: 16px;
+  line-height: 20px;
+  padding: 12px 24px;
+  cursor: pointer;
+  border-radius: 24px;
+  box-shadow: 0 0 1px #1c293d33, 0 2px 4px #1c293d1f;
+  background-color: transparent;
+  border-width: 0;
+  outline: none;
+} 
+
+@media (max-width: 650px) {
+  .popup-compare__header-button {
+    font-size: 14px;
+    line-height: 16px;
+    padding: 6px 12px;
+  }
+}
+
+.popup-compare__header-button:hover {
+  color: #ff4f12;
+} 
+
+.popup-compare__header-button_active {
+  outline: 1px solid #ff4f12;
+  color: #101828d9;
+}
+
+.popup-compare__connect-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 15px;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  background: #ff4f12;
+  border-width: 0;
+  cursor: pointer;
+}
+
+.popup-compare__add-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 15px;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  background: #ff4f12;
+  border-width: 0;
+  cursor: pointer;
+}
+
+.popup-compare__connect-btn:hover {
+
+}
+
+.row--faded {
+  opacity: 0.5;
+}
+
+.popup-compare__tile-price-container {
+  display: flex;
+  gap: 4px;
+  position: relative;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.popup-compare__tile-price {
+  position: relative;
+  color: #858e92;
+  padding-left: 4px;
+  padding-right: 4px;
+
+}
+
+.popup-compare__tile-price::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: #858e92;
+  transform: rotate(-10deg);
+}
+
+.popup-compare__tile-price-promo {
+
+}
+
+.popup-compare__tile-price-text {
+
+}
+
+.popup-compare__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.popup-compare {
+  z-index: 10;
 }

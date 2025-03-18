@@ -263,12 +263,11 @@ function populateComparePopup() {
   // Если тарифов нет – выводим блок с сообщением
   if (selectedTariffs.length === 0) {
     container.innerHTML = `
-      <div class="popup-compare__empty">
-        <p>Сравнивать пока нечего<br>
-        Добавьте тарифы, чтобы сравнить их опции.<br>
-        Подобрать подходящий тариф стало проще!</p>
-        <button class="popup-compare__add-all-btn">Добавить тарифы</button>
-      </div>
+        <div class="popup-compare__empty">
+          <span class="popup-compare__empty-title">Сравнивать пока нечего</span>
+          <span class="popup-compare__empty-subtitle">Добавьте тарифы, чтобы сравнить их опции. <br>Подобрать подходящий тариф стало проще!</span>
+          <button class="popup-compare__add-all-btn">Добавить тарифы</button>
+        </div>
     `;
     const addAllBtn = container.querySelector('.popup-compare__add-all-btn');
     if (addAllBtn) {

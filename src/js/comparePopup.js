@@ -68,7 +68,9 @@ function showComparePopup() {
 // 7) Сворачиваем попап
 function hideComparePopup() {
   comparePopup.style.display = 'none';
-  comparePopupMinimized.style.display = 'flex';
+  if (selectedTariffs.length != 0) {
+    comparePopupMinimized.style.display = 'flex';
+  }
 }
 
 // 8) Сбрасываем/запускаем таймер автосворачивания (10 секунд)
@@ -258,10 +260,17 @@ const svgIcons = {
 
 
 function populateComparePopup() {
+  const popup = document.querySelector('.popup-compare')
   const container = document.querySelector('.popup-compare__container');
 
   // Если тарифов нет – выводим блок с сообщением
   if (selectedTariffs.length === 0) {
+    const headerButtons = popup.querySelector('.popup-compare__header-buttons')
+    const navBar = popup.querySelector('.popup-compare__nav-bar')
+    
+    headerButtons.style.display = "none"
+    navBar.style.display = "none"
+
     container.innerHTML = `
         <div class="popup-compare__empty">
           <span class="popup-compare__empty-title">Сравнивать пока нечего</span>
@@ -734,64 +743,31 @@ function initCompareSlider() {
     
     // Обработка свайпов (touch-события)
     let touchStartX = 0;
-    let touchStartY = 0;
+    let touchCurrentX = 0;
     let isTouching = false;
-
+    
     popupContainer.addEventListener('touchstart', function(e) {
       if (e.touches.length === 1) {
         touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
         isTouching = true;
       }
     });
-
+    
     popupContainer.addEventListener('touchmove', function(e) {
       if (!isTouching) return;
-      
-      const currentX = e.touches[0].clientX;
-      const currentY = e.touches[0].clientY;
-      
-      const diffX = touchStartX - currentX;
-      const diffY = touchStartY - currentY;
-      
-      // Если "горизонтальная" составляющая свайпа больше вертикальной —
-      // значит, пользователь свайпит вбок, и тут мы делаем preventDefault()
-      // чтобы запустить нашу логику слайдера и отключить нативный скролл вбок.
-      if (Math.abs(diffX) > Math.abs(diffY)) {
-        e.preventDefault(); 
-        // здесь твой код для drag-свайпа, если он нужен (например, плавный drag)
-        // ...
-      } 
-      // Если diffY больше, это вертикальный свайп — не делаем preventDefault(),
-      // чтобы работал нативный скролл.
+      touchCurrentX = e.touches[0].clientX;
+      e.preventDefault();
     });
-
+    
     popupContainer.addEventListener('touchend', function(e) {
       if (!isTouching) return;
-      
-      const endX = e.changedTouches[0].clientX;
-      const endY = e.changedTouches[0].clientY;
-      
-      const deltaX = touchStartX - endX;
-      const deltaY = touchStartY - endY;
-      
-      // Порог срабатывания свайпа по горизонтали (примерно 50px)
-      const swipeThreshold = 50; 
-      
-      // Свайп вправо/влево
-      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
-        if (deltaX > 0) {
-          // Сдвиг влево => Следующий слайд
-          slideNext();
-        } else {
-          // Сдвиг вправо => Предыдущий слайд
-          slidePrev();
-        }
+      const deltaX = touchStartX - touchCurrentX;
+      const swipeThreshold = 50; // порог для срабатывания свайпа (в пикселях)
+      if (deltaX > swipeThreshold) {
+        slideNext();
+      } else if (deltaX < -swipeThreshold) {
+        slidePrev();
       }
-      
-      // Если по модулю deltaX < swipeThreshold, то игнорим горизонтальный свайп.
-      // Вертикальный скролл в это время был нативным.
-      
       isTouching = false;
     });
     

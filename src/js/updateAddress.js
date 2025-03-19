@@ -38,7 +38,7 @@ function updateUIBasedOnTechResult() {
     // Создаем HTML для баннера в зависимости от состояния
     const bannerHTML = isPossible
         ? `
-            <div id="techResultBanner" class="tech-result-banner">
+            <div id="techResultBanner" class="tech-result-banner section">
                 <div class="tech-result-banner__content">
                     <span class="tech-result-banner__icon tech-result-banner__icon_check"></span>
                     <div>
@@ -52,7 +52,7 @@ function updateUIBasedOnTechResult() {
             </div>
           `
         : `
-            <div id="techResultBanner" class="tech-result-banner">
+            <div id="techResultBanner" class="tech-result-banner section">
                 <div class="tech-result-banner__content">
                     <span class="tech-result-banner__icon tech-result-banner__icon_stop"></span>
                     <div>

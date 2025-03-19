@@ -145,7 +145,9 @@ export function openConnectFlow(sourceElement, tariffDataFromPopup = null) {
   
   // Обработчик кнопок выбора подключения:
   newConnectionBtn.addEventListener("click", () => {
-    closePopup(popup1);
+    popups.forEach((popup) => {
+      closePopup(popup);
+    });
     openPopup(popup2);
     document.getElementById('tarif').value = JSON.stringify(tariff);
     document.getElementById('location').value = JSON.parse(localStorage.getItem("userLocation")).city || "";
@@ -153,7 +155,9 @@ export function openConnectFlow(sourceElement, tariffDataFromPopup = null) {
   });
   
   existingConnectionBtn.addEventListener("click", () => {
-    closePopup(popup1);
+    popups.forEach((popup) => {
+      closePopup(popup);
+    });
     openPopup(popup3);
   });
 }

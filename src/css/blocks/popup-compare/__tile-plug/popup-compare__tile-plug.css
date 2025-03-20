@@ -1,0 +1,11 @@
+.popup-compare__tile-plug {
+  background: #f7f7f7;
+  /* border-bottom-color: #f6f7f7; */
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-compare__tile-row_head .popup-compare__tile-plug {
+  border-bottom-color: #eeeff0;
+}

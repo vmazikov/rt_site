@@ -1,0 +1,14 @@
+.popup-compare__add-all-btn {
+  padding-left: 24px;
+  padding-right: 24px;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 48px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  background: #ff4f12;
+  border-width: 0;
+  cursor: pointer;
+}

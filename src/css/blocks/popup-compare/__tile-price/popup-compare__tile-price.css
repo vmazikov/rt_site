@@ -1,0 +1,17 @@
+.popup-compare__tile-price {
+  position: relative;
+  color: #858e92;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.popup-compare__tile-price::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: #858e92;
+  transform: rotate(-10deg);
+}

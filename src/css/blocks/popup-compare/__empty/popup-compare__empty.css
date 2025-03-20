@@ -1,0 +1,4 @@
+.popup-compare__empty {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,17 @@
+
+.popup-compare__connect-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 15px;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  background: #ff4f12;
+  border-width: 0;
+  cursor: pointer;
+}
+
+.popup-compare__connect-btn:hover {
+
+}

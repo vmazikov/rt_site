@@ -1,0 +1,36 @@
+@import url(./__add-all-btn/popup-compare__add-all-btn.css);
+@import url(./__add-btn/popup-compare__add-btn.css);
+@import url(./__connect-btn/popup-compare__connect-btn.css);
+@import url(./__container/popup-compare__container.css);
+@import url(./__dot/popup-compare__dot.css);
+@import url(./__dot/_active/popup-compare__dot_active.css);
+@import url(./__dots/popup-compare__dots.css);
+@import url(./__empty-subtitle/popup-compare__empty-subtitle.css);
+@import url(./__empty-title/popup-compare__empty-title.css);
+@import url(./__empty/popup-compare__empty.css);
+@import url(./__header-button/popup-compare__header-button.css);
+@import url(./__header-button/_active/popup-compare__header-button_active.css);
+@import url(./__header-buttons/popup-compare__header-buttons.css);
+@import url(./__icon/popup-compare__icon.css);
+@import url(./__nav-bar/popup-compare__nav-bar.css);
+@import url(./__property-icon/popup-compare__property-icon.css);
+@import url(./__property-subtitle/popup-compare__property-subtitle.css);
+@import url(./__property-title/popup-compare__property-title.css);
+@import url(./__tile-col-property/popup-compare__tile-col-property.css);
+@import url(./__tile-col/popup-compare__tile-col.css);
+@import url(./__tile-col/_white/popup-compare__tile-col_white.css);
+@import url(./__tile-col/_offer/popup-compare__tile-col_offer.css);
+@import url(./__tile-col/_offer-close-btn/popup-compare__tile-col_offer-close-btn.css);
+@import url(./__tile-plug/popup-compare__tile-plug.css);
+@import url(./__tile-price-container/popup-compare__tile-price-container.css);
+@import url(./__tile-price-promo/popup-compare__tile-price-promo.css);
+@import url(./__tile-price-text/popup-compare__tile-price-text.css);
+@import url(./__tile-price/popup-compare__tile-price.css);
+@import url(./__tile-row/popup-compare__tile-row.css);
+@import url(./__tile-row/_head/popup-compare__tile-row_head.css);
+@import url(./__title-container/popup-compare__title-container.css);
+
+
+.popup-compare {
+  z-index: 10;
+}

@@ -1,0 +1,22 @@
+.popup-compare__tile-col-property {
+  background-color: #f7f7f7;;
+  padding: 24px 8px;
+  text-align: left;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  z-index: 10;
+}
+
+.popup-compare__tile-col-property::before {
+  content: "";
+  position: absolute;
+  background: #eeeff0;
+  width: 4px;
+  height: calc(100% + 4px);
+  left: 100%;
+  right: 100%;
+  top: 0;
+  z-index: 10;
+}
+

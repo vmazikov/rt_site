@@ -1,0 +1,10 @@
+.popup-compare__property-title {
+  font-size: 18px;
+  padding-left: 4px;
+}
+
+@media (max-width: 1024px) {
+  .popup-compare__property-title {
+    padding-left: 0;
+  }
+}

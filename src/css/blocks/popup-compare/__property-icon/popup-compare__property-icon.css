@@ -1,0 +1,10 @@
+.popup-compare__property-icon {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 1024px) {
+  .popup-compare__property-icon {
+    display: none;
+  }
+}

@@ -1,0 +1,6 @@
+.popup-compare__nav-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  justify-content: flex-end;
+}

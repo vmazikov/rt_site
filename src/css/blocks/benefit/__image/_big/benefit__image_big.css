@@ -1,0 +1,12 @@
+.benefit.benefit_big .benefit__image.benefit__image_big {
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .benefit.benefit_big .benefit__image.benefit__image_big {
+      max-width: 354px;
+  }
+}
+
+

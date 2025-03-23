@@ -1,0 +1,12 @@
+
+.benefit.benefit_big {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .benefit.benefit_big {
+      flex-flow: row;
+  }
+}

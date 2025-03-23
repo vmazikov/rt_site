@@ -1,0 +1,14 @@
+@import url(./__item/__item-title/faq__item__title.css);
+@import url(./__item/__button-arrow/faq__item__button-arrow.css);
+@import url(./__item/__button-arrow/_active/faq__item__button-arrow_active.css);
+@import url(./__item-text/faq__item-text.css);
+@import url(./__item-section/faq__item-section.css);
+@import url(./__item-content/faq__item-content.css);
+@import url(./__item-content/_active/faq__item-content_active.css);
+@import url(./__item-container/faq__item-container.css);
+@import url(./__container/faq__container.css);
+@import url(./__item/faq__item.css);
+
+.faq {
+  padding: 10px;
+}

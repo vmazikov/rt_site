@@ -1,0 +1,12 @@
+.card__bg_family {
+  background: linear-gradient(0deg, #ffffff12, #ffffff12), linear-gradient(180deg, #4803a0, #602fb9 24.68%, #6b4fc9 49.85%, #663cc0 68.09%, #4803a0);
+}
+
+.card__bg_family::after {
+  background-image: url(../../../../../assets/images/bg_family.png);
+  background-size: 100%;
+  width: 120px;
+  height: 150px;
+  right: 10px;
+  top: 60px;
+}

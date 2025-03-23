@@ -117,6 +117,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     function createTariffCard(tariff) {
         return `
         <div class="card" data-tariff='${JSON.stringify(tariff)}'>
+        <div class="card__bg"></div>
         <div class="card__highlights">
             ${tariff.card__highlight_hit ? `<span class="card__highlight card__highlight_hit">${tariff.card__highlight_hit}</span>` : ''}
             ${tariff.card__highlight_promo ? `<span class="card__highlight card__highlight_promo">${tariff.card__highlight_promo}</span>` : ''}
@@ -188,14 +189,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <h4 class="card__subtitle__item">${tariff.video} камера</h4>
                     </div>
                 </div>` : ''}
-            ${tariff.router_price ? `
-            <div class="card__subtitle">
-                <img class="card__subtitle-img" src="${routerIcon}" alt="Роутер">
-                <div class="card__subtitle__items">
-                <span class="card__subtitle__span">Wi-Fi роутер</span>
-                <h4 class="card__subtitle__item card__subtitle__item_router">${tariff.router_price}</h4>
-                </div>
-            </div>` : ''}
+
             </div>
             ${tariff.additional_info ? `
             <div class="card__additional-info">

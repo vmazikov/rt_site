@@ -1,0 +1,17 @@
+
+.benefits {
+  padding: 10px;
+}
+
+@media (max-width: 767px) {
+  .benefit {
+    margin-bottom: 10px;
+  }
+
+  .benefit:not(.benefit_big) .benefit__image {
+    max-width: 93px;
+  }
+}
+
+@import url(./__title/benefits__title.css);
+@import url(./__grid/benefits__grid.css);

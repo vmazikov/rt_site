@@ -1,6 +1,15 @@
 .connect-section__title {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
-  }
+  font-size: 24px;
+  line-height: 32px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+  
+@media (min-width: 820px) {
+  .connect-section__title {
+    font-size: 32px;
+    line-height: 40px;
+  }  
+}

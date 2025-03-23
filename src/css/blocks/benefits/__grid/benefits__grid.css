@@ -1,0 +1,15 @@
+.benefits__grid {
+  display: grid;
+  grid-template-areas:
+  "big big"
+  "two three"
+  "four five";
+  gap: 20px;
+}
+
+@media (max-width: 767px) {
+  .benefits__grid {
+    display: block;
+  }
+
+}

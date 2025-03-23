@@ -45,7 +45,6 @@ function updateUIBasedOnTechResult() {
                         <p class="tech-result-banner__status-text">Есть возможность подключения по адресу: </p>
                         <div class="flex">
                             <p class="tech-result-banner__address-text">${userLocation.fullAddress}</p>
-                            <span class="tech-result-banner__edit-icon" onclick="openPopup(popupAddress)"></span>
                         </div>
                     </div>
                 </div>

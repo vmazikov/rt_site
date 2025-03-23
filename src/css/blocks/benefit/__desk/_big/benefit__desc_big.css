@@ -1,0 +1,5 @@
+@media (min-width: 768px) {
+  .benefit__desc.benefit__desc_big {
+    padding-right: 16px;
+  }
+}

@@ -1,0 +1,7 @@
+.faq__item-content {
+  width: 100%;  /* Обеспечиваем, что контент будет растягиваться на всю ширину контейнера */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  margin-top: 5px;
+}

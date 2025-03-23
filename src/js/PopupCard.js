@@ -480,26 +480,34 @@ if (techResult && techResult.isPossible === true) {
   }
 
   // Навешиваем обработчики для переключения выпадающих списков в секциях
-  popup.querySelectorAll('.popup-card__item-container').forEach(container => {
+  initToggleBlocks(popup, 'popup-card');
+}
+
+function initToggleBlocks(rootElement, baseClass) {
+  const qs = (suffix) => `.${baseClass}__${suffix}`;
+
+  rootElement.querySelectorAll(qs('item-container')).forEach(container => {
     container.addEventListener('click', () => {
-      const item = container.closest('.popup-card__item');
-      const content = item.querySelector('.popup-card__item-content');
-      const arrow = item.querySelector('.popup-card__item__button-arrow');
-      const label = item.querySelector('.popup-card__toggle__label');
-      
+      const item = container.querySelector(qs('item'));
+      const content = container.querySelector(qs('item-content'));
+      const arrow = container.querySelector(qs('item__button-arrow'));
+      const label = container.querySelector(qs('toggle__label'));
+
       if (!content || !arrow) return;
-      
-      // Переключаем класс для открытия/закрытия содержимого секции
-      content.classList.toggle('popup-card__item-content_active');
-      arrow.classList.toggle('popup-card__item__button-arrow_active');
-      
+
+      content.classList.toggle(`${baseClass}__item-content_active`);
+      arrow.classList.toggle(`${baseClass}__item__button-arrow_active`);
+
       if (label) {
         label.classList.toggle('hidden');
       }
     });
   });
-
 }
+
+const faq = document.querySelector('.faq');
+initToggleBlocks(faq, 'faq');
+
 // Функция для отправки события при изменении userLocation
 function handleUserLocationChanged() {
   const popup = document.querySelector('.popup-card');

@@ -1,0 +1,19 @@
+
+.benefit {
+  background: #F8F8F8;
+  border-radius: 16px;
+  grid-area: one;
+  min-width: 33.3333%;
+  display: flex;
+  flex-flow: column;
+}
+
+@import url(./_big/benefit_big.css);
+@import url(./__title/benefit__title.css);
+@import url(./__info/benefit__info.css);
+@import url(./__img/benefit__img.css);
+@import url(./__image/benefit__image.css);
+@import url(./__image/_big/benefit__image_big.css);
+@import url(./__desk/benefit__desc.css);
+@import url(./__desk/_big/benefit__desc_big.css);
+  

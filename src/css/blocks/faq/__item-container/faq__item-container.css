@@ -1,0 +1,11 @@
+.faq__item-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFF;
+  padding: 19px 32px 16px;
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}

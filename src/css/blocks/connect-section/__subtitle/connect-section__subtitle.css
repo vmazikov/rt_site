@@ -1,5 +1,13 @@
 .connect-section__subtitle {
-    margin: 0 0 5px;
-    font-size: 16px;
-    color: #333;
+  margin: 0 0 5px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #333;
+}
+
+  
+@media (min-width: 820px) {
+  .connect-section__subtitle {
+    font-size: 20px;
   }
+}

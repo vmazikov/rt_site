@@ -1,0 +1,13 @@
+.card__bg_game {
+  background: #0d162d;
+}
+
+.card__bg_game::after {
+  background-image: url(../../../../../assets/images/bg_games.svg);
+  background-repeat: no-repeat;
+  opacity: .3;
+  width: 707px;
+  height: 577px;
+  left: 20px;
+  bottom: -174px;
+}

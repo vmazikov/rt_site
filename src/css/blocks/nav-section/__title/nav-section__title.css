@@ -1,4 +1,13 @@
 .nav-section__title {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+  font-size: 24px;
+  line-height: 32px;
+  padding-bottom: 8px;
+}
+
+@media (min-width: 750px) {
+  .nav-section__title {
+      font-size: 32px;
+      line-height: 40px;
+      padding-bottom: 15px;
   }
+}

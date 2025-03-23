@@ -1,0 +1,13 @@
+.benefits__title {
+  padding-bottom: 32px;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+@media (min-width: 750px) {
+  .benefits__title {
+    padding-bottom: 40px;
+    font-size: 32px;
+    line-height: 40px;
+  }
+}

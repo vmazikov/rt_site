@@ -1,0 +1,10 @@
+.equipment-section__item {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  -webkit-user-select: none; /* для Chrome, Safari, Opera */
+  -moz-user-select: none;    /* для Firefox */
+  -ms-user-select: none;     /* для IE/Edge */
+  user-select: none;         /* для современных браузеров */
+}

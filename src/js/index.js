@@ -11,6 +11,8 @@ import 'swiper/css'; // Подключаем стили Swiper
 import './PopupCard.js'
 import './utm-filter.js'
 import './comparePopup.js'
+import './equipmentSwiper.js'
+import './equipmentCards.js'
 
 const swiper = new Swiper('.swiper-container', {
   slidesPerView: 1,

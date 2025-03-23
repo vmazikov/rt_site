@@ -52,21 +52,25 @@
 @import url(./blocks/contact-section/__social-button/_telegram/contact-section__social-button_telegram.css);
 @import url(./blocks/contact-section/__call-button/contact-section__call-button.css);
 @import url(./blocks/equipment-section/equipment-section.css);
-@import url(./blocks/equipment-section/__container/equipment-section__container.css);
 @import url(./blocks/equipment-section/__title/equipment-section__title.css);
 @import url(./blocks/equipment-section/__subtitle/equipment-section__subtitle.css);
+@import url(./blocks/equipment-section/__items-container/equipment-section__items-container.css);
+@import url(./blocks/equipment-section/__item/equipment-section__item.css);
+@import url(./blocks/equipment-section/__container/equipment-section__container.css);
 @import url(./blocks/equipment-section/__carousel/equipment-section__carousel.css);
 @import url(./blocks/equipment-section/__carousel/__track/equipment-section__carousel__track.css);
 @import url(./blocks/equipment-section/__carousel/__item/equipment-section__carousel__item.css);
 @import url(./blocks/equipment-section/__carousel/__item-text/equipment-section__carousel__item-text.css);
+@import url(./blocks/equipment-section/__carousel/__item-text/_price/equipment-section__carousel__item-text_price.css);
+@import url(./blocks/equipment-section/__carousel/__item-text/_model/equipment-section__carousel__item-text_model.css);
 @import url(./blocks/equipment-section/__carousel/__item-img/equipment-section__carousel__item-img.css);
+@import url(./blocks/equipment-section/__carousel/__item-img-section/equipment-section__carousel__item-img-section.css);
 @import url(./blocks/equipment-section/__carousel/__dots/equipment-section__carousel__dots.css);
 @import url(./blocks/equipment-section/__carousel/__dot/equipment-section__carousel__dot.css);
 @import url(./blocks/equipment-section/__carousel/__dot/_active/equipment-section__carousel__dot_active.css);
 @import url(./blocks/equipment-section/__buttons/equipment-section__buttons.css);
 @import url(./blocks/equipment-section/__button/equipment-section__button.css);
 @import url(./blocks/equipment-section/__button/_active/equipment-section__button_active.css);
-@import url(./blocks/filter/filter.css);
 @import url(./blocks/filter/__wrapper/filter__wrapper.css);
 @import url(./blocks/filter/__icon/filter__icon.css);
 @import url(./blocks/filter/__dropdown-menu/filter__dropdown-menu.css);
@@ -1550,21 +1554,6 @@
   background-color: #5b00c4;
 }
 
-  /* Стили пагинации */
-  .swiper-pagination-bullet {
-    background: #ddd;
-  }
-  .swiper-pagination-bullet-active {
-    background: #ff4f13;
-  }
-  .swiper-pagination.hidden {
-    display: none !important;
-  }
-  /* Ограничиваем максимальную ширину карточки */
-  .swiper-slide {
-    max-width: 350px;
-    width: auto;
-  }
 
 
 
@@ -1580,41 +1569,10 @@
 
 
 
-.equipment-section__carousel__item-text_model {
-  font-size: 22px;
-  }
-  
-.equipment-section__carousel__item-text_price {
-  font-size: 22px;
-}
-
-.equipment-section__carousel__item-img-section {
-  background: rgb(239, 238, 243);
-  border: 1px solid rgb(229, 229, 237);
-  border-radius: 15px;
-  display: flex;
-  height: 150px;
-  justify-content: center;
-}
-
-.equipment-section__carousel__items-text {
-
-}
 
 
-.equipment-section__item {
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 100%;
-}
 
-.equipment-section__items-container {
-  display: grid;  
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 16px;
-  justify-content: start; /* или просто убрать, по умолчанию будет "stretch" */
-  align-items: stretch;   /* тоже опционально */
-  text-align: left;       /* общий текст слева */
-}
+
+
+
+

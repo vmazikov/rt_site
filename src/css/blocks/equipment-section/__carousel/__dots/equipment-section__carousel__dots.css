@@ -1,5 +1,12 @@
 .equipment-section__carousel__dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-  }
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  min-height: 20px; /* или другая подходящая высота */
+  transition: opacity 0.3s ease; /* для плавного скрытия/появления */
+}
+
+.equipment-section__carousel__dots.invisible {
+  opacity: 0;       /* делаем содержимое прозрачным */
+  pointer-events: none; /* чтобы не ловилось событие клика, если нужно */
+}

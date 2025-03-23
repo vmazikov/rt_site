@@ -1,10 +1,15 @@
 .equipment-section__button {
     background-color: #f5f5f5;
-    border: none;
     padding: 10px 20px;
     margin: 0 5px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
     transition: 0.3s;
-   }
+    border: 1px solid #f8530f;
+    color: #f8530f;
+    -webkit-user-select: none; /* для Chrome, Safari, Opera */
+    -moz-user-select: none;    /* для Firefox */
+    -ms-user-select: none;     /* для IE/Edge */
+    user-select: none;         /* для современных браузеров */
+    }

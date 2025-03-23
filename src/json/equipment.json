@@ -1,0 +1,150 @@
+[
+    {
+        "data-category": "routers",
+        "model": "RT-GM-2",
+        "type": "Оптический модем",
+        "picture": "./assets/images/RT-GM-2.png",
+        "technology": "gpon",
+        "feature": [
+            "Гигабитные порты LAN",
+            "Двухдиапазонный Wi-Fi",
+            {
+                "speed_2_4": "100",
+                "speed_5": "300"
+            }
+        ],
+        "price": {
+            "rent": "150",
+            "credit": "295",
+            "buy": "5900"
+        }
+    },
+    {
+        "data-category": "routers",
+        "model": "RT-GM-3",
+        "type": "Оптический модем",
+        "picture": "./assets/images/RT-GM-3.png",
+        "technology": "gpon",
+        "feature": [
+            "Гигабитные порты LAN",
+            "Двухдиапазонный Wi-Fi",
+            {
+                "speed_2_4": "100",
+                "speed_5": "300"
+            }
+        ],
+        "price": {
+            "rent": "150",
+            "credit": "295",
+            "buy": "5900"
+        }
+    },
+    {
+        "data-category": "routers",
+        "model": "Eltex 1421G-Wac",
+        "type": "Оптический модем",
+        "picture": "./assets/images/Eltex-1421G-Wac.png",
+        "technology": "gpon",
+        "feature": [
+            "Гигабитные порты LAN",
+            "Двухдиапазонный Wi-Fi",
+            {
+                "speed_2_4": "100",
+                "speed_5": "300"
+            }
+        ],
+        "price": {
+            "rent": "150",
+            "credit": "295",
+            "buy": "5900"
+        }
+    },
+    {
+        "data-category": "routers",
+        "model": "ZTE H298A",
+        "type": "WiFi Роутер",
+        "picture": "./assets/images/ZTE_H298A.png",
+        "technology": "fttb",
+        "feature": [
+            "Гигабитные порты LAN",
+            "Двухдиапазонный Wi-Fi",
+            {
+                "speed_2_4": "100",
+                "speed_5": "300"
+            }
+        ],
+        "price": {
+            "rent": "150",
+            "credit": "295",
+            "buy": "5900"
+        }
+    },
+    {
+        "data-category": "routers",
+        "model": "Iscratel E80",
+        "type": "WiFi Роутер",
+        "picture": "./assets/images/Iskratel-E80.png",
+        "technology": "gpon",
+        "feature": [
+            "Гигабитные порты LAN",
+            "Двухдиапазонный Wi-Fi",
+            {
+                "speed_2_4": "100",
+                "speed_5": "300"
+            }
+        ],
+        "price": {
+            "rent": "150",
+            "credit": "295",
+            "buy": "5900"
+        }
+    },
+    {
+        "data-category": "set-top-boxes",
+        "model": "Wink",
+        "type": "ТВ-Приставка",
+        "picture": "./assets/images/Wink.webp",
+        "feature": [
+            "Работает на сети домашнего интернета Ростелекома",
+            "Каналы и фильмы в цифровом, HD качестве, стереозвук",
+            "Поддержка интерактивных сервисов"
+        ],
+        "price": {
+            "rent": "100",
+            "credit": "100",
+            "buy": "3900"
+        }
+    },
+    {
+        "data-category": "set-top-boxes",
+        "model": "Wink+",
+        "type": "Андроид ТВ-Приставка",
+        "picture": "./assets/images/Wink.webp",
+        "feature": [
+            "Подключается и работает на сети Wi-Fi любого интернет-провайдера",
+            "Каналы и фильмы в цифровом, HD и Ultra HD (4K) качестве, стереозвук",
+            "Поддержка интерактивных сервисов",
+            "Каталог развлекательных и полезных приложений"
+        ],
+        "price": {
+            "credit": "355",
+            "buy": "6990"
+        }
+    },
+    {
+        "data-category": "set-top-boxes",
+        "model": "WinkBox Mini",
+        "type": "Андроид ТВ-Приставка",
+        "picture": "./assets/images/wink_box_mini.png",
+        "feature": [
+            "Подключается и работает на сети Wi-Fi любого интернет-провайдера",
+            "Каналы и фильмы в цифровом, HD и Ultra HD (4K) качестве, стереозвук",
+            "Поддержка интерактивных сервисов",
+            "Каталог развлекательных и полезных приложений"
+        ],
+        "price": {
+            "credit": "355",
+            "buy": "6990"
+        }
+    }
+]

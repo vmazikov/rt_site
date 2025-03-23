@@ -1,0 +1,8 @@
+.equipment-section__items-container {
+  display: grid;  
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 16px;
+  justify-content: start; /* или просто убрать, по умолчанию будет "stretch" */
+  align-items: stretch;   /* тоже опционально */
+  text-align: left;       /* общий текст слева */
+}

@@ -1,0 +1,8 @@
+.equipment-section__carousel__item-img-section {
+  background: rgb(239, 238, 243);
+  border: 1px solid rgb(229, 229, 237);
+  border-radius: 15px;
+  display: flex;
+  height: 150px;
+  justify-content: center;
+}

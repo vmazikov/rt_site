@@ -1,4 +1,7 @@
+
 .equipment-section__carousel__item-img {
-    width: 150px;
-    height: auto;
-  }
+  width: 150px;
+  height: auto;
+  -webkit-user-drag: none; /* для Chrome, Safari */
+  -user-drag: none;         /* для остальных браузеров */
+}

@@ -519,30 +519,6 @@
   }
 }
 
-.equipment-section__carousel__item-text_model {
- font-size: 22px;
-}
-
-.equipment-section__carousel__item-text_price {
-  font-size: 22px;
-}
-
-.equipment-section__carousel__item-img-section {
-  align-items: center;
-  background: rgb(239, 238, 243);
-  border: 1px solid rgb(229, 229, 237);
-  border-radius: 15px;
-  display: flex;
-  height: 150px;
-  justify-content: center;
-  margin: 0 15px;
-  margin-bottom: 16px;
-
-}
-
-.equipment-section__carousel__items-text {
-
-}
 
 
 .suggetion-img {
@@ -1589,3 +1565,56 @@
     max-width: 350px;
     width: auto;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.equipment-section__carousel__item-text_model {
+  font-size: 22px;
+  }
+  
+.equipment-section__carousel__item-text_price {
+  font-size: 22px;
+}
+
+.equipment-section__carousel__item-img-section {
+  background: rgb(239, 238, 243);
+  border: 1px solid rgb(229, 229, 237);
+  border-radius: 15px;
+  display: flex;
+  height: 150px;
+  justify-content: center;
+}
+
+.equipment-section__carousel__items-text {
+
+}
+
+
+.equipment-section__item {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.equipment-section__items-container {
+  display: grid;  
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 16px;
+  justify-content: start; /* или просто убрать, по умолчанию будет "stretch" */
+  align-items: stretch;   /* тоже опционально */
+  text-align: left;       /* общий текст слева */
+}

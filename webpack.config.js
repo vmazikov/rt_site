@@ -6,6 +6,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+
 module.exports = {
   mode: 'production', // Режим сборки
   entry: './src/js/index.js', // Главный входной JS-файл
@@ -68,5 +69,10 @@ module.exports = {
           { from: "src/json", to: "json" } // Копируем JSON-файлы в dist/json
         ],
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/assets/images', to: 'assets/images' } // Копируем JSON-файлы в dist/json
+      ],
+  }),
   ],
 };

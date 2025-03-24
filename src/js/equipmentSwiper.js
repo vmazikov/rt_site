@@ -40,14 +40,14 @@ function initCategorySlider(category) {
   itemsContainer.style.gridColumnGap = '0';
   itemsContainer.style.transform = 'translateX(0px)';
 
-  // ---- ВАЖНО: все ключевые переменные делаем в замыкании ----
+  // ---- Все ключевые переменные в замыкании ----
   let visibleCount = getVisibleCount(); // сколько карточек показывать
   const minCardWidth = 250;
   const maxCardWidth = 330;
   const margin = 16; // отступ между карточками
   let containerWidth = container.clientWidth;
 
-  // Рассчитываем ширину карточки так, чтобы ровно уместить visibleCount штук
+  // Функция расчёта ширины карточки так, чтобы ровно уместить visibleCount штук
   function calcItemWidth() {
     containerWidth = container.clientWidth;
     const maxWidthThatFits = (containerWidth - (visibleCount - 1) * margin) / visibleCount;
@@ -56,73 +56,68 @@ function initCategorySlider(category) {
 
   let itemWidth = calcItemWidth();
 
-  // Устанавливаем карточкам нужную ширину
+  // Устанавливаем карточкам нужную ширину и отступы
   items.forEach(item => {
     item.style.minWidth = itemWidth + 'px';
     item.style.flexShrink = '0';
     item.style.marginRight = margin + 'px';
   });
 
-  // Общая ширина всех карточек (учитывая margin)
+  // Общая ширина всех карточек (с учетом margin)
   let totalSlidesWidth = totalItems * (itemWidth + margin) - margin;
-  // Максимально возможное смещение, чтобы последняя карточка была у правого края
+  // Функция, возвращающая максимальное смещение, чтобы последняя карточка была у правого края
   function getMaxOffset() {
     return Math.max(totalSlidesWidth - containerWidth, 0);
   }
 
-  // Индекс текущего «окна»
+  // Индекс текущего "окна"
   let currentIndex = 0;
-  // Чтобы при смене ширины мы могли корректно восстанавливать смещение
+  // Предыдущее смещение
   let prevTranslate = 0;
-
-  // maxIndex: последний допустимый индекс
+  // Последний допустимый индекс
   let maxIndex = totalItems - visibleCount;
 
   // ========== Генерация точек ==========
   function generateDots() {
-  // Если все карточки влезли в контейнер, делаем dots невидимыми, но оставляем пространство
-  if (totalSlidesWidth <= containerWidth) {
-    dotsContainer.classList.add('invisible');
-    // Можно очистить содержимое, чтобы не генерировать доты
-    dotsContainer.innerHTML = '';
-    return;
-  } else {
-    dotsContainer.classList.remove('invisible');
-  }
-
-  dotsContainer.innerHTML = '';
-  // Далее генерация дотов как и прежде...
-  const totalDots = totalItems;
-  const maxDotsDisplayed = 6;
-  let dotStart = 0;
-  if (totalDots > maxDotsDisplayed) {
-    dotStart = Math.min(
-      Math.max(currentIndex - Math.floor(maxDotsDisplayed / 2), 0),
-      totalDots - maxDotsDisplayed
-    );
-  }
-  const dotEnd = (totalDots > maxDotsDisplayed) ? dotStart + maxDotsDisplayed : totalDots;
-
-  for (let i = dotStart; i < dotEnd; i++) {
-    const dot = document.createElement('span');
-    dot.classList.add('equipment-section__carousel__dot');
-    if (i >= currentIndex && i < currentIndex + visibleCount) {
-      dot.classList.add('equipment-section__carousel__dot_active');
+    if (totalSlidesWidth <= containerWidth) {
+      dotsContainer.classList.add('invisible');
+      dotsContainer.innerHTML = '';
+      return;
+    } else {
+      dotsContainer.classList.remove('invisible');
     }
-    dot.addEventListener('click', () => {
-      currentIndex = Math.min(i, maxIndex);
-      updateSlider();
-    });
-    dotsContainer.appendChild(dot);
-  }
-}
 
+    dotsContainer.innerHTML = '';
+    const totalDots = totalItems;
+    const maxDotsDisplayed = 6;
+    let dotStart = 0;
+    if (totalDots > maxDotsDisplayed) {
+      dotStart = Math.min(
+        Math.max(currentIndex - Math.floor(maxDotsDisplayed / 2), 0),
+        totalDots - maxDotsDisplayed
+      );
+    }
+    const dotEnd = (totalDots > maxDotsDisplayed) ? dotStart + maxDotsDisplayed : totalDots;
+
+    for (let i = dotStart; i < dotEnd; i++) {
+      const dot = document.createElement('span');
+      dot.classList.add('equipment-section__carousel__dot');
+      if (i >= currentIndex && i < currentIndex + visibleCount) {
+        dot.classList.add('equipment-section__carousel__dot_active');
+      }
+      dot.addEventListener('click', () => {
+        currentIndex = Math.min(i, maxIndex);
+        updateSlider();
+      });
+      dotsContainer.appendChild(dot);
+    }
+  }
 
   function updateDots() {
     generateDots();
   }
 
-  // Возвращает смещение (в пикселях), которое соответствует currentIndex, с учётом margin и ограничения
+  // Возвращает смещение (в пикселях) с учетом margin и ограничений
   function getClampedOffset(index) {
     const offset = index * (itemWidth + margin);
     return Math.min(offset, getMaxOffset());
@@ -135,10 +130,14 @@ function initCategorySlider(category) {
     updateDots();
   }
 
-  // ===== ЛОГИКА СВАЙПА =====
+  // ===== ЛОГИКА СВАЙПА И ТАПА =====
   let isDragging = false;
   let startX = 0;
   let currentTranslate = 0;
+  // Флаг, который определяет, что было значительное движение (свайп)
+  let isSwiping = false;
+  // Сохраняем начальный элемент, на котором начался touch/mousedown
+  let startTarget = null;
 
   function getPositionX(e) {
     return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
@@ -146,32 +145,53 @@ function initCategorySlider(category) {
 
   function dragStart(e) {
     isDragging = true;
+    isSwiping = false; // сбрасываем флаг свайпа
+    startTarget = e.target;
     startX = getPositionX(e);
     itemsContainer.style.transition = 'none';
+    if (!e.type.includes('mouse')) {
+      e.preventDefault();
+    }
   }
 
   function dragMove(e) {
     if (!isDragging) return;
     const currentPosition = getPositionX(e);
     const diff = currentPosition - startX;
+    // Если движение больше 10px, считаем, что это свайп
+    if (Math.abs(diff) > 10) {
+      isSwiping = true;
+    }
     currentTranslate = prevTranslate + diff;
     itemsContainer.style.transform = `translateX(${currentTranslate}px)`;
+    if (!e.type.includes('mouse')) {
+      e.preventDefault();
+    }
   }
 
-  function dragEnd() {
+  function dragEnd(e) {
     if (!isDragging) return;
     isDragging = false;
     const movedBy = currentTranslate - prevTranslate;
-
-    // Свайп влево
+    console.log(movedBy)
+    // Если движение меньше 10px, считаем, что это просто тап
+    if (!isSwiping && Math.abs(movedBy) < 500) {
+      // Если тап произошел по карточке, вызываем попап
+      const card = startTarget.closest('.equipment-section__item');
+      if (card) {
+        openPopupWithInfo(card);
+      }
+      // Сбрасываем трансформацию
+      itemsContainer.style.transition = 'transform 0.3s ease';
+      updateSlider();
+      return;
+    }
+    // Если свайп значительный – меняем индекс
     if (movedBy < -50 && currentIndex < maxIndex) {
       currentIndex++;
-    }
-    // Свайп вправо
-    else if (movedBy > 50 && currentIndex > 0) {
+    } else if (movedBy > 50 && currentIndex > 0) {
       currentIndex--;
     }
-
     itemsContainer.style.transition = 'transform 0.3s ease';
     updateSlider();
   }
@@ -182,41 +202,28 @@ function initCategorySlider(category) {
   itemsContainer.addEventListener('mouseup', dragEnd);
   itemsContainer.addEventListener('mouseleave', dragEnd);
 
-  // И для тач
-  itemsContainer.addEventListener('touchstart', dragStart);
-  itemsContainer.addEventListener('touchmove', dragMove);
+  // И для тач-устройств (с опцией passive: false)
+  itemsContainer.addEventListener('touchstart', dragStart, { passive: false });
+  itemsContainer.addEventListener('touchmove', dragMove, { passive: false });
   itemsContainer.addEventListener('touchend', dragEnd);
 
   // ========== ОБРАБОТЧИК RESIZE ==========
   window.addEventListener('resize', () => {
-    // 1. Пересчитываем количество видимых карточек
     visibleCount = getVisibleCount();
     maxIndex = totalItems - visibleCount;
-
-    // 2. Пересчитываем ширину карточек
     itemWidth = calcItemWidth();
-
-    // 3. Применяем новую ширину ко всем карточкам
     items.forEach(item => {
       item.style.minWidth = itemWidth + 'px';
     });
-
-    // 4. Пересчитываем суммарную ширину
     totalSlidesWidth = totalItems * (itemWidth + margin) - margin;
-
-    // 5. Если currentIndex стал больше maxIndex — сдвигаем в допустимые рамки
     if (currentIndex > maxIndex) {
       currentIndex = maxIndex;
     }
     if (currentIndex < 0) {
       currentIndex = 0;
     }
-
-    // 6. Пересчитываем prevTranslate
     const offset = getClampedOffset(currentIndex);
     prevTranslate = -offset;
-
-    // 7. Обновляем слайдер (а значит, и доты)
     updateSlider();
   });
 
@@ -236,4 +243,10 @@ function getVisibleCount() {
   } else {
     return 1;
   }
+}
+
+// Пример функции открытия попапа (реализуйте по своему усмотрению)
+function openPopupWithInfo(cardElement) {
+
+  // Здесь можно реализовать логику показа попапа с информацией о карточке
 }

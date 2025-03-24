@@ -3,7 +3,7 @@
         "data-category": "routers",
         "model": "RT-GM-2",
         "type": "Оптический модем",
-        "picture": "./assets/images/RT-GM-2.png",
+        "picture": "/assets/images/RT-GM-2.png",
         "technology": "gpon",
         "feature": [
             "Гигабитные порты LAN",
@@ -23,7 +23,7 @@
         "data-category": "routers",
         "model": "RT-GM-3",
         "type": "Оптический модем",
-        "picture": "./assets/images/RT-GM-3.png",
+        "picture": "/assets/images/RT-GM-3.png",
         "technology": "gpon",
         "feature": [
             "Гигабитные порты LAN",
@@ -43,7 +43,7 @@
         "data-category": "routers",
         "model": "Eltex 1421G-Wac",
         "type": "Оптический модем",
-        "picture": "./assets/images/Eltex-1421G-Wac.png",
+        "picture": "/assets/images/Eltex-1421G-Wac.png",
         "technology": "gpon",
         "feature": [
             "Гигабитные порты LAN",
@@ -63,7 +63,7 @@
         "data-category": "routers",
         "model": "ZTE H298A",
         "type": "WiFi Роутер",
-        "picture": "./assets/images/ZTE_H298A.png",
+        "picture": "/assets/images/ZTE_H298A.png",
         "technology": "fttb",
         "feature": [
             "Гигабитные порты LAN",
@@ -83,7 +83,7 @@
         "data-category": "routers",
         "model": "Iscratel E80",
         "type": "WiFi Роутер",
-        "picture": "./assets/images/Iskratel-E80.png",
+        "picture": "/assets/images/Iskratel-E80.png",
         "technology": "gpon",
         "feature": [
             "Гигабитные порты LAN",
@@ -103,7 +103,7 @@
         "data-category": "set-top-boxes",
         "model": "Wink",
         "type": "ТВ-Приставка",
-        "picture": "./assets/images/Wink.webp",
+        "picture": "/assets/images/Wink.webp",
         "feature": [
             "Работает на сети домашнего интернета Ростелекома",
             "Каналы и фильмы в цифровом, HD качестве, стереозвук",
@@ -119,7 +119,7 @@
         "data-category": "set-top-boxes",
         "model": "Wink+",
         "type": "Андроид ТВ-Приставка",
-        "picture": "./assets/images/Wink.webp",
+        "picture": "/assets/images/Wink.webp",
         "feature": [
             "Подключается и работает на сети Wi-Fi любого интернет-провайдера",
             "Каналы и фильмы в цифровом, HD и Ultra HD (4K) качестве, стереозвук",
@@ -135,7 +135,7 @@
         "data-category": "set-top-boxes",
         "model": "WinkBox Mini",
         "type": "Андроид ТВ-Приставка",
-        "picture": "./assets/images/wink_box_mini.png",
+        "picture": "/assets/images/wink_box_mini.png",
         "feature": [
             "Подключается и работает на сети Wi-Fi любого интернет-провайдера",
             "Каналы и фильмы в цифровом, HD и Ultra HD (4K) качестве, стереозвук",
